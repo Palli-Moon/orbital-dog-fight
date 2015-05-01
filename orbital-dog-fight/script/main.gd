@@ -61,13 +61,13 @@ func _on_Resume_pressed():
 func _on_Single_pressed():
 	toggle_menu()
 	clear_scene()
-	load_scene("res://scene/mode/single.scn")
+	load_scene("res://scene/mode/single.xml")
 	toggle_pause()
 
 func _on_Multi_pressed():
 	toggle_menu()
 	clear_scene()
-	load_scene("res://scene/mode/multi.scn")
+	load_scene("res://scene/mode/multi.xml")
 	toggle_pause()
 
 func _on_Restart_pressed():
