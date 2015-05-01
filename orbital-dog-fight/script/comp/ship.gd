@@ -16,6 +16,30 @@ func get_ctrl(type):
 func xform_dir(vec):
 	return vec.rotated(get_transform().get_rotation())
 
+func get_particles(type):
+	var nodes = []
+	if type == "fwd":
+		nodes = [get_node("RearThrusters")]
+	#elif type == "sl":
+	#	nodes = [get_node("RearRightThruster"), get_node("FrontRightThruster")]
+	#elif type == "sr":
+	#	nodes = [get_node("RearLeftThruster"), get_node("FrontLeftThruster")]
+	elif type == "tl":
+		nodes = [get_node("RearLeftThruster"), get_node("FrontRightThruster")]
+	elif type == "tr":
+		nodes = [get_node("RearRightThruster"), get_node("FrontLeftThruster")]
+	return nodes
+	
+func show_particles(type):
+	var nodes = get_particles(type)
+	for node in nodes:
+		node.show()
+
+func hide_particles(type):
+	var nodes = get_particles(type)
+	for node in nodes:
+		node.hide()
+	
 func apply_ctrl(type):
 	if type == "fwd":
 		apply_impulse(Vector2(0,0), xform_dir(Vector2(0,-1)))
@@ -33,7 +57,6 @@ func apply_ctrl(type):
 		apply_impulse(Vector2(-rot_speed,-rot_speed), Vector2(1,0))
 	else:
 		print("Unkown command: " + type)
-
 #func _integrate_forces(state):
 #	#print("Integrate! " + str(step))
 #	#step+=1
@@ -53,5 +76,8 @@ func apply_ctrl(type):
 func _fixed_process(delta):
 	for type in CONTROLS:
 		if Input.is_action_pressed(get_ctrl(type)):
+			show_particles(type)
 			apply_ctrl(type)
+		else:
+			hide_particles(type)
 	pass
