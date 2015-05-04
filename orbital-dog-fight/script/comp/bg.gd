@@ -1,5 +1,5 @@
 
-extends Node2D
+extends Polygon2D
 
 # member variables here, example:
 # var a=2
@@ -7,11 +7,10 @@ extends Node2D
 
 func _ready():
 	# Initialization here
-	var rect = get_node("/root").get_rect()
+	var rect = get_tree().get_root().get_rect()
 	var points = Vector2Array([rect.pos, Vector2(rect.pos.x, rect.end.y), rect.end, Vector2(rect.end.x, rect.pos.y)])
-	var bg = get_node("BackgroundFill")
-	bg.set_polygon(points)
-	bg.set_color(Color(0,0,0))
+	set_polygon(points)
+	set_color(Color(0,0,0))
 	pass
 
 

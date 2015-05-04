@@ -12,11 +12,6 @@ func _ready():
 	menu = get_node("Main Menu")
 	get_tree().set_pause(pause)
 	set_process_input(true)
-	var rect = get_tree().get_root().get_rect()
-	var points = Vector2Array([rect.pos, Vector2(rect.pos.x, rect.end.y), rect.end, Vector2(rect.end.x, rect.pos.y)])
-	var bg = get_node("BackgroundFill")
-	bg.set_polygon(points)
-	bg.set_color(Color(0,0,0))
 	pass
 
 func _input(event):
