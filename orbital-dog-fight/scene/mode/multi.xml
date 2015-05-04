@@ -3,7 +3,7 @@
 	<ext_resource path="res://scene/comp/planet_one.xml" type="PackedScene"></ext_resource>
 	<ext_resource path="res://scene/comp/ship.xml" type="PackedScene"></ext_resource>
 	<ext_resource path="res://assets/img/ship1.png" type="Texture"></ext_resource>
-	<ext_resource path="res://assets/img/ship3.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/ship4.png" type="Texture"></ext_resource>
 	<resource type="CircleShape2D" path="local://0">
 		<real name="custom_solver_bias"> 0 </real>
 		<real name="radius"> 80 </real>
@@ -509,7 +509,7 @@
 				<vector2> 620, 300 </vector2>
 				<real> 180 </real>
 				<vector2> 0, 120 </vector2>
-				<resource  resource_type="Texture" path="res://assets/img/ship3.png">  </resource>
+				<resource  resource_type="Texture" path="res://assets/img/ship4.png">  </resource>
 			</array>
 			<string> "version" </string>
 			<int> 1 </int>
