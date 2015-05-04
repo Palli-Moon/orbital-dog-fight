@@ -26,6 +26,8 @@ func clear_scene():
 		child.queue_free()
 
 func load_scene(scene):
+	get_node("Main Menu/Resume").show()
+	get_node("Main Menu/Restart").show()
 	current_scene = scene
 	var s = ResourceLoader.load(scene)
 	current.add_child(s.instance())
