@@ -6,6 +6,7 @@ extends Polygon2D
 # var b="textvar"
 
 export var starsize = 5
+export var numstars = 25
 
 func _ready():
 	# Initialization here
@@ -13,7 +14,7 @@ func _ready():
 	var points = Vector2Array([rect.pos, Vector2(rect.pos.x, rect.end.y), rect.end, Vector2(rect.end.x, rect.pos.y)])
 	set_polygon(points)
 	set_color(Color(0,0,0))
-	for i in range(25):
+	for i in range(numstars):
 		var curr = [randi() % (int(rect.end.x)+1), randi() % (int(rect.end.y)+1)]
 		var p = Polygon2D.new()
 		add_child(p)
