@@ -124,13 +124,15 @@ func _die():
 
 func hit(beam):
 	curr_hp -= beam.get_power()
-	update_bar()
 	if curr_hp <= 0:
 		if !isdying:
 			isdying = true
 			get_node("explosion").show()
 			get_node("explosion/AnimationPlayer").play("explosion")
 			get_node("Sprite").hide()
+			get_node("HealthBar").hide()
+	else:
+		update_bar()
 	
 func _on_AnimationPlayer_finished():
 	_die()
