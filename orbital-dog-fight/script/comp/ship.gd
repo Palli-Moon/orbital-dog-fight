@@ -22,6 +22,8 @@ var impulse = null
 var step = 0
 var fire_timer
 
+var isdying = false
+
 func _ready():
 	fire_timer = get_node("FireTimer")
 	set_fixed_process(true)
@@ -107,7 +109,16 @@ func _die():
 	queue_free()
 
 func hit(beam):
+	if !isdying:
+		isdying = true
+		get_node("explosion").show()
+		get_node("explosion/AnimationPlayer").play("explosion")
+		get_node("Sprite").hide()
+	
+func _on_AnimationPlayer_finished():
 	_die()
+	
+	
 
 #func _integrate_forces(state):
 #	#print("Integrate! " + str(step))
@@ -124,4 +135,3 @@ func hit(beam):
 #		#print("Velocity: ", get_linear_velocity())
 #	else:
 #		state.integrate_forces()
-
