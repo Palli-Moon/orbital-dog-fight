@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 export(int, "ONE", "TWO") var player_num = 0
+export var hitpoints = 100 setget set_hitpoints, get_hitpoints
 export var rot_speed = 16
 export var fwd_speed = 10.0
 export var bwd_speed = 5.0
@@ -29,6 +30,12 @@ func _ready():
 
 func get_ctrl(type):
 	return "p" + str(player_num+1) + "_" + type
+
+func set_hitpoints(hp):
+	hitpoints = hp
+
+func get_hitpoints(hp):
+	return hitpoints
 
 func xform_dir(vec):
 	return vec.rotated(get_transform().get_rotation())
@@ -107,7 +114,9 @@ func _die():
 	queue_free()
 
 func hit(beam):
-	_die()
+	hitpoints -= beam.get_power()
+	if hitpoints <= 0:
+		_die()
 
 #func _integrate_forces(state):
 #	#print("Integrate! " + str(step))
