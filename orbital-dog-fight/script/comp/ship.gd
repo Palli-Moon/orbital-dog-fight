@@ -7,6 +7,7 @@ export var fwd_speed = 10.0
 export var bwd_speed = 5.0
 export var strafe_speed = 3.0
 export var laser_speed = 300.0
+export(Texture) var shiptex
 
 const CMD_FORWARD = "fwd"
 const CMD_BACKWARD = "bwd"
@@ -26,6 +27,7 @@ var fire_timer
 var isdying = false
 
 func _ready():
+	get_node("Sprite").set_texture(shiptex)
 	fire_timer = get_node("FireTimer")
 	set_fixed_process(true)
 	pass
