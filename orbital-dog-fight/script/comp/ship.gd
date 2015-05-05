@@ -25,32 +25,36 @@ var healthBar = null
 var step = 0
 var fire_timer
 var curr_hp
+var process = true
 
 var isdying = false
 
-func _init():
-	if get_node("Sprite") != null:
-		get_node("Sprite").set_texture(shiptex)
-
 func _ready():
+	process = !get_tree().is_editor_hint()
 	curr_hp = hitpoints
-	set_fixed_process(true)
-	
+	if process:
+		set_fixed_process(true)
+	# Manage child nodes
+	fire_timer = get_node("FireTimer")
 	healthBar = get_node("HealthBar")
 	healthBar.update()
 	get_node("Sprite").set_texture(shiptex)
-	fire_timer = get_node("FireTimer")
-	pass
+	get_node("explosion").hide()
+	# Bind animation events
+	get_node("explosion/AnimationPlayer")
 
 func get_ctrl(type):
 	return "p" + str(player_num+1) + "_" + type
 
 func get_shiptex():
-	return get_node("Sprite").get_texture()
+	if has_node("Sprite"):
+		return get_node("Sprite").get_texture()
+	return shiptex
 
 func set_shiptex(tex):
-	if get_node("Sprite") != null:
+	if has_node("Sprite"):
 		get_node("Sprite").set_texture(tex)
+	shiptex = tex
 
 func set_hitpoints(hp):
 	hitpoints = hp
@@ -143,12 +147,12 @@ func hit(beam):
 			isdying = true
 			get_node("explosion").show()
 			get_node("explosion/AnimationPlayer").play("exp_one")
-			get_node("Sprite").hide()
 			healthBar.hide()
 	else:
 		healthBar.update()
 	
 func _on_AnimationPlayer_finished():
+	get_node("explosion").hide()
 	_die()
 
 func _on_AnimationPlayer_animation_changed( old_name, new_name ):

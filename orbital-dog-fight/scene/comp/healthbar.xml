@@ -40,14 +40,14 @@
 			<string> "node_count" </string>
 			<int> 3 </int>
 			<string> "nodes" </string>
-			<int_array  len="125"> 				-1, -1, 1, 0, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 0, 0, 0, 15, 14, -1, 20, 2, 0, 3, 1, 4, 10, 5, 2, 6, 3, 7, 11, 8, 12, 9, 6, 10, 7, 11, 1, 16, 13, 17, 14, 18, 15, 19, 11, 20, 16, 21, 11, 22, 6, 23, 12, 24, 17, 25, 18, 0, 0, 0, 15, 26, -1, 20, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 11, 8, 12, 9, 6, 10, 7, 11, 1, 16, 19, 17, 14, 18, 20, 19, 11, 20, 16, 21, 11, 22, 6, 23, 12, 24, 17, 25, 18, 0 </int_array>
+			<int_array  len="125"> 				-1, -1, 1, 0, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 0, 0, 0, 15, 14, -1, 20, 2, 0, 3, 1, 4, 10, 5, 2, 6, 3, 7, 4, 8, 11, 9, 6, 10, 7, 11, 1, 16, 12, 17, 13, 18, 14, 19, 4, 20, 15, 21, 4, 22, 6, 23, 11, 24, 16, 25, 17, 0, 0, 0, 15, 26, -1, 20, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 11, 9, 6, 10, 7, 11, 1, 16, 18, 17, 13, 18, 19, 19, 4, 20, 15, 21, 4, 22, 6, 23, 11, 24, 16, 25, 17, 0 </int_array>
 			<string> "variants" </string>
-			<array  len="21" shared="false">
+			<array  len="20" shared="false">
 				<node_path> "" </node_path>
 				<bool> True </bool>
 				<real> 1 </real>
 				<int> 1 </int>
-				<vector2> 400, 300 </vector2>
+				<vector2> 0, 0 </vector2>
 				<real> -0 </real>
 				<vector2> 1, 1 </vector2>
 				<int> 0 </int>
@@ -60,7 +60,7 @@
 						<string> "2D" </string>
 						<dictionary  shared="false">
 							<string> "ofs" </string>
-							<vector2> -357.158, 19.6745 </vector2>
+							<vector2> -68.5485, -35.5556 </vector2>
 							<string> "snap_grid" </string>
 							<bool> False </bool>
 							<string> "snap_offset" </string>
@@ -80,7 +80,7 @@
 							<string> "snap_step" </string>
 							<vector2> 10, 10 </vector2>
 							<string> "zoom" </string>
-							<real> 0.911914 </real>
+							<real> 7.804688 </real>
 						</dictionary>
 						<string> "3D" </string>
 						<dictionary  shared="false">
@@ -194,7 +194,6 @@
 					</dictionary>
 				</dictionary>
 				<real> 0.3 </real>
-				<vector2> 0, 0 </vector2>
 				<real> 0 </real>
 				<vector2_array  len="4"> 					-17, -27, 17, -27, 17, -35, -17, -35 </vector2_array>
 				<vector2_array  len="0"> 					 </vector2_array>
