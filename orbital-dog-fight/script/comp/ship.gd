@@ -21,7 +21,7 @@ const CMD_FIRE_LASERS = "lasers"
 var laser = preload("res://scene/comp/laser.xml")
 var CONTROLS = [CMD_FORWARD, CMD_BACKWARD, CMD_STRAFE_LEFT, CMD_STRAFE_RIGHT,
 				CMD_TURN_LEFT, CMD_TURN_RIGHT, CMD_FIRE_LASERS]
-var healthBar = null
+var impulse = null
 var step = 0
 var fire_timer
 var curr_hp
@@ -33,13 +33,11 @@ func _init():
 		get_node("Sprite").set_texture(shiptex)
 
 func _ready():
-	curr_hp = hitpoints
-	set_fixed_process(true)
-	
-	healthBar = get_node("HealthBar")
-	healthBar.update()
 	get_node("Sprite").set_texture(shiptex)
+	curr_hp = hitpoints
+	init_bar()
 	fire_timer = get_node("FireTimer")
+	set_fixed_process(true)
 	pass
 
 func get_ctrl(type):
@@ -117,7 +115,7 @@ func _fixed_process(delta):
 		show_particles(type)
 
 	# Keeps the health bar on top
-	healthBar.update_rot()
+	get_node("HealthBar").set_rot(-get_rot())
 
 func fire():
 	if fire_timer.get_time_left() != 0:
@@ -144,9 +142,9 @@ func hit(beam):
 			get_node("explosion").show()
 			get_node("explosion/AnimationPlayer").play("exp_one")
 			get_node("Sprite").hide()
-			healthBar.hide()
+			get_node("HealthBar").hide()
 	else:
-		healthBar.update()
+		update_bar()
 	
 func _on_AnimationPlayer_finished():
 	_die()
@@ -155,3 +153,42 @@ func _on_AnimationPlayer_animation_changed( old_name, new_name ):
 	# Disable collision
 	set_layer_mask(0)
 	get_node("Sprite").hide()
+
+func init_bar():
+	var sx = -17
+	var sy = -27
+	var ex = 17
+	var ey = -35
+	get_node("HealthBar/Frame").set_polygon(Vector2Array([Vector2(sx,sy),Vector2(ex,sy),Vector2(ex,ey), Vector2(sx,ey)]))
+	get_node("HealthBar/Frame").set_opacity(0.3)
+	update_bar()
+
+func update_bar():
+	var ratio = float(curr_hp)/hitpoints
+	var sx = -16
+	var sy = -28
+	var ex = sx + 32*ratio
+	var ey = -34
+	get_node("HealthBar/Points").set_polygon(Vector2Array([Vector2(sx,sy),Vector2(ex,sy),Vector2(ex,ey), Vector2(sx,ey)]))
+	if ratio < 0.2:
+		get_node("HealthBar/Points").set_color(Color(1,0,0))
+	elif ratio < 0.6:
+		get_node("HealthBar/Points").set_color(Color(1,1,0))
+	else:
+		get_node("HealthBar/Points").set_color(Color(0,1,0))
+
+#func _integrate_forces(state):
+#	#print("Integrate! " + str(step))
+#	#step+=1
+#	if impulse != null:
+#		print("OK!")
+#		var pos = get_pos()
+#		apply_impulse(pos, impulse)
+#		state.integrate_forces()
+#		apply_impulse(pos, -impulse)
+#		impulse = null
+#		#print("Gravity : ", state.get_total_gravity())
+#		#print("Force   : ", get_applied_force())
+#		#print("Velocity: ", get_linear_velocity())
+#	else:
+#		state.integrate_forces()
