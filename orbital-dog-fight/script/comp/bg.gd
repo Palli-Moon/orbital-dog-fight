@@ -7,6 +7,7 @@ extends Polygon2D
 
 export var starsize = 5
 export var numstars = 25
+export var variance = 2
 
 func _ready():
 	# Initialization here
@@ -15,12 +16,13 @@ func _ready():
 	set_polygon(points)
 	set_color(Color(0,0,0))
 	for i in range(numstars):
+		var thisstarsize = starsize + int(floor((randf()-0.5)*variance*2))
 		var curr = [randi() % (int(rect.end.x)+1), randi() % (int(rect.end.y)+1)]
 		var p = Polygon2D.new()
 		add_child(p)
 		p.set_z_as_relative(true)
 		p.set_z(1)
-		curr = Vector2Array([Vector2(curr[0],curr[1]), Vector2(curr[0]+starsize,curr[1]), Vector2(curr[0]+starsize,curr[1]+starsize), Vector2(curr[0],curr[1]+starsize)])
+		curr = Vector2Array([Vector2(curr[0],curr[1]), Vector2(curr[0]+thisstarsize,curr[1]), Vector2(curr[0]+thisstarsize,curr[1]+thisstarsize), Vector2(curr[0],curr[1]+thisstarsize)])
 		p.set_polygon(curr)
 		p.set_color(Color(255, 255, 255, 255))
 	pass

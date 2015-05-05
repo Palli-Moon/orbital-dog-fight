@@ -6,14 +6,33 @@ var pause = true
 var current
 var current_scene
 var menu
+export var alt_control_mode = false
 
 func _ready():
 	current = get_node("Current")
 	menu = get_node("Main Menu")
 	get_tree().set_pause(pause)
+	set_input_map(false)
 	set_process_input(true)
 	pass
 
+func set_input_map(mode):
+	var actions = ["p1_tl", "p1_tr", "p1_sl", "p1_sr"]
+	for v in actions:
+		InputMap.erase_action(v)
+		InputMap.add_action(v)
+	var altactions = [actions[2], actions[3], actions[0], actions[1]]
+	var remappableevents = [InputEvent(), InputEvent(), InputEvent(), InputEvent()]
+	var keys = [KEY_Q, KEY_E, KEY_A, KEY_D]
+	for event_num in range(remappableevents.size()):
+		var curr_event = remappableevents[event_num]
+		curr_event.type = InputEvent.KEY
+		curr_event.scancode = keys[event_num]
+		if !mode:
+			InputMap.action_add_event(actions[event_num], curr_event)
+		else:
+			InputMap.action_add_event(altactions[event_num], curr_event)
+	
 func _input(event):
 	if event.is_action("main_menu") and event.is_pressed() and not event.is_echo() and current_scene != null:
 		pause = menu_open
@@ -75,3 +94,6 @@ func _on_Multi_pressed():
 func _on_Restart_pressed():
 	restart_scene()
 	toggle_pause()
+
+func _on_CheckButton_toggled( pressed ):
+	set_input_map(pressed)
