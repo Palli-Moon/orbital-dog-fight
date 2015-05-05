@@ -128,7 +128,7 @@ func hit(beam):
 		if !isdying:
 			isdying = true
 			get_node("explosion").show()
-			get_node("explosion/AnimationPlayer").play("explosion")
+			get_node("explosion/AnimationPlayer").play("exp_one")
 			get_node("Sprite").hide()
 			get_node("HealthBar").hide()
 	else:
@@ -136,6 +136,12 @@ func hit(beam):
 	
 func _on_AnimationPlayer_finished():
 	_die()
+
+func _on_AnimationPlayer_animation_changed( old_name, new_name ):
+	# Disable collision
+	set_collision_mask(0)
+	set_layer_mask(0)
+	get_node("Sprite").hide()
 
 func init_bar():
 	var sx = -17
