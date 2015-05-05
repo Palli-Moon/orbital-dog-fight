@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resource_file type="PackedScene" subresource_count="6" version="1.1" version_name="Godot Engine v1.1.beta1.42d41a3fbc">
-	<ext_resource path="res://scene/comp/asteroid.scn" type="PackedScene"></ext_resource>
+	<ext_resource path="res://scene/comp/asteroid.xml" type="PackedScene"></ext_resource>
 	<ext_resource path="res://scene/comp/planet_one.xml" type="PackedScene"></ext_resource>
 	<ext_resource path="res://scene/comp/ship.xml" type="PackedScene"></ext_resource>
 	<resource type="CircleShape2D" path="local://1">
@@ -498,7 +498,7 @@
 					<string> "__editor_plugin_screen__" </string>
 					<string> "2D" </string>
 				</dictionary>
-				<resource  resource_type="PackedScene" path="res://scene/comp/asteroid.scn">  </resource>
+				<resource  resource_type="PackedScene" path="res://scene/comp/asteroid.xml">  </resource>
 				<vector2> 677.664, 149.316 </vector2>
 				<vector2> 0, 150 </vector2>
 				<dictionary  shared="false">
