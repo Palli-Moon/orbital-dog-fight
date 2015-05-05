@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resource_file type="PackedScene" subresource_count="4" version="1.1" version_name="Godot Engine v1.1.beta1.42d41a3fbc">
 	<ext_resource path="res://script/comp/asteroid.gd" type="Script"></ext_resource>
-	<ext_resource path="res://assets/img/dapoopoo.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/asteroid1.png" type="Texture"></ext_resource>
 	<resource type="CircleShape2D" path="local://1">
 		<real name="custom_solver_bias"> 0 </real>
 		<real name="radius"> 10 </real>
@@ -81,7 +81,7 @@
 				<int> 0 </int>
 				<bool> False </bool>
 				<resource  resource_type="Shape2D" path="local://1">  </resource>
-				<matrix32> 1.59307, -0, 0, 1.59307, -0.660441, 0.845568 </matrix32>
+				<matrix32> 1.59307, -0, 0, 1.59307, 0.594564, -0.158437 </matrix32>
 				<real> -1 </real>
 				<resource  resource_type="Script" path="res://script/comp/asteroid.gd">  </resource>
 				<dictionary  shared="false">
@@ -223,13 +223,13 @@
 						<int> 0 </int>
 					</dictionary>
 					<string> "__editor_plugin_screen__" </string>
-					<string> "Script" </string>
+					<string> "2D" </string>
 				</dictionary>
 				<int> 100 </int>
-				<resource  resource_type="Texture" path="res://assets/img/dapoopoo.png">  </resource>
+				<resource  resource_type="Texture" path="res://assets/img/asteroid1.png">  </resource>
 				<color> 1, 1, 1, 1 </color>
 				<rect2> 0, 0, 0, 0 </rect2>
-				<vector2> -0.660441, 0.845568 </vector2>
+				<vector2> 0.594564, -0.158437 </vector2>
 				<vector2> 1.59307, 1.59307 </vector2>
 			</array>
 			<string> "nodes" </string>
