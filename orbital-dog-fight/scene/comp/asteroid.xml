@@ -10,7 +10,7 @@
 	<main_resource>
 		<dictionary name="_bundled" shared="false">
 			<string> "names" </string>
-			<string_array  len="50">
+			<string_array  len="51">
 				<string> "Asteroid" </string>
 				<string> "RigidBody2D" </string>
 				<string> "_import_path" </string>
@@ -46,6 +46,7 @@
 				<string> "damp_override/angular" </string>
 				<string> "script/script" </string>
 				<string> "__meta__" </string>
+				<string> "hitpoints" </string>
 				<string> "Sprite" </string>
 				<string> "texture" </string>
 				<string> "centered" </string>
@@ -69,7 +70,7 @@
 			<string> "node_count" </string>
 			<int> 3 </int>
 			<string> "variants" </string>
-			<array  len="19" shared="false">
+			<array  len="20" shared="false">
 				<node_path> "" </node_path>
 				<bool> True </bool>
 				<real> 1 </real>
@@ -91,8 +92,9 @@
 							<string> "current" </string>
 							<int> 0 </int>
 							<string> "sources" </string>
-							<array  len="1" shared="false">
+							<array  len="2" shared="false">
 								<string> "res://script/comp/asteroid.gd" </string>
+								<string> "res://script/comp/ship.gd" </string>
 							</array>
 						</dictionary>
 						<string> "2D" </string>
@@ -223,6 +225,7 @@
 					<string> "__editor_plugin_screen__" </string>
 					<string> "Script" </string>
 				</dictionary>
+				<int> 100 </int>
 				<resource  resource_type="Texture" path="res://assets/img/dapoopoo.png">  </resource>
 				<color> 1, 1, 1, 1 </color>
 				<rect2> 0, 0, 0, 0 </rect2>
@@ -230,7 +233,7 @@
 				<vector2> 1.59307, 1.59307 </vector2>
 			</array>
 			<string> "nodes" </string>
-			<int_array  len="153"> 				-1, -1, 1, 0, -1, 33, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 3, 14, 9, 15, 10, 16, 8, 17, 3, 18, 7, 19, 2, 20, 2, 21, 5, 22, 2, 23, 8, 24, 7, 25, 7, 26, 8, 27, 8, 28, 1, 29, 4, 30, 5, 31, 11, 32, 11, 33, 12, 34, 13, 0, 0, 0, 35, 35, -1, 21, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 36, 14, 37, 1, 38, 4, 39, 8, 40, 8, 41, 3, 42, 3, 43, 7, 44, 15, 45, 8, 46, 16, 0, 0, 0, 47, 47, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 17, 8, 5, 9, 18, 10, 7, 11, 1, 48, 9, 49, 8, 0 </int_array>
+			<int_array  len="155"> 				-1, -1, 1, 0, -1, 34, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 3, 14, 9, 15, 10, 16, 8, 17, 3, 18, 7, 19, 2, 20, 2, 21, 5, 22, 2, 23, 8, 24, 7, 25, 7, 26, 8, 27, 8, 28, 1, 29, 4, 30, 5, 31, 11, 32, 11, 33, 12, 34, 13, 35, 14, 0, 0, 0, 36, 36, -1, 21, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 37, 15, 38, 1, 39, 4, 40, 8, 41, 8, 42, 3, 43, 3, 44, 7, 45, 16, 46, 8, 47, 17, 0, 0, 0, 48, 48, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 18, 8, 5, 9, 19, 10, 7, 11, 1, 49, 9, 50, 8, 0 </int_array>
 			<string> "conns" </string>
 			<int_array  len="0"> 				 </int_array>
 		</dictionary>
