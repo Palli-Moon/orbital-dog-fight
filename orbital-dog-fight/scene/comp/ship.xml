@@ -203,7 +203,7 @@
 				<resource  resource_type="Script" path="res://script/comp/ship.gd">  </resource>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
-					<string> "Script" </string>
+					<string> "2D" </string>
 					<string> "__editor_plugin_states__" </string>
 					<dictionary  shared="false">
 						<string> "2D" </string>
@@ -387,10 +387,7 @@
 				<resource  resource_type="Animation" path="res://anim/exp_one.xml">  </resource>
 				<string> "exp_two" </string>
 				<resource  resource_type="Animation" path="res://anim/exp_two.xml">  </resource>
-				<array  len="3" shared="false">
-					<string> "exp_one" </string>
-					<string> "exp_two" </string>
-					<real> 0.75 </real>
+				<array  len="0" shared="false">
 				</array>
 				<string> "" </string>
 				<real> 100 </real>
