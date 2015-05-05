@@ -1,3 +1,4 @@
+tool
 extends RigidBody2D
 
 export(int, "ONE", "TWO") var player_num = 0
@@ -7,7 +8,7 @@ export var fwd_speed = 10.0
 export var bwd_speed = 5.0
 export var strafe_speed = 3.0
 export var laser_speed = 300.0
-export(Texture) var shiptex
+export(Texture) var shiptex setget set_shiptex, get_shiptex
 
 const CMD_FORWARD = "fwd"
 const CMD_BACKWARD = "bwd"
@@ -27,6 +28,10 @@ var curr_hp
 
 var isdying = false
 
+func _init():
+	if get_node("Sprite") != null:
+		get_node("Sprite").set_texture(shiptex)
+
 func _ready():
 	get_node("Sprite").set_texture(shiptex)
 	curr_hp = hitpoints
@@ -37,6 +42,13 @@ func _ready():
 
 func get_ctrl(type):
 	return "p" + str(player_num+1) + "_" + type
+
+func get_shiptex():
+	return get_node("Sprite").get_texture()
+
+func set_shiptex(tex):
+	if get_node("Sprite") != null:
+		get_node("Sprite").set_texture(tex)
 
 func set_hitpoints(hp):
 	hitpoints = hp
