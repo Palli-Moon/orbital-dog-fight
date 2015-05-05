@@ -139,7 +139,6 @@ func _on_AnimationPlayer_finished():
 
 func _on_AnimationPlayer_animation_changed( old_name, new_name ):
 	# Disable collision
-	set_collision_mask(0)
 	set_layer_mask(0)
 	get_node("Sprite").hide()
 
