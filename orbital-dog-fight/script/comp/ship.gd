@@ -35,6 +35,7 @@ func _ready():
 		var anim = get_node("explosion/AnimationPlayer")
 		anim.connect("finished", self, "anim_finished")
 		anim.connect("animation_changed", self, "anim_changed")
+		connect("body_enter", self, "collision")
 
 func get_ctrl(type):
 	return "p" + str(player_num+1) + "_" + type
@@ -85,9 +86,17 @@ func _fixed_process(delta):
 	# Keeps the health bar on top
 	healthBar.update_rot()
 	# Check for collissions
-	check_collisions()
+	#check_collisions()
+
+func collision(body):
+	print(self.get_name())
+	if body.is_in_group("ships") or body.is_in_group("asteroids"):
+			collide(body)
+	elif body.is_in_group("planet"):
+			die("exp_one")
 
 func collide(b):
+	print((get_linear_velocity() - b.get_linear_velocity()).length())
 	curr_hp -= b.get_mass()
 	if curr_hp <= 0:
 		if !isdying:
