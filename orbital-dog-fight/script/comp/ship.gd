@@ -129,6 +129,7 @@ func fire():
 	la_r.set_linear_velocity(Vector2(0,-laser_speed).rotated(get_transform().get_rotation()))
 	add_child(la_l)
 	add_child(la_r)
+	get_node("ShipSounds").play("laser1")
 
 func _die():
 	queue_free()
