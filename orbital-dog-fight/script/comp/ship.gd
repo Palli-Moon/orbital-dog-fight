@@ -93,8 +93,6 @@ func collision(body):
 	# Called at the beginning ready
 	if get_rid() == body.get_rid():
 		return
-	print(self.get_name(), "->", body.get_name())
-	print((get_linear_velocity() - body.get_linear_velocity()).length())
 	colliding_bodies+=1
 	if body.is_in_group("ships") or body.is_in_group("asteroids"):
 			collide(body)
