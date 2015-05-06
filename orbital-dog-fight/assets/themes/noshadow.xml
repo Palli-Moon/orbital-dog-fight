@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resource_file type="Theme" subresource_count="2" version="1.1" version_name="Godot Engine v1.1.rc2.custom_build">
+	<ext_resource path="res://assets/fonts/codeman2dnoshadow.fnt" type="Font"></ext_resource>
+	<main_resource>
+		<resource name="default_font" resource_type="Font" path="res://assets/fonts/codeman2dnoshadow.fnt">  </resource>
+
+	</main_resource>
+</resource_file>

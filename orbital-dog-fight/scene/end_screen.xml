@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<resource_file type="PackedScene" subresource_count="3" version="1.1" version_name="Godot Engine v1.1.rc2.0995a230f6">
+<resource_file type="PackedScene" subresource_count="3" version="1.1" version_name="Godot Engine v1.1.rc2.custom_build">
 	<ext_resource path="res://script/end_screen.gd" type="Script"></ext_resource>
-	<ext_resource path="res://assets/themes/main.thm" type="Theme"></ext_resource>
+	<ext_resource path="res://assets/themes/noshadow.xml" type="Theme"></ext_resource>
 	<main_resource>
 		<dictionary name="_bundled" shared="false">
 			<string> "conn_count" </string>
@@ -78,7 +78,7 @@
 						<string> "2D" </string>
 						<dictionary  shared="false">
 							<string> "ofs" </string>
-							<vector2> -748.272, -284.072 </vector2>
+							<vector2> -238.925, -72.8794 </vector2>
 							<string> "snap_grid" </string>
 							<bool> False </bool>
 							<string> "snap_offset" </string>
@@ -98,7 +98,7 @@
 							<string> "snap_step" </string>
 							<vector2> 10, 10 </vector2>
 							<string> "zoom" </string>
-							<real> 0.487675 </real>
+							<real> 0.735092 </real>
 						</dictionary>
 						<string> "3D" </string>
 						<dictionary  shared="false">
@@ -217,7 +217,7 @@
 				<real> 172 </real>
 				<real> 448 </real>
 				<real> 188 </real>
-				<resource  resource_type="Theme" path="res://assets/themes/main.thm">  </resource>
+				<resource  resource_type="Theme" path="res://assets/themes/noshadow.xml">  </resource>
 				<bool> False </bool>
 				<string> "Player 2 Wins!" </string>
 				<real> -1 </real>
