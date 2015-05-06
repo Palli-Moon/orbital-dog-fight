@@ -8,6 +8,9 @@ export var fwd_speed = 10.0
 export var bwd_speed = 5.0
 export var strafe_speed = 3.0
 export var laser_speed = 300.0
+export var laser_heat_step = 10
+export var laser_overheat_threshold = 50
+export var laser_cool_rate = 5
 export(Texture) var shiptex setget set_shiptex, get_shiptex
 
 var colliding_bodies = 0
@@ -17,6 +20,7 @@ var healthBar = null
 var particles = null
 var fire_timer = null
 var curr_hp = 0
+var laser_heat = 0
 
 var isdying = false
 
@@ -88,6 +92,10 @@ func _fixed_process(delta):
 		particles.show_particles(type)
 	# Keeps the health bar on top
 	healthBar.update_rot()
+	if laser_heat > 0:
+		laser_heat -= laser_cool_rate * delta
+	else:
+		laser_heat = 0
 
 func collision(body):
 	# Called at the beginning ready
@@ -118,7 +126,7 @@ func collide(b):
 		healthBar.update()
 
 func fire():
-	if fire_timer.get_time_left() != 0:
+	if fire_timer.get_time_left() != 0 or laser_heat > laser_overheat_threshold:
 		return
 	fire_timer.start()
 	var scale = get_node("Sprite").get_scale()
@@ -131,6 +139,7 @@ func fire():
 	add_child(la_l)
 	add_child(la_r)
 	get_node("ShipSounds").play("laser1")
+	laser_heat += laser_heat_step
 
 func _die():
 	queue_free()
