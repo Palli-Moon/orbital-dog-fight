@@ -110,6 +110,7 @@ func collide(b):
 	if curr_hp <= 0:
 		if !isdying:
 			isdying = true
+			get_node("ShipSounds").play("explosion1")
 			get_node("explosion").show()
 			get_node("explosion/AnimationPlayer").play("exp_one")
 			healthBar.hide()
@@ -139,6 +140,7 @@ func die(anim):
 		isdying = true
 		set_fixed_process(false)
 		particles.hide()
+		get_node("ShipSounds").play("explosion1")
 		get_node("explosion").show()
 		get_node("explosion/AnimationPlayer").play(anim)
 		healthBar.hide()
@@ -148,6 +150,7 @@ func hit(beam):
 	if curr_hp <= 0:
 		die("exp_one")
 	else:
+		get_node("ShipSounds").play("laser-hit1")
 		healthBar.update()
 	
 func anim_finished():

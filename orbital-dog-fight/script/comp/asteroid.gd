@@ -29,6 +29,7 @@ func _die():
 	queue_free()
 
 func hit(beam):
+	get_node("AsteroidSounds").play("laser-hit1")
 	curr_hp -= beam.get_power()
 	health_bar.update()
 	if curr_hp <= 0:
