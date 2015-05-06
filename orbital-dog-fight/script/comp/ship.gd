@@ -10,6 +10,7 @@ export var strafe_speed = 3.0
 export var laser_speed = 300.0
 export(Texture) var shiptex setget set_shiptex, get_shiptex
 
+var colliding_bodies = 0
 var CMD = preload("res://script/comp/ship/commands.gd")
 var laser = preload("res://scene/comp/laser.xml")
 var healthBar = null
@@ -35,7 +36,9 @@ func _ready():
 		var anim = get_node("explosion/AnimationPlayer")
 		anim.connect("finished", self, "anim_finished")
 		anim.connect("animation_changed", self, "anim_changed")
-		connect("body_enter", self, "collision")
+		set_layer_mask(0)
+		get_node("Trigger").connect("body_enter", self, "collision")
+		get_node("Trigger").connect("body_exit", self, "separation")
 
 func get_ctrl(type):
 	return "p" + str(player_num+1) + "_" + type
@@ -85,19 +88,27 @@ func _fixed_process(delta):
 		particles.show_particles(type)
 	# Keeps the health bar on top
 	healthBar.update_rot()
-	# Check for collissions
-	#check_collisions()
 
 func collision(body):
-	print(self.get_name())
+	# Called at the beginning ready
+	if get_rid() == body.get_rid():
+		return
+	print(self.get_name(), "->", body.get_name())
+	print((get_linear_velocity() - body.get_linear_velocity()).length())
+	colliding_bodies+=1
 	if body.is_in_group("ships") or body.is_in_group("asteroids"):
 			collide(body)
+			set_layer_mask(1)
 	elif body.is_in_group("planet"):
 			die("exp_one")
 
+func separation(b):
+	colliding_bodies-=1
+	if colliding_bodies < 1:
+		set_layer_mask(0)
+
 func collide(b):
-	print((get_linear_velocity() - b.get_linear_velocity()).length())
-	curr_hp -= b.get_mass()
+	curr_hp -= round(abs((get_linear_velocity() - b.get_linear_velocity()).length()) / 10)
 	if curr_hp <= 0:
 		if !isdying:
 			isdying = true
@@ -106,14 +117,6 @@ func collide(b):
 			healthBar.hide()
 	else:
 		healthBar.update()
-
-func check_collisions():
-	var bodies = get_colliding_bodies()
-	for b in bodies:
-		if b.is_in_group("ships") or b.is_in_group("asteroids"):
-			collide(b)
-		elif b.is_in_group("planet"):
-			die("exp_one")
 
 func fire():
 	if fire_timer.get_time_left() != 0:
