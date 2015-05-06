@@ -161,12 +161,15 @@ func hit(beam):
 	else:
 		get_node("ShipSounds").play("laser-hit1")
 		healthBar.update()
-	
+
 func anim_finished():
 	get_node("explosion").hide()
 	_die()
 
 func anim_changed( old_name, new_name ):
-	# Disable collision
-	set_layer_mask(0)
+	# Disable trigger
+	get_node("Trigger").disconnect("body_enter", self, "collision")
+	get_node("Trigger").disconnect("body_exit", self, "separation")
+	# Delete colliders
+	clear_shapes()
 	get_node("Sprite").hide()
