@@ -40,6 +40,7 @@ func _process(delta):
 		label.set_text(songnames[currsong])
 		playernode.play()
 		fadeTimer.start()
+		isFadingIn = true
 	if isFadingOut:
 		label.set_opacity(fadeTimer.get_time_left()/fadeTimer.get_wait_time())
 	elif isFadingIn:
