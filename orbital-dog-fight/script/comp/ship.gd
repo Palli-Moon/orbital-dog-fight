@@ -22,6 +22,8 @@ var isdying = false
 func _ready():
 	curr_hp = hitpoints
 	if !get_tree().is_editor_hint():
+		add_to_group("ships")
+		add_to_group("shootables")
 		set_fixed_process(true)
 		# Manage child nodes
 		fire_timer = get_node("FireTimer")
@@ -81,6 +83,31 @@ func _fixed_process(delta):
 		particles.show_particles(type)
 	# Keeps the health bar on top
 	healthBar.update_rot()
+	# Check for collissions
+	check_collisions()
+
+func collide(b):
+	curr_hp -= b.get_mass()
+	if curr_hp <= 0:
+		if !isdying:
+			isdying = true
+			get_node("explosion").show()
+			get_node("explosion/AnimationPlayer").play("exp_one")
+			healthBar.hide()
+	else:
+		healthBar.update()
+
+func check_collisions():
+	var bodies = get_colliding_bodies()
+	for b in bodies:
+		if b.is_in_group("ships") or b.is_in_group("asteroids"):
+			collide(b)
+		elif b.is_in_group("planet"):
+			if !isdying:
+				isdying = true
+				get_node("explosion").show()
+				get_node("explosion/AnimationPlayer").play("exp_one")
+				healthBar.hide()
 
 func fire():
 	if fire_timer.get_time_left() != 0:

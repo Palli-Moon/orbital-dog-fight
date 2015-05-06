@@ -6,6 +6,8 @@ var curr_hp
 var health_bar = null
 
 func _ready():
+	add_to_group("shootables")
+	add_to_group("asteroids")
 	curr_hp = hitpoints
 	health_bar = get_node("HealthBar")
 	health_bar.update()

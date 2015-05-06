@@ -3,9 +3,6 @@ extends RigidBody2D
 
 export var power = 10 setget set_power,get_power
 
-var ship_class = preload("res://script/comp/ship.gd")
-var asteroid_class = preload("res://script/comp/asteroid.gd")
-
 func _ready():
 	get_node("LifeTime").connect("timeout", self, "_die")
 	get_node("LifeTime").start()
@@ -22,9 +19,7 @@ func _die():
 	queue_free()
 
 func _on_body_enter(body):
-	if body extends ship_class:
-		body.hit(self)
-	if body extends asteroid_class:
+	if body.is_in_group("shootables"):
 		body.hit(self)
 	_die()
 
