@@ -2,6 +2,9 @@
 extends RigidBody2D
 
 export var hitpoints = 100 setget set_hitpoints, get_hitpoints
+
+var end_screen = preload("res://scene/end_screen.xml")
+
 var curr_hp
 var health_bar = null
 
@@ -25,6 +28,8 @@ func get_hitpoints():
 	return hitpoints
 
 func _die():
+	var end = end_screen.instance()
+	get_parent().add_child(end)
 	queue_free()
 
 func hit(beam):

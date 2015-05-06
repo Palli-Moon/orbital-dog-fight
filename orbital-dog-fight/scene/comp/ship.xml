@@ -4,8 +4,8 @@
 	<ext_resource path="res://assets/img/ship2.png" type="Texture"></ext_resource>
 	<ext_resource path="res://script/comp/ship/ship_particles.gd" type="Script"></ext_resource>
 	<ext_resource path="res://assets/img/explosion.png" type="Texture"></ext_resource>
-	<ext_resource path="res://anim/exp_two.xml" type="Animation"></ext_resource>
 	<ext_resource path="res://anim/exp_one.xml" type="Animation"></ext_resource>
+	<ext_resource path="res://anim/exp_two.xml" type="Animation"></ext_resource>
 	<ext_resource path="res://scene/comp/healthbar.xml" type="PackedScene"></ext_resource>
 	<resource type="CircleShape2D" path="local://1">
 		<real name="custom_solver_bias"> 0 </real>
@@ -151,9 +151,9 @@
 				<string> "playback/process_mode" </string>
 				<string> "playback/default_blend_time" </string>
 				<string> "root/root" </string>
-				<string> "anims/exp_two" </string>
 				<string> "anims/exp_one" </string>
 				<string> "next/exp_one" </string>
+				<string> "anims/exp_two" </string>
 				<string> "playback/active" </string>
 				<string> "playback/speed" </string>
 				<string> "blend_times" </string>
@@ -372,9 +372,9 @@
 				<resource  resource_type="Texture" path="res://assets/img/explosion.png">  </resource>
 				<int> 14 </int>
 				<node_path> ".." </node_path>
-				<resource  resource_type="Animation" path="res://anim/exp_two.xml">  </resource>
 				<resource  resource_type="Animation" path="res://anim/exp_one.xml">  </resource>
 				<string> "exp_two" </string>
+				<resource  resource_type="Animation" path="res://anim/exp_two.xml">  </resource>
 				<array  len="0" shared="false">
 				</array>
 				<string> "" </string>
