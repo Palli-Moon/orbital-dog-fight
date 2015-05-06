@@ -2,20 +2,18 @@
 extends Node2D
 
 var end_screen = preload("res://scene/end_screen.xml")
+var end
 
 func _ready():
+	end = end_screen.instance()
+	end.hide()
+	add_child(end)
 	set_fixed_process(true)
-	pass
-	
+
 func _fixed_process(delta):
 	var ships = get_tree().get_nodes_in_group("ships")
 	var asteroids = get_tree().get_nodes_in_group("asteroids")
 	if ships.empty():
-		spawn_end_screen("You lose!")
+		end.show_end("You lose!")
 	elif asteroids.empty():
-		spawn_end_screen("You win!")
-		
-func spawn_end_screen(message):
-	var end = end_screen.instance()
-	end.get_node("End Text").set_text(message)
-	add_child(end)
+		end.show_end("You win!")
