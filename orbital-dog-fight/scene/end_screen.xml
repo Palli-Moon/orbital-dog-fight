@@ -63,7 +63,7 @@
 				<bool> True </bool>
 				<real> 1 </real>
 				<int> 1 </int>
-				<vector2> 220, 60 </vector2>
+				<vector2> 0, 0 </vector2>
 				<real> 0 </real>
 				<vector2> 2, 2 </vector2>
 				<int> 0 </int>
@@ -76,7 +76,7 @@
 						<string> "2D" </string>
 						<dictionary  shared="false">
 							<string> "ofs" </string>
-							<vector2> -122.23, -23.651 </vector2>
+							<vector2> -717.671, -301.326 </vector2>
 							<string> "snap_grid" </string>
 							<bool> False </bool>
 							<string> "snap_offset" </string>
@@ -96,7 +96,7 @@
 							<string> "snap_step" </string>
 							<vector2> 10, 10 </vector2>
 							<string> "zoom" </string>
-							<real> 0.9025 </real>
+							<real> 0.487675 </real>
 						</dictionary>
 						<string> "3D" </string>
 						<dictionary  shared="false">
