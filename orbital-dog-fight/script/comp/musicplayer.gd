@@ -4,7 +4,9 @@ extends Node2D
 # member variables here, example:
 # var a=2
 # var b="textvar"
-var songnames = ["Tsrups - 505 - Relix", "Kitchentable - 505 - Relix"]
+var songnames = ["Tsrups - 505 - Relix",
+				 "Kitchentable - 505 - Relix",
+				]
 var songs = []
 var currsong = 0
 var playernode
