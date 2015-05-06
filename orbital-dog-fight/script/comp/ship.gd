@@ -12,7 +12,6 @@ export(Texture) var shiptex setget set_shiptex, get_shiptex
 
 var CMD = preload("res://script/comp/ship/commands.gd")
 var laser = preload("res://scene/comp/laser.xml")
-var end_screen = preload("res://scene/end_screen.xml")
 var healthBar = null
 var particles = null
 var fire_timer = null
@@ -122,8 +121,6 @@ func fire():
 	add_child(la_r)
 
 func _die():
-	var end = end_screen.instance()
-	get_parent().add_child(end)
 	queue_free()
 
 func die(anim):

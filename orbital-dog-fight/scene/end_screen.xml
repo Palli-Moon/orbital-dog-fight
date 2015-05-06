@@ -193,7 +193,7 @@
 						<string> "Script" </string>
 						<dictionary  shared="false">
 							<string> "current" </string>
-							<int> 3 </int>
+							<int> 2 </int>
 							<string> "sources" </string>
 							<array  len="4" shared="false">
 								<string> "res://script/end_screen.gd" </string>
