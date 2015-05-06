@@ -31,9 +31,10 @@ func _ready():
 		particles = get_node("Particles")
 		healthBar.update()
 		get_node("Sprite").set_texture(shiptex)
-		get_node("explosion").hide()
 		# Bind animation events
-		get_node("explosion/AnimationPlayer")
+		var anim = get_node("explosion/AnimationPlayer")
+		anim.connect("finished", self, "anim_finished")
+		anim.connect("animation_changed", self, "anim_changed")
 
 func get_ctrl(type):
 	return "p" + str(player_num+1) + "_" + type
@@ -103,11 +104,7 @@ func check_collisions():
 		if b.is_in_group("ships") or b.is_in_group("asteroids"):
 			collide(b)
 		elif b.is_in_group("planet"):
-			if !isdying:
-				isdying = true
-				get_node("explosion").show()
-				get_node("explosion/AnimationPlayer").play("exp_one")
-				healthBar.hide()
+			die("exp_one")
 
 func fire():
 	if fire_timer.get_time_left() != 0:
@@ -126,22 +123,27 @@ func fire():
 func _die():
 	queue_free()
 
+func die(anim):
+	if !isdying:
+		isdying = true
+		set_fixed_process(false)
+		particles.hide()
+		get_node("explosion").show()
+		get_node("explosion/AnimationPlayer").play(anim)
+		healthBar.hide()
+
 func hit(beam):
 	curr_hp -= beam.get_power()
 	if curr_hp <= 0:
-		if !isdying:
-			isdying = true
-			get_node("explosion").show()
-			get_node("explosion/AnimationPlayer").play("exp_one")
-			healthBar.hide()
+		die("exp_one")
 	else:
 		healthBar.update()
 	
-func _on_AnimationPlayer_finished():
+func anim_finished():
 	get_node("explosion").hide()
 	_die()
 
-func _on_AnimationPlayer_animation_changed( old_name, new_name ):
+func anim_changed( old_name, new_name ):
 	# Disable collision
 	set_layer_mask(0)
 	get_node("Sprite").hide()
