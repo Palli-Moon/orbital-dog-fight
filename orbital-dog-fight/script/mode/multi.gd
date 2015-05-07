@@ -20,5 +20,8 @@ func _fixed_process(delta):
 		end.show_end("Player " + str(ships[0].player_num + 1) + " wins!")
 
 func _on_Respawn_timeout():
-	print("Respawn!")
+	print(get_tree().get_nodes_in_group("dead"))
+	for b in get_tree().get_nodes_in_group("dead"):
+		b.remove_from_group("dead")
+		b.spawn_at(Vector2(360,360), Vector2(0,-120))
 	pass # replace with function body

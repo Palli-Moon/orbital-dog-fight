@@ -25,24 +25,38 @@ var laser_heat = 0
 var isdying = false
 
 func _ready():
-	curr_hp = hitpoints
 	if !get_tree().is_editor_hint():
-		add_to_group("ships")
-		add_to_group("shootables")
-		set_fixed_process(true)
 		# Manage child nodes
 		fire_timer = get_node("FireTimer")
 		healthBar = get_node("HealthBar")
 		particles = get_node("Particles")
-		healthBar.update()
 		get_node("Sprite").set_texture(shiptex)
 		# Bind animation events
 		var anim = get_node("explosion/AnimationPlayer")
 		anim.connect("finished", self, "anim_finished")
 		anim.connect("animation_changed", self, "anim_changed")
-		set_layer_mask(0)
-		get_node("Trigger").connect("body_enter", self, "collision")
-		get_node("Trigger").connect("body_exit", self, "separation")
+		spawn()
+
+func spawn_at(pos, vel):
+	spawn()
+	set_pos(pos)
+	set_linear_velocity(vel)
+
+func spawn():
+	isdying = false
+	curr_hp = hitpoints
+	remove_from_group("dead")
+	add_to_group("ships")
+	add_to_group("shootables")
+	set_layer_mask(0)
+	set_collision_enable(true)
+	set_cd_enable(true)
+	get_node("Sprite").show()
+	particles.show()
+	healthBar.update()
+	healthBar.show()
+	show()
+	set_fixed_process(true)
 
 func get_ctrl(type):
 	return "p" + str(player_num+1) + "_" + type
@@ -142,7 +156,12 @@ func fire():
 	laser_heat += laser_heat_step
 
 func _die():
-	queue_free()
+	add_to_group("dead")
+	set_pos(Vector2(-1000,-1000))
+	set_rot(0)
+	set_linear_velocity(Vector2(0,0))
+	set_angular_velocity(0)
+	hide()
 
 func die(anim):
 	if !isdying:
@@ -167,9 +186,24 @@ func anim_finished():
 	_die()
 
 func anim_changed( old_name, new_name ):
-	# Disable trigger
-	get_node("Trigger").disconnect("body_enter", self, "collision")
-	get_node("Trigger").disconnect("body_exit", self, "separation")
-	# Delete colliders
-	clear_shapes()
+	set_cd_enable(false)
+	set_collision_enable(false)
 	get_node("Sprite").hide()
+
+# Enable/disable our custom ship collision damage detection
+func set_cd_enable(enable):
+	if enable:
+		get_node("Trigger").connect("body_enter", self, "collision")
+		get_node("Trigger").connect("body_exit", self, "separation")
+	else:
+		get_node("Trigger").disconnect("body_enter", self, "collision")
+		get_node("Trigger").disconnect("body_exit", self, "separation")
+
+# Enable/disable the collision of the ship
+func set_collision_enable(enable):
+	if enable:
+		set_collision_mask(1)
+		set_layer_mask(1)
+	else:
+		set_collision_mask(0)
+		set_layer_mask(0)
