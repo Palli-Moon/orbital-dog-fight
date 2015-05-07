@@ -6,7 +6,7 @@ func _ready():
 	pass
 
 func set_game(m):
-	game = m
+	game = weakref(m)
 
 func send_signal(sender, sig, args):
 	if not sender.has_user_signal(sig):
@@ -27,16 +27,12 @@ func register_signal(node, sig):
 		{name="data", type=TYPE_DICTIONARY}])
 	node.connect(sig, self, "message")
 
-func msg():
-	print("MSG")
-	pass
-
 func message(sender, sig, data):
 	print("Received ", str(sig), " from ", str(sender), " with data: ", str(data))
-	if game == null:
+	if game.get_ref() == null:
 		print("game not set, signal not sent!")
 		return
-	if not game.has_method("message"):
+	if not game.get_ref().has_method("message"):
 		print("game is not compatible with Heimdallr (missing message(sender,sig,data) function)!")
 		return
-	game.message(sender, sig, data)
+	game.get_ref().message(sender, sig, data)
