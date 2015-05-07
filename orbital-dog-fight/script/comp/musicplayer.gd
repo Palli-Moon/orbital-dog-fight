@@ -19,6 +19,7 @@ var muteButton
 var isFadingOut = false
 var isFadingIn = false
 var muted = false
+var isPlaying = true
 
 func _ready():
 	# Initialize random seed
@@ -65,6 +66,8 @@ func prev_song():
 		isFadingOut = false
 		
 func _process(delta):
+	if !isPlaying:
+		return
 	if !playernode.is_playing():
 		next_song()
 	if isFadingOut:

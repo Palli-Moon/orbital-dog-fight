@@ -2,28 +2,36 @@
 extends Node2D
 
 var menu_open = true
+var settings_open = false
 var pause = true
 var current
 var current_scene
+var settings
 var menu
 export var alt_control_mode = false
 
 func _ready():
 	current = get_node("Current")
 	menu = get_node("Main Menu")
+	settings = get_node("Settings")
 	get_tree().set_pause(pause)
-	set_input_map(false)
+	set_input_map(false, 1)
+	set_input_map(false, 2)
 	set_process_input(true)
 	pass
-
-func set_input_map(mode):
-	var actions = ["p1_tl", "p1_tr", "p1_sl", "p1_sr"]
+	
+func set_input_map(mode, pl):
+	var actions = ["p"+str(pl)+"_tl", "p"+str(pl)+"_tr", "p"+str(pl)+"_sl", "p"+str(pl)+"_sr"]
 	for v in actions:
 		InputMap.erase_action(v)
 		InputMap.add_action(v)
 	var altactions = [actions[2], actions[3], actions[0], actions[1]]
 	var remappableevents = [InputEvent(), InputEvent(), InputEvent(), InputEvent()]
-	var keys = [KEY_Q, KEY_E, KEY_A, KEY_D]
+	var keys
+	if pl == 1:
+		keys = [KEY_Q, KEY_E, KEY_A, KEY_D]
+	if pl == 2:
+		keys = [KEY_Y, KEY_I, KEY_H, KEY_K]
 	for event_num in range(remappableevents.size()):
 		var curr_event = remappableevents[event_num]
 		curr_event.type = InputEvent.KEY
@@ -34,9 +42,13 @@ func set_input_map(mode):
 			InputMap.action_add_event(altactions[event_num], curr_event)
 	
 func _input(event):
-	if event.is_action("main_menu") and event.is_pressed() and not event.is_echo() and current_scene != null:
-		pause = menu_open
-		toggle_pause()
+	if event.is_action("main_menu") and event.is_pressed() and not event.is_echo():
+		if settings_open:
+			toggle_settings()
+		else:
+			if current_scene != null:
+				pause = menu_open
+				toggle_pause()
 		toggle_menu()
 
 func clear_scene():
@@ -65,9 +77,16 @@ func toggle_pause():
 func toggle_menu():
 	menu_open = !menu_open
 	if menu_open:
-		get_node("Main Menu").show()
+		menu.show()
 	else:
-		get_node("Main Menu").hide()
+		menu.hide()
+
+func toggle_settings():
+	settings_open = !settings_open
+	if settings_open:
+		settings.show()
+	else:
+		settings.hide()
 
 # Button Handlers
 func _on_Exit_pressed():
@@ -95,5 +114,16 @@ func _on_Restart_pressed():
 	restart_scene()
 	toggle_pause()
 
-func _on_CheckButton_toggled( pressed ):
-	set_input_map(pressed)
+func _on_Settings_pressed():
+	toggle_menu()
+	toggle_settings()
+	pass
+
+func _on_Return_pressed():
+	toggle_menu()
+	toggle_settings()
+	pass # replace with function body
+
+func _on_P1_Controls_toggled( pressed ):
+	set_input_map( pressed, 1)
+	pass # replace with function body
