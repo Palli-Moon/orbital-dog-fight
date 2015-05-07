@@ -23,5 +23,5 @@ func _on_Respawn_timeout():
 	print(get_tree().get_nodes_in_group("dead"))
 	for b in get_tree().get_nodes_in_group("dead"):
 		b.remove_from_group("dead")
-		b.spawn_at(Vector2(360,360), Vector2(0,-120))
+		b.spawn_at(Vector2(360,360), Vector2(0,-120), 0)
 	pass # replace with function body

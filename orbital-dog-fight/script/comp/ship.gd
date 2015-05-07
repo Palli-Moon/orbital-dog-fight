@@ -1,5 +1,5 @@
 tool
-extends RigidBody2D
+extends "res://script/comp/orbital_obj.gd"
 
 export(int, "ONE", "TWO") var player_num = 0
 export var hitpoints = 100
@@ -24,33 +24,23 @@ var laser_heat = 0
 
 var isdying = false
 
-func _ready():
-	if !get_tree().is_editor_hint():
-		# Manage child nodes
-		fire_timer = get_node("FireTimer")
-		healthBar = get_node("HealthBar")
-		particles = get_node("Particles")
-		get_node("Sprite").set_texture(shiptex)
-		# Bind animation events
-		var anim = get_node("explosion/AnimationPlayer")
-		anim.connect("finished", self, "anim_finished")
-		anim.connect("animation_changed", self, "anim_changed")
-		spawn()
+func on_ready():
+	# Manage child nodes
+	fire_timer = get_node("FireTimer")
+	healthBar = get_node("HealthBar")
+	particles = get_node("Particles")
+	get_node("Sprite").set_texture(shiptex)
+	# Bind animation events
+	var anim = get_node("explosion/AnimationPlayer")
+	anim.connect("finished", self, "anim_finished")
+	anim.connect("animation_changed", self, "anim_changed")
 
-func spawn_at(pos, vel):
-	spawn()
-	set_pos(pos)
-	set_linear_velocity(vel)
-
-func spawn():
+func on_spawn():
 	isdying = false
 	curr_hp = hitpoints
 	remove_from_group("dead")
 	add_to_group("ships")
 	add_to_group("shootables")
-	set_layer_mask(0)
-	set_collision_enable(true)
-	set_cd_enable(true)
 	get_node("Sprite").show()
 	particles.show()
 	healthBar.update()
@@ -111,33 +101,15 @@ func _fixed_process(delta):
 	else:
 		laser_heat = 0
 
-func collision(body):
-	# Called at the beginning ready
-	if get_rid() == body.get_rid():
-		return
-	colliding_bodies+=1
+func on_collide(body):
 	if body.is_in_group("ships") or body.is_in_group("asteroids"):
-			collide(body)
-			set_layer_mask(1)
+		curr_hp -= round(abs((get_linear_velocity() - body.get_linear_velocity()).length()) / 10)
+		if curr_hp <= 0:
+			die("exp_one")
+		else:
+			healthBar.update()
 	elif body.is_in_group("planet"):
 			die("exp_one")
-
-func separation(b):
-	colliding_bodies-=1
-	if colliding_bodies < 1:
-		set_layer_mask(0)
-
-func collide(b):
-	curr_hp -= round(abs((get_linear_velocity() - b.get_linear_velocity()).length()) / 10)
-	if curr_hp <= 0:
-		if !isdying:
-			isdying = true
-			get_node("ShipSounds").play("explosion1")
-			get_node("explosion").show()
-			get_node("explosion/AnimationPlayer").play("exp_one")
-			healthBar.hide()
-	else:
-		healthBar.update()
 
 func fire():
 	if fire_timer.get_time_left() != 0 or laser_heat > laser_overheat_threshold:
@@ -189,21 +161,3 @@ func anim_changed( old_name, new_name ):
 	set_cd_enable(false)
 	set_collision_enable(false)
 	get_node("Sprite").hide()
-
-# Enable/disable our custom ship collision damage detection
-func set_cd_enable(enable):
-	if enable:
-		get_node("Trigger").connect("body_enter", self, "collision")
-		get_node("Trigger").connect("body_exit", self, "separation")
-	else:
-		get_node("Trigger").disconnect("body_enter", self, "collision")
-		get_node("Trigger").disconnect("body_exit", self, "separation")
-
-# Enable/disable the collision of the ship
-func set_collision_enable(enable):
-	if enable:
-		set_collision_mask(1)
-		set_layer_mask(1)
-	else:
-		set_collision_mask(0)
-		set_layer_mask(0)
