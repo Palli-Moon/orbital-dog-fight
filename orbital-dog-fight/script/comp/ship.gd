@@ -16,6 +16,7 @@ export(Texture) var shiptex setget set_shiptex, get_shiptex
 var colliding_bodies = 0
 var CMD = preload("res://script/comp/ship/commands.gd")
 var laser = preload("res://scene/comp/laser.xml")
+var heimdallr = null
 var healthBar = null
 var laserBar = null
 var particles = null
@@ -24,9 +25,11 @@ var curr_hp = 0
 var laser_heat = 0
 
 var isdying = false
-var is_dead = false
 
 func on_ready():
+	# Register events
+	heimdallr = get_node("/root/Heimdallr")
+	heimdallr.register_signal(self, "die")
 	# Manage child nodes
 	fire_timer = get_node("FireTimer")
 	healthBar = get_node("HealthBar")
@@ -40,7 +43,6 @@ func on_ready():
 
 func on_spawn():
 	isdying = false
-	is_dead = false
 	curr_hp = hitpoints
 	remove_from_group("dead")
 	add_to_group("ships")
@@ -142,7 +144,7 @@ func _die():
 	set_linear_velocity(Vector2(0,0))
 	set_angular_velocity(0)
 	hide()
-	is_dead = true
+	heimdallr.send_signal(self, "die", [])
 
 func die(anim):
 	if !isdying:
@@ -162,15 +164,6 @@ func hit(beam):
 	else:
 		get_node("ShipSounds").play("laser-hit2")
 		healthBar.update()
-
-func dump_state():
-	return {
-		pos=get_pos(),
-		vel=get_linear_velocity(),
-		ang=get_angular_velocity(),
-		dead=is_dead,
-		is_dying=isdying
-	}
 
 func anim_finished():
 	get_node("explosion").hide()

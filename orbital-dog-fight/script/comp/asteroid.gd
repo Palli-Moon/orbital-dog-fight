@@ -5,8 +5,13 @@ export var hitpoints = 100 setget set_hitpoints, get_hitpoints
 
 var curr_hp
 var health_bar = null
+var heimdallr
 
 func _ready():
+	# Register events
+	heimdallr = get_node("/root/Heimdallr")
+	heimdallr.register_signal(self, "die")
+	# Add to groups
 	add_to_group("shootables")
 	add_to_group("asteroids")
 	curr_hp = hitpoints
@@ -26,6 +31,7 @@ func get_hitpoints():
 	return hitpoints
 
 func _die():
+	heimdallr.send_signal(self, "die", [])
 	queue_free()
 
 func hit(beam):

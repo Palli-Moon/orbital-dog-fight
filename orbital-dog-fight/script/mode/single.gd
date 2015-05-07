@@ -1,24 +1,26 @@
 
-extends "res://script/mode/mode.gd"
+extends Node2D
 
-export var lives = 5
-
+var finish = false
 var end_screen = preload("res://scene/end_screen.xml")
 var end
 
 func _ready():
-	state.ships = {}
+	get_node("/root/Heimdallr").set_game(self)
 	end = end_screen.instance()
 	end.hide()
 	add_child(end)
-	set_fixed_process(true)
-	# Init state
-	state = {ship=get_node("Ship").dump_state()}
+	set_process(true)
 
-func _fixed_process(delta):
-	var asteroids = get_tree().get_nodes_in_group("asteroids")
-	set_mode_state_prop("ship",get_node("Ship").dump_state())
-	if state.ship.dead:
+func _process(delta):
+	if finish:
+		get_tree().set_pause(true)
+
+func message(sender, sig, data):
+	print("Received ", sig, " from ", sender, " with data ", data)
+	if sig == "die" and sender.is_in_group("ships"):
+		finish = true
 		end.show_end("You lose!")
-	elif asteroids.empty():
+	elif sig == "die" and sender.is_in_group("asteroids"):
+		finish = true
 		end.show_end("You win!")
