@@ -21,6 +21,8 @@ var isFadingIn = false
 var muted = false
 
 func _ready():
+	# Initialize random seed
+	seed(OS.get_unix_time())
 	# Initialization here
 	playernode = get_child(0)
 	label = get_child(1)
@@ -29,7 +31,7 @@ func _ready():
 	muteButton = get_child(6)
 	for name in songnames:
 		songs.append(load("res://sound/"+name+".ogg"))
-	currsong = 0
+	currsong = randi() % songnames.size()
 	label.set_opacity(0)
 	print(currsong)
 	playernode.set_stream(songs[currsong])
