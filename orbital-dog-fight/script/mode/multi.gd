@@ -3,6 +3,7 @@ extends Node2D
 
 export var lives = 5
 
+var life_scene = preload("res://scene/comp/life.xml")
 var finished = false
 var end_screen = preload("res://scene/end_screen.xml")
 var end = null
@@ -18,6 +19,35 @@ func _ready():
 	var ships = get_tree().get_nodes_in_group("ships")
 	for s in ships:
 		state[s.get_rid()] = lives
+		update_lives(s)
+
+func update_lives(ship):
+	var node = null
+	var instance = null
+	var spacing = 10
+	var margin_l = 30
+	var margin_r = 25
+	var anchor_mode = Control.ANCHOR_BEGIN
+	if ship.player_num == 0:
+		node = get_node("Lives/P1")
+	else:
+		node = get_node("Lives/P2")
+		anchor_mode = Control.ANCHOR_END
+		spacing = 40
+	for i in range(state[ship.get_rid()]):
+		instance = life_scene.instance()
+		instance.set_anchor_and_margin( MARGIN_RIGHT, anchor_mode, margin_r)
+		instance.set_anchor_and_margin( MARGIN_LEFT, anchor_mode, margin_l * i + spacing)
+		instance.set_margin( MARGIN_TOP, 10)
+		node.add_child(instance)
+	pass
+
+func clear_lives(player_num):
+	var node
+	var lives_node = get_node("Lives/P"+str(player_num+1))
+	for i in range(lives_node.get_child_count()):
+		node = lives_node.get_child(i)
+		node.queue_free()
 
 func _process(delta):
 	if finished:
@@ -27,6 +57,8 @@ func _process(delta):
 func message(sender, sig, data):
 	if sig == "die" and state.has(sender.get_rid()):
 		state[sender.get_rid()]-=1
+		clear_lives(sender.player_num)
+		update_lives(sender)
 		if state[sender.get_rid()] < 1:
 			finished = true
 			var num = 0
