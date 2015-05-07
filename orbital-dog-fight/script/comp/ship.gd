@@ -17,6 +17,7 @@ var colliding_bodies = 0
 var CMD = preload("res://script/comp/ship/commands.gd")
 var laser = preload("res://scene/comp/laser.xml")
 var healthBar = null
+var laserBar = null
 var particles = null
 var fire_timer = null
 var curr_hp = 0
@@ -30,6 +31,7 @@ func on_ready():
 	fire_timer = get_node("FireTimer")
 	healthBar = get_node("HealthBar")
 	particles = get_node("Particles")
+	laserBar = get_node("LaserBar")
 	get_node("Sprite").set_texture(shiptex)
 	# Bind animation events
 	var anim = get_node("explosion/AnimationPlayer")
@@ -47,6 +49,8 @@ func on_spawn():
 	particles.show()
 	healthBar.update()
 	healthBar.show()
+	laserBar.update()
+	laserBar.show()
 	show()
 	set_fixed_process(true)
 
@@ -98,6 +102,8 @@ func _fixed_process(delta):
 		particles.show_particles(type)
 	# Keeps the health bar on top
 	healthBar.update_rot()
+	laserBar.update()
+	laserBar.update_rot()
 	if laser_heat > 0:
 		laser_heat -= laser_cool_rate * delta
 	else:
@@ -147,6 +153,7 @@ func die(anim):
 		get_node("explosion").show()
 		get_node("explosion/AnimationPlayer").play(anim)
 		healthBar.hide()
+		laserBar.hide()
 
 func hit(beam):
 	curr_hp -= beam.get_power()

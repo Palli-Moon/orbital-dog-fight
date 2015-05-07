@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<resource_file type="PackedScene" subresource_count="14" version="1.1" version_name="Godot Engine v1.1.rc2.custom_build">
+<resource_file type="PackedScene" subresource_count="15" version="1.1" version_name="Godot Engine v1.1.rc2.custom_build">
 	<ext_resource path="res://script/comp/ship.gd" type="Script"></ext_resource>
 	<ext_resource path="res://assets/img/ship2.png" type="Texture"></ext_resource>
 	<ext_resource path="res://script/comp/ship/ship_particles.gd" type="Script"></ext_resource>
@@ -10,6 +10,7 @@
 	<ext_resource path="res://sound/samples/explosion1.wav" type="Sample"></ext_resource>
 	<ext_resource path="res://sound/samples/laser-hit1.wav" type="Sample"></ext_resource>
 	<ext_resource path="res://sound/samples/laser1.wav" type="Sample"></ext_resource>
+	<ext_resource path="res://scene/comp/laserbar.xml" type="PackedScene"></ext_resource>
 	<resource type="CircleShape2D" path="local://0">
 		<real name="custom_solver_bias"> 0 </real>
 		<real name="radius"> 12.5 </real>
@@ -54,7 +55,7 @@
 			<string> "conns" </string>
 			<int_array  len="0"> 				 </int_array>
 			<string> "names" </string>
-			<string_array  len="166">
+			<string_array  len="167">
 				<string> "Ship" </string>
 				<string> "RigidBody2D" </string>
 				<string> "_import_path" </string>
@@ -221,13 +222,14 @@
 				<string> "config/polyphony" </string>
 				<string> "config/samples" </string>
 				<string> "config/pitch_random" </string>
+				<string> "LaserBar" </string>
 			</string_array>
 			<string> "node_count" </string>
-			<int> 18 </int>
+			<int> 19 </int>
 			<string> "nodes" </string>
-			<int_array  len="1316"> 				-1, -1, 1, 0, -1, 45, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 3, 14, 9, 15, 10, 16, 8, 17, 3, 18, 3, 19, 7, 20, 2, 21, 5, 22, 5, 23, 2, 24, 8, 25, 11, 26, 12, 27, 8, 28, 8, 29, 8, 30, 13, 31, 5, 32, 14, 33, 15, 34, 16, 35, 17, 36, 7, 37, 18, 38, 19, 39, 20, 40, 21, 41, 22, 42, 23, 43, 24, 44, 25, 45, 24, 46, 26, 0, 0, 0, 48, 47, -1, 24, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 27, 8, 5, 9, 6, 10, 7, 11, 1, 12, 1, 13, 3, 14, 28, 15, 29, 16, 8, 49, 8, 50, 13, 51, 5, 52, 5, 53, 2, 54, 1, 55, 1, 17, 3, 18, 3, 0, 1, 0, 56, 56, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 6, 10, 7, 11, 1, 57, 28, 58, 8, 0, 0, 0, 56, 56, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 27, 8, 5, 9, 6, 10, 7, 11, 1, 57, 9, 58, 8, 0, 0, 0, 59, 59, -1, 21, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 30, 10, 7, 11, 1, 60, 26, 61, 1, 62, 13, 63, 8, 64, 8, 65, 3, 66, 3, 67, 7, 68, 31, 69, 8, 70, 32, 0, 0, 0, 72, 71, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 6, 10, 7, 11, 1, 34, 33, 35, 34, 0, 5, 0, 72, 73, -1, 11, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 6, 10, 7, 11, 1, 35, 35, 0, 6, 0, 75, 74, -1, 67, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 36, 8, 5, 9, 6, 10, 37, 11, 1, 76, 38, 77, 39, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 20, 93, 41, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 11, 124, 5, 125, 43, 126, 2, 127, 44, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 6, 0, 75, 133, -1, 67, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 47, 8, 5, 9, 6, 10, 37, 11, 1, 76, 38, 77, 39, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 20, 93, 41, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 11, 124, 5, 125, 43, 126, 2, 127, 48, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 5, 0, 75, 134, -1, 67, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 49, 8, 50, 9, 6, 10, 37, 11, 1, 76, 51, 77, 15, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 52, 93, 21, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 3, 124, 5, 125, 31, 126, 2, 127, 45, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 5, 0, 75, 135, -1, 67, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 53, 8, 50, 9, 6, 10, 37, 11, 1, 76, 51, 77, 15, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 52, 93, 21, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 3, 124, 5, 125, 31, 126, 2, 127, 45, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 5, 0, 75, 136, -1, 67, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 54, 8, 55, 9, 6, 10, 37, 11, 1, 76, 51, 77, 15, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 52, 93, 21, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 3, 124, 5, 125, 31, 126, 2, 127, 45, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 5, 0, 75, 137, -1, 67, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 56, 8, 55, 9, 6, 10, 37, 11, 1, 76, 51, 77, 15, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 52, 93, 21, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 3, 124, 5, 125, 31, 126, 2, 127, 45, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 0, 0, 59, 138, -1, 21, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 30, 10, 7, 11, 1, 60, 57, 61, 1, 62, 13, 63, 8, 64, 8, 65, 3, 66, 58, 67, 7, 68, 31, 69, 8, 70, 32, 0, 13, 0, 139, 139, -1, 11, 2, 0, 140, 3, 141, 5, 142, 59, 143, 60, 144, 61, 145, 62, 146, 1, 147, 2, 148, 63, 149, 64, 0, 0, 0, 72, 150, 65, 2, 2, 0, 35, 66, 0, 0, 0, 152, 151, -1, 4, 2, 0, 153, 67, 154, 1, 155, 8, 0, 0, 0, 157, 156, -1, 18, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 6, 10, 7, 11, 1, 158, 5, 159, 2, 160, 2, 161, 68, 162, 2, 163, 3, 164, 69, 165, 5, 0 </int_array>
+			<int_array  len="1327"> 				-1, -1, 1, 0, -1, 45, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 3, 14, 9, 15, 10, 16, 8, 17, 3, 18, 3, 19, 7, 20, 2, 21, 5, 22, 5, 23, 2, 24, 8, 25, 11, 26, 12, 27, 8, 28, 8, 29, 8, 30, 13, 31, 5, 32, 14, 33, 15, 34, 16, 35, 17, 36, 7, 37, 18, 38, 19, 39, 20, 40, 21, 41, 22, 42, 23, 43, 24, 44, 25, 45, 24, 46, 26, 0, 0, 0, 48, 47, -1, 24, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 27, 8, 5, 9, 6, 10, 7, 11, 1, 12, 1, 13, 3, 14, 28, 15, 29, 16, 8, 49, 8, 50, 13, 51, 5, 52, 5, 53, 2, 54, 1, 55, 1, 17, 3, 18, 3, 0, 1, 0, 56, 56, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 6, 10, 7, 11, 1, 57, 28, 58, 8, 0, 0, 0, 56, 56, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 27, 8, 5, 9, 6, 10, 7, 11, 1, 57, 9, 58, 8, 0, 0, 0, 59, 59, -1, 21, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 30, 10, 7, 11, 1, 60, 26, 61, 1, 62, 13, 63, 8, 64, 8, 65, 3, 66, 3, 67, 7, 68, 31, 69, 8, 70, 32, 0, 0, 0, 72, 71, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 6, 10, 7, 11, 1, 34, 33, 35, 34, 0, 5, 0, 72, 73, -1, 11, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 6, 10, 7, 11, 1, 35, 35, 0, 6, 0, 75, 74, -1, 67, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 36, 8, 5, 9, 6, 10, 37, 11, 1, 76, 38, 77, 39, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 20, 93, 41, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 11, 124, 5, 125, 43, 126, 2, 127, 44, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 6, 0, 75, 133, -1, 67, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 47, 8, 5, 9, 6, 10, 37, 11, 1, 76, 38, 77, 39, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 20, 93, 41, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 11, 124, 5, 125, 43, 126, 2, 127, 48, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 5, 0, 75, 134, -1, 67, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 49, 8, 50, 9, 6, 10, 37, 11, 1, 76, 51, 77, 15, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 52, 93, 21, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 3, 124, 5, 125, 31, 126, 2, 127, 45, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 5, 0, 75, 135, -1, 67, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 53, 8, 50, 9, 6, 10, 37, 11, 1, 76, 51, 77, 15, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 52, 93, 21, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 3, 124, 5, 125, 31, 126, 2, 127, 45, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 5, 0, 75, 136, -1, 67, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 54, 8, 55, 9, 6, 10, 37, 11, 1, 76, 51, 77, 15, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 52, 93, 21, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 3, 124, 5, 125, 31, 126, 2, 127, 45, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 5, 0, 75, 137, -1, 67, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 56, 8, 55, 9, 6, 10, 37, 11, 1, 76, 51, 77, 15, 78, 2, 79, 5, 80, 5, 81, 1, 82, 13, 83, 13, 84, 1, 85, 2, 86, 8, 87, 8, 88, 40, 89, 3, 90, 3, 91, 5, 92, 52, 93, 21, 94, 5, 95, 5, 96, 5, 97, 42, 98, 5, 99, 5, 100, 5, 101, 5, 102, 2, 103, 2, 104, 5, 105, 2, 106, 5, 107, 5, 108, 5, 109, 5, 110, 5, 111, 5, 112, 5, 113, 5, 114, 5, 115, 5, 116, 5, 117, 5, 118, 5, 119, 5, 120, 5, 121, 5, 122, 5, 123, 3, 124, 5, 125, 31, 126, 2, 127, 45, 128, 2, 129, 45, 130, 2, 131, 45, 132, 46, 0, 0, 0, 59, 138, -1, 21, 2, 0, 3, 8, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 30, 10, 7, 11, 1, 60, 57, 61, 1, 62, 13, 63, 8, 64, 8, 65, 3, 66, 58, 67, 7, 68, 31, 69, 8, 70, 32, 0, 13, 0, 139, 139, -1, 11, 2, 0, 140, 3, 141, 5, 142, 59, 143, 60, 144, 61, 145, 62, 146, 1, 147, 2, 148, 63, 149, 64, 0, 0, 0, 72, 150, 65, 2, 2, 0, 35, 66, 0, 0, 0, 152, 151, -1, 4, 2, 0, 153, 67, 154, 1, 155, 8, 0, 0, 0, 157, 156, -1, 18, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 13, 8, 5, 9, 6, 10, 7, 11, 1, 158, 5, 159, 2, 160, 2, 161, 68, 162, 2, 163, 3, 164, 69, 165, 5, 0, 0, 0, 72, 166, 70, 2, 2, 0, 35, 71, 0 </int_array>
 			<string> "variants" </string>
-			<array  len="70" shared="false">
+			<array  len="72" shared="false">
 				<node_path> "" </node_path>
 				<bool> True </bool>
 				<real> 1 </real>
@@ -247,13 +249,13 @@
 				<resource  resource_type="Script" path="res://script/comp/ship.gd">  </resource>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
-					<string> "2D" </string>
+					<string> "Script" </string>
 					<string> "__editor_plugin_states__" </string>
 					<dictionary  shared="false">
 						<string> "2D" </string>
 						<dictionary  shared="false">
 							<string> "ofs" </string>
-							<vector2> 367.868, 283.333 </vector2>
+							<vector2> 223.7, 238.801 </vector2>
 							<string> "snap_grid" </string>
 							<bool> False </bool>
 							<string> "snap_offset" </string>
@@ -273,7 +275,7 @@
 							<string> "snap_step" </string>
 							<vector2> 10, 10 </vector2>
 							<string> "zoom" </string>
-							<real> 16.65 </real>
+							<real> 3.959817 </real>
 						</dictionary>
 						<string> "3D" </string>
 						<dictionary  shared="false">
@@ -372,9 +374,10 @@
 							<string> "current" </string>
 							<int> 0 </int>
 							<string> "sources" </string>
-							<array  len="2" shared="false">
+							<array  len="3" shared="false">
 								<string> "res://script/comp/ship.gd" </string>
 								<string> "res://script/comp/healthbar.gd" </string>
+								<string> "res://script/comp/laserbar.gd" </string>
 							</array>
 						</dictionary>
 					</dictionary>
@@ -584,6 +587,149 @@
 				<real> 0.25 </real>
 				<real> 2048 </real>
 				<resource  resource_type="SampleLibrary" path="local://2">  </resource>
+				<resource  resource_type="PackedScene" path="res://scene/comp/laserbar.xml">  </resource>
+				<dictionary  shared="false">
+					<string> "__editor_plugin_screen__" </string>
+					<string> "Script" </string>
+					<string> "__editor_plugin_states__" </string>
+					<dictionary  shared="false">
+						<string> "2D" </string>
+						<dictionary  shared="false">
+							<string> "ofs" </string>
+							<vector2> -68.2923, -35.388 </vector2>
+							<string> "snap_grid" </string>
+							<bool> False </bool>
+							<string> "snap_offset" </string>
+							<vector2> 0, 0 </vector2>
+							<string> "snap_pixel" </string>
+							<bool> False </bool>
+							<string> "snap_relative" </string>
+							<bool> False </bool>
+							<string> "snap_rotation" </string>
+							<bool> False </bool>
+							<string> "snap_rotation_offset" </string>
+							<real> 0 </real>
+							<string> "snap_rotation_step" </string>
+							<real> 0.261799 </real>
+							<string> "snap_show_grid" </string>
+							<bool> False </bool>
+							<string> "snap_step" </string>
+							<vector2> 10, 10 </vector2>
+							<string> "zoom" </string>
+							<real> 7.804688 </real>
+						</dictionary>
+						<string> "3D" </string>
+						<dictionary  shared="false">
+							<string> "ambient_light_color" </string>
+							<color> 0.15, 0.15, 0.15, 1 </color>
+							<string> "default_light" </string>
+							<bool> True </bool>
+							<string> "default_srgb" </string>
+							<bool> False </bool>
+							<string> "deflight_rot_x" </string>
+							<real> 0.942478 </real>
+							<string> "deflight_rot_y" </string>
+							<real> 0.628319 </real>
+							<string> "fov" </string>
+							<real> 45 </real>
+							<string> "show_grid" </string>
+							<bool> True </bool>
+							<string> "show_origin" </string>
+							<bool> True </bool>
+							<string> "viewport_mode" </string>
+							<int> 1 </int>
+							<string> "viewports" </string>
+							<array  len="4" shared="false">
+								<dictionary  shared="false">
+									<string> "distance" </string>
+									<real> 4 </real>
+									<string> "listener" </string>
+									<bool> True </bool>
+									<string> "pos" </string>
+									<vector3> 0, 0, 0 </vector3>
+									<string> "use_environment" </string>
+									<bool> False </bool>
+									<string> "use_orthogonal" </string>
+									<bool> False </bool>
+									<string> "x_rot" </string>
+									<real> 0 </real>
+									<string> "y_rot" </string>
+									<real> 0 </real>
+								</dictionary>
+								<dictionary  shared="false">
+									<string> "distance" </string>
+									<real> 4 </real>
+									<string> "listener" </string>
+									<bool> False </bool>
+									<string> "pos" </string>
+									<vector3> 0, 0, 0 </vector3>
+									<string> "use_environment" </string>
+									<bool> False </bool>
+									<string> "use_orthogonal" </string>
+									<bool> False </bool>
+									<string> "x_rot" </string>
+									<real> 0 </real>
+									<string> "y_rot" </string>
+									<real> 0 </real>
+								</dictionary>
+								<dictionary  shared="false">
+									<string> "distance" </string>
+									<real> 4 </real>
+									<string> "listener" </string>
+									<bool> False </bool>
+									<string> "pos" </string>
+									<vector3> 0, 0, 0 </vector3>
+									<string> "use_environment" </string>
+									<bool> False </bool>
+									<string> "use_orthogonal" </string>
+									<bool> False </bool>
+									<string> "x_rot" </string>
+									<real> 0 </real>
+									<string> "y_rot" </string>
+									<real> 0 </real>
+								</dictionary>
+								<dictionary  shared="false">
+									<string> "distance" </string>
+									<real> 4 </real>
+									<string> "listener" </string>
+									<bool> False </bool>
+									<string> "pos" </string>
+									<vector3> 0, 0, 0 </vector3>
+									<string> "use_environment" </string>
+									<bool> False </bool>
+									<string> "use_orthogonal" </string>
+									<bool> False </bool>
+									<string> "x_rot" </string>
+									<real> 0 </real>
+									<string> "y_rot" </string>
+									<real> 0 </real>
+								</dictionary>
+							</array>
+							<string> "zfar" </string>
+							<real> 500 </real>
+							<string> "znear" </string>
+							<real> 0.1 </real>
+						</dictionary>
+						<string> "Script" </string>
+						<dictionary  shared="false">
+							<string> "current" </string>
+							<int> 2 </int>
+							<string> "sources" </string>
+							<array  len="3" shared="false">
+								<string> "res://script/comp/ship.gd" </string>
+								<string> "res://script/comp/healthbar.gd" </string>
+								<string> "res://script/comp/laserbar.gd" </string>
+							</array>
+						</dictionary>
+					</dictionary>
+					<string> "__editor_run_settings__" </string>
+					<dictionary  shared="false">
+						<string> "custom_args" </string>
+						<string> "-l $scene" </string>
+						<string> "run_mode" </string>
+						<int> 0 </int>
+					</dictionary>
+				</dictionary>
 			</array>
 			<string> "version" </string>
 			<int> 1 </int>
