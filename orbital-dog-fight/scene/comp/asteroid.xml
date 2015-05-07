@@ -3,20 +3,20 @@
 	<ext_resource path="res://script/comp/asteroid.gd" type="Script"></ext_resource>
 	<ext_resource path="res://assets/img/asteroid1.png" type="Texture"></ext_resource>
 	<ext_resource path="res://scene/comp/healthbar.xml" type="PackedScene"></ext_resource>
-	<ext_resource path="res://sound/samples/laser-hit1.wav" type="Sample"></ext_resource>
+	<ext_resource path="res://sound/samples/laser-hit2.wav" type="Sample"></ext_resource>
 	<resource type="CircleShape2D" path="local://1">
 		<real name="custom_solver_bias"> 0 </real>
 		<real name="radius"> 10 </real>
 
 	</resource>
 	<resource type="SampleLibrary" path="local://2">
-		<dictionary name="samples/laser-hit1" shared="false">
+		<dictionary name="samples/laser-hit2" shared="false">
 			<string> "db" </string>
 			<real> 0 </real>
 			<string> "pitch" </string>
 			<real> 1 </real>
 			<string> "sample" </string>
-			<resource  resource_type="Sample" path="res://sound/samples/laser-hit1.wav">  </resource>
+			<resource  resource_type="Sample" path="res://sound/samples/laser-hit2.wav">  </resource>
 		</dictionary>
 
 	</resource>

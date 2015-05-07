@@ -160,7 +160,7 @@ func hit(beam):
 	if curr_hp <= 0:
 		die("exp_one")
 	else:
-		get_node("ShipSounds").play("laser-hit1")
+		get_node("ShipSounds").play("laser-hit2")
 		healthBar.update()
 
 func dump_state():
