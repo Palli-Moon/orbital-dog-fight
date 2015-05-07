@@ -111,6 +111,7 @@ func _fixed_process(delta):
 
 func on_collide(body):
 	if body.is_in_group("ships") or body.is_in_group("asteroids"):
+		get_node("ShipSounds").play("hit2")
 		curr_hp -= round(abs((get_linear_velocity() - body.get_linear_velocity()).length()) / 10)
 		if curr_hp <= 0:
 			die("exp_one")
@@ -134,7 +135,6 @@ func fire():
 	add_child(la_r)
 	get_node("ShipSounds").play("laser1")
 	laser_heat += laser_heat_step
-
 func _die():
 	add_to_group("dead")
 	set_pos(Vector2(-1000,-1000))
