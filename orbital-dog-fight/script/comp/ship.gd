@@ -114,7 +114,8 @@ func _fixed_process(delta):
 func on_collide(body):
 	if body.is_in_group("ships") or body.is_in_group("asteroids"):
 		get_node("ShipSounds").play("hit2")
-		curr_hp -= round(abs((get_linear_velocity() - body.get_linear_velocity()).length()) / 10)
+		curr_hp -= round(abs((get_linear_velocity() - body.get_linear_velocity()).length()) / 10) \
+					* (body.get_mass() / get_mass())
 		if curr_hp <= 0:
 			die("exp_one")
 		else:
