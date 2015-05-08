@@ -20,6 +20,7 @@ func on_spawn():
 	curr_hp = hitpoints
 	health_bar = get_node("HealthBar")
 	health_bar.update()
+	set_fixed_process(true)
 	pass
 
 func on_collide(body):
