@@ -1,5 +1,5 @@
 
-extends RigidBody2D
+extends "res://script/comp/orbital_obj.gd"
 
 export var hitpoints = 100 setget set_hitpoints, get_hitpoints
 
@@ -7,19 +7,26 @@ var curr_hp
 var health_bar = null
 var heimdallr
 
-func _ready():
+func on_ready():
 	# Register events
 	heimdallr = get_node("/root/Heimdallr")
 	heimdallr.register_signal(self, "die")
 	# Add to groups
 	add_to_group("shootables")
 	add_to_group("asteroids")
+	pass
+
+func on_spawn():
 	curr_hp = hitpoints
 	health_bar = get_node("HealthBar")
 	health_bar.update()
-	set_fixed_process(true)
 	pass
 
+func on_collide(body):
+	pass
+
+func on_separate(body):
+	pass
 
 func _fixed_process(delta):
 	health_bar.update_rot()
