@@ -47,11 +47,12 @@ func _input(event):
 	if event.is_action("main_menu") and event.is_pressed() and not event.is_echo():
 		if settings_open:
 			toggle_settings()
+			toggle_menu()
 		else:
 			if current_scene != null:
 				pause = menu_open
 				toggle_pause()
-		toggle_menu()
+				toggle_menu()
 
 func clear_scene():
 	var child = current.get_child(0)
