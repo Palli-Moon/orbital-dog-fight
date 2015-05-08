@@ -64,12 +64,11 @@ func prev_song():
 	isFadingIn = true
 	if isFadingOut:
 		isFadingOut = false
-		
+
 func _process(delta):
-	if !isPlaying:
-		return
-	if !playernode.is_playing():
-		next_song()
+	if isPlaying:
+		if !playernode.is_playing():
+			next_song()
 	if isFadingOut:
 		label.set_opacity(fadeTimer.get_time_left()/fadeTimer.get_wait_time())
 	elif isFadingIn:
@@ -86,8 +85,6 @@ func _on_FadeTimer_timeout():
 		showTimer.start()
 	isFadingIn = false
 	isFadingOut = false
-	
-
 
 func _on_Forward_pressed():
 	next_song()

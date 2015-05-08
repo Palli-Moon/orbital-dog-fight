@@ -11,6 +11,7 @@ export var variance = 2
 
 func _ready():
 	# Initialization here
+	seed(OS.get_unix_time())
 	var rect = get_tree().get_root().get_rect()
 	var points = Vector2Array([rect.pos, Vector2(rect.pos.x, rect.end.y), rect.end, Vector2(rect.end.x, rect.pos.y)])
 	set_polygon(points)

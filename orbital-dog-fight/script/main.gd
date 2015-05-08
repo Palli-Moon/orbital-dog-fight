@@ -7,6 +7,7 @@ var pause = true
 var current
 var current_scene
 var settings
+var musicPlayer
 var menu
 export var alt_control_mode = false
 
@@ -14,6 +15,7 @@ func _ready():
 	current = get_node("Current")
 	menu = get_node("Main Menu")
 	settings = get_node("Settings")
+	musicPlayer = get_node("MusicPlayer")
 	get_tree().set_pause(pause)
 	set_input_map(false, 1)
 	set_input_map(false, 2)
@@ -126,4 +128,34 @@ func _on_Return_pressed():
 
 func _on_P1_Controls_toggled( pressed ):
 	set_input_map( pressed, 1)
+	pass # replace with function body
+
+func _on_P2_Controls_toggled( pressed ):
+	set_input_map( pressed, 2)
+	pass # replace with function body
+
+
+func _on_MusicCheck_toggled( pressed ):
+	if musicPlayer.isPlaying:
+		musicPlayer.get_node("StreamPlayer").set_paused( !pressed )
+		get_node("Settings/MusicSlider").set_ignore_mouse( true )
+		musicPlayer.isFadingOut = false
+		musicPlayer.isFadingIn = false
+		musicPlayer.label.set_opacity(0)
+		musicPlayer.hide()
+	else:
+		musicPlayer.get_node("StreamPlayer").set_paused( !pressed )
+		get_node("Settings/MusicSlider").set_ignore_mouse( false )
+		musicPlayer.label.set_opacity(1.0)
+		musicPlayer.get_node("ShowTimer").start()
+		musicPlayer.show()
+	musicPlayer.isPlaying = !musicPlayer.isPlaying
+	
+	
+	pass # replace with function body
+
+
+func _on_MusicSlider_value_changed( value ):
+	print(value)
+	musicPlayer.get_node("StreamPlayer").set_volume( value )
 	pass # replace with function body
