@@ -1,24 +1,22 @@
+tool
+extends Node2D
 
-extends Polygon2D
-
-# member variables here, example:
-# var a=2
-# var b="textvar"
-
-export var starsize = 5
-export var numstars = 25
-export var variance = 2
+export var star_size = 5
+export var star_density = 2.5
+export var viewport_scale = 2
+export var size_variance = 2
 
 func _ready():
 	# Initialization here
 	seed(OS.get_unix_time())
 	var rect = get_tree().get_root().get_rect()
-	var points = Vector2Array([rect.pos, Vector2(rect.pos.x, rect.end.y), rect.end, Vector2(rect.end.x, rect.pos.y)])
-	set_polygon(points)
-	set_color(Color(0,0,0))
-	for i in range(numstars):
-		var thisstarsize = starsize + int(floor((randf()-0.5)*variance*2))
-		var curr = [randi() % (int(rect.end.x)+1), randi() % (int(rect.end.y)+1)]
+	var sx = rect.end.x
+	var sy = rect.end.y
+	var num = sx * viewport_scale * star_density / 100
+	
+	for i in range(num):
+		var thisstarsize = star_size + int(floor((randf()-0.5)*size_variance*2))
+		var curr = [(randi() % (int(sx*viewport_scale)+1)), (randi() % (int(sy*viewport_scale)+1))]
 		var p = Polygon2D.new()
 		add_child(p)
 		p.set_z_as_relative(true)

@@ -12,7 +12,7 @@ var menu
 export var alt_control_mode = false
 
 func _ready():
-	current = get_node("Current")
+	current = get_node("Game/Viewport/Current")
 	menu = get_node("Main Menu")
 	settings = get_node("Settings")
 	musicPlayer = get_node("MusicPlayer")
