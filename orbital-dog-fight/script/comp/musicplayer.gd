@@ -34,7 +34,7 @@ func _ready():
 		songs.append(load("res://sound/"+name+".ogg"))
 	currsong = randi() % songnames.size()
 	label.set_opacity(0)
-	print(currsong)
+	#print(currsong)
 	playernode.set_stream(songs[currsong])
 	playernode.play()
 	label.set_text(songnames[currsong])
