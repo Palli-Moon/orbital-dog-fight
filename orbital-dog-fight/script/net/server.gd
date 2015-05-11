@@ -14,10 +14,10 @@ func _ready():
 	debug = get_node("Label")
 	server = TCP_Server.new()
 	if server.listen( port, [host] ) == 0:
-		debug.add_text( "Server started on port "+str(port) ); debug.newline()
+		print_debug("Server started on port "+str(port))
 		set_process( true )
 	else:
-		debug.add_text( "Failed to start server on port "+str(port) ); debug.newline()
+		print_debug("Failed to start server on port "+str(port))
 
 
 func _process( delta ):
@@ -28,15 +28,24 @@ func _process( delta ):
 		streams.append( PacketPeerStream.new() )
 		var index = clients.find( client )
 		streams[ index ].set_stream_peer( client )
-		debug.add_text( "Client has connected!" ); debug.newline()
-	# Check if somebody disconnected (we need to flush stream somehow to know if they dropped connection)
+		print_debug("Client has connected!")
+	# Read incoming data
 	for stream in streams:
-		stream.get_available_packet_count()
+		while stream.get_available_packet_count() > 0:
+			var data = stream.get_var()
+			print_debug(str(data))
+			broadcast(clients[streams.find(stream)].get_connected_host() + " says " + str(data))
+	# Delete disconnected clients
 	for client in clients:
 		if !client.is_connected():
-			debug.add_text("Client disconnected"); debug.newline()
+			print_debug("Client disconnected")
 			var index = clients.find( client )
 			clients.remove( index )
 			streams.remove( index )
 
+func broadcast(message):
+	for s in streams:
+		s.put_var(message)
 
+func print_debug(mess):
+	debug.add_text( str(mess) ); debug.newline()
