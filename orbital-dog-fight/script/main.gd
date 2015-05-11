@@ -32,20 +32,6 @@ func _ready():
 	splash.get_node("Sprite/Animation").connect("finished",self,"splash_finished")
 	pass
 
-func remap(events):
-	for action in global_actions:
-		if InputMap.action_has_event(action, events[1]):
-			is_remapping = false
-			return
-	for action in global_actions:
-		if InputMap.action_has_event(action, events[0]):
-			InputMap.erase_action(action)
-			InputMap.add_action(action)
-			InputMap.action_add_event(action, events[1])
-	is_remapping = false
-	remapping = null
-	pass
-
 func remap_action(event):
 	if event.scancode != KEY_ESCAPE:
 		var txt
