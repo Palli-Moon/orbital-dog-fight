@@ -56,6 +56,9 @@ func broadcast(message):
 	for s in streams:
 		s.put_var(message)
 
+func send_data(stream, message):
+	stream.put_var(message)
+
 func print_debug(mess):
 	debug.add_text( str(mess) )
 	debug.newline()

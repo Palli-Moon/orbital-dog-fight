@@ -3,7 +3,7 @@
 	<ext_resource path="res://scene/net/server.xml" type="PackedScene"></ext_resource>
 	<ext_resource path="res://scene/net/client.xml" type="PackedScene"></ext_resource>
 	<resource type="GDScript" path="local://1">
-		<string name="script/source"> "&#000a;extends Node2D&#000a;&#000a;var Command = preload(&quot;res://script/net/commands.gd&quot;)&#000a;&#000a;var server&#000a;var client&#000a;&#000a;func _ready():&#000a;&#0009;server = get_node(&quot;Server&quot;)&#000a;&#0009;server.start()&#000a;&#0009;client = get_node(&quot;Client&quot;)&#000a;&#0009;client.connect()&#000a;&#0009;get_node(&quot;Timer&quot;).connect(&quot;timeout&quot;, self, &quot;timeout&quot;)&#000a;&#000a;func timeout():&#000a;&#0009;client.send_data(Command.ClientConnect.new(&quot;Pippo&quot;).get_msg())&#000a;&#0009;server.broadcast(Command.ClientAccepted.new(123).get_msg())&#000a;&#0009;client.send_data(Command.ClientUpdateCtrl.new(123,true,false,false,false,false).get_msg())&#000a;&#000a;" </string>
+		<string name="script/source"> "&#000a;extends Node2D&#000a;&#000a;var Command = preload(&quot;res://script/net/commands.gd&quot;)&#000a;&#000a;var server&#000a;var client&#000a;&#000a;func _ready():&#000a;&#0009;server = get_node(&quot;Server&quot;)&#000a;&#0009;server.start()&#000a;&#0009;client = get_node(&quot;Client&quot;)&#000a;&#0009;client.connect()&#000a;&#0009;get_node(&quot;Timer&quot;).connect(&quot;timeout&quot;, self, &quot;timeout&quot;)&#000a;&#000a;func timeout():&#000a;&#0009;client.send_data(Command.ClientConnect.new(&quot;Pippo&quot;).get_msg())&#000a;&#0009;server.send_data(client.stream, Command.ServerClientAccepted.new(123).get_msg())&#000a;&#0009;server.broadcast(Command.ServerNewPlayer.new(123, &quot;Pippo&quot;, {&quot;id&quot;: 123}).get_msg())&#000a;&#0009;client.send_data(Command.ClientUpdateCtrl.new(123,true,false,false,false,false).get_msg())&#000a;&#000a;" </string>
 
 	</resource>
 	<main_resource>
@@ -176,7 +176,7 @@
 						<string> "Script" </string>
 						<dictionary  shared="false">
 							<string> "current" </string>
-							<int> 3 </int>
+							<int> 1 </int>
 							<string> "sources" </string>
 							<array  len="4" shared="false">
 								<string> "res://script/net/commands.gd" </string>

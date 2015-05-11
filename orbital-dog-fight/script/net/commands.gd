@@ -1,9 +1,10 @@
 
 const CLIENT_CONNECT = 0
-const CLIENT_ACCEPTED = 1
-const CLIENT_UPDATE_CTRL = 2
-const CLIENT_DISCONNECT = 3
-const STATE_UPDATE = 10
+const CLIENT_UPDATE_CTRL = 1
+const CLIENT_DISCONNECT = 2
+const SERVER_CLIENT_ACCEPTED = 100
+const SERVER_STATE_UPDATE = 101
+const SERVER_NEW_PLAYER = 102
 
 class ClientConnect:
 	var name
@@ -14,16 +15,6 @@ class ClientConnect:
 	
 	func get_msg():
 		return [cmd, name]
-
-class ClientAccepted:
-	var id
-	const cmd = CLIENT_ACCEPTED
-	
-	func _init(my_id):
-		id = my_id
-	
-	func get_msg():
-		return [cmd, id]
 
 class ClientUpdateCtrl:
 	var id
@@ -51,19 +42,49 @@ class ClientDisconnect:
 	func get_msg():
 		return [cmd, id]
 
+class ServerClientAccepted:
+	var id
+	const cmd = SERVER_CLIENT_ACCEPTED
+	
+	func _init(my_id):
+		id = my_id
+	
+	func get_msg():
+		return [cmd, id]
+
+class ServerStateUpdate:
+	var state
+	const cmd = SERVER_STATE_UPDATE
+	
+	func set_state(s):
+		state = s
+	
+	func get_msg():
+		return [cmd, state]
+
+class ServerNewPlayer:
+	var id
+	var ship
+	var name
+	const cmd = SERVER_NEW_PLAYER
+	
+	func _init(my_id, my_name, my_ship):
+		id = my_id
+		name = my_name
+		ship = my_ship
+	
+	func get_msg():
+		return [cmd, id, name, ship]
+
 func parse(data):
-	if typeof(data) != TYPE_ARRAY:
-		print("Invalid data type " + str(typeof(data)))
+	if typeof(data) != TYPE_ARRAY || data.size() < 1 || typeof(data[0]) != TYPE_INT:
+		print("Invalid data " + str(data))
 		return null
 	var cmd = data[0]
 	if cmd == CLIENT_CONNECT:
 		if data.size() != 2 || typeof(data[1]) != TYPE_STRING:
 			return null
 		return ClientConnect.new(data[1])
-	elif cmd == CLIENT_ACCEPTED:
-		if data.size() != 2 || typeof(data[1]) != TYPE_INT:
-			return null
-		return ClientAccepted.new(data[1])
 	elif cmd == CLIENT_DISCONNECT:
 		if data.size() != 2 || typeof(data[1]) != TYPE_INT:
 			return null
@@ -74,5 +95,19 @@ func parse(data):
 			typeof(data[6]) != TYPE_BOOL:
 			return null
 		return ClientUpdateCtrl.new(data[1],data[2],data[3],data[4],data[5],data[6])
+	elif cmd == SERVER_CLIENT_ACCEPTED:
+		if data.size() != 2 || typeof(data[1]) != TYPE_INT:
+			return null
+		return ServerClientAccepted.new(data[1])
+	elif cmd == SERVER_STATE_UPDATE:
+		# TODO Check/parse state type?!
+		if data.size() != 2 || typeof(data[1]) != TYPE_DICTIONARY:
+			return null
+		return ServerStateUpdate.new(data[1])
+	elif cmd == SERVER_NEW_PLAYER:
+		# TODO Check ship/parse type?!
+		if data.size() != 4 || typeof(data[1]) != TYPE_INT || typeof(data[2]) != TYPE_STRING:
+			return null
+		return ServerNewPlayer.new(data[1], data[2], data[3])
 	print("Unknown client command")
 	return null
