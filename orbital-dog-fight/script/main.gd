@@ -9,6 +9,7 @@ var current_scene
 var settings
 var musicPlayer
 var menu
+var splash
 export var alt_control_mode = false
 var events = []
 var CMD = preload("res://script/comp/ship/commands.gd")
@@ -16,6 +17,7 @@ var global_actions = []
 var remapping = null
 
 func _ready():
+	splash = get_node("Splash")
 	current = get_node("Game/Viewport/Current")
 	menu = get_node("Main Menu")
 	settings = get_node("Settings")
@@ -25,6 +27,9 @@ func _ready():
 		global_actions.append("p1_"+str(command))
 		global_actions.append("p2_"+str(command))
 	set_process_input(true)
+	menu.hide()
+	musicPlayer.hide()
+	splash.get_node("Sprite/Animation").connect("finished",self,"splash_finished")
 	pass
 
 func remap(events):
@@ -230,3 +235,8 @@ func _on_p2_lasers_pressed():
 	is_remapping = true
 	remapping = "p2_lasers"
 	pass # replace with function body
+	
+func splash_finished():
+	splash.hide()
+	menu.show()
+	musicPlayer.show()
