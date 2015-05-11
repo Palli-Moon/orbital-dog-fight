@@ -6,7 +6,6 @@ var client = null
 var server = null
 var debug = true
 
-var ships = {}
 var players = {}
 var Command = preload("res://script/net/commands.gd")
 var Server = preload("res://script/net/server.gd")
@@ -27,7 +26,12 @@ class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 		pass
 	
 	func on_message(stream, message):
-		pass
+		var msg = mode.Command.parse(message)
+		if msg == null:
+			print("Unknown command " + str(message))
+			return
+		if msg.cmd == mode.Command.SERVER_CLIENT_ACCEPTED:
+			mode.client_accepted(msg.id)
 
 class OnlineServer extends "res://script/net/server.gd".ServerHandler:
 	var inited = []
@@ -40,7 +44,7 @@ class OnlineServer extends "res://script/net/server.gd".ServerHandler:
 		pass
 	
 	func on_disconnect(client, stream):
-		pass
+		mode.player_left(client)
 	
 	func on_message(client, stream, message):
 		var msg = mode.Command.parse(message)
@@ -72,12 +76,24 @@ func _ready():
 
 func new_player(client, stream, name):
 	var id = randi()
-	ships[id] = create_ship()
-	players[id] = client
-	server.send_data(stream, Command.ServerClientAccepted.new(id))
-	server.broadcast(Command.ServerNewPlayer.new(id,name, ships[id]))
+	var ship = create_ship()
+	players[id] = {"client":client,"ship":ship}
+	server.send_data(stream, Command.ServerClientAccepted.new(id).get_msg())
+	server.broadcast(Command.ServerNewPlayer.new(id,name, ship).get_msg())
+
+func player_left(client):
+	for key in players.keys():
+		if players[key] != null and players[key].client == client:
+			print("Removing client")
+			players[key].ship.queue_free()
+			players.erase(key)
+			break
+	pass
 
 func create_ship():
 	var ship = Ship.instance()
 	add_child(ship)
 	return ship
+
+func client_accepted(id):
+	print("accepted: " + str(id))
