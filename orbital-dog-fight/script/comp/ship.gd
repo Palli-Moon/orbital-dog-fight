@@ -40,13 +40,16 @@ func on_ready():
 	var anim = get_node("explosion/AnimationPlayer")
 	anim.connect("finished", self, "anim_finished")
 	anim.connect("animation_changed", self, "anim_changed")
-
+	# Manage volume settings
+	set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
+	
 func on_spawn():
 	isdying = false
 	curr_hp = hitpoints
 	remove_from_group("dead")
 	add_to_group("ships")
 	add_to_group("shootables")
+	add_to_group("sfx")
 	get_node("Sprite").show()
 	particles.show()
 	healthBar.update()
@@ -165,6 +168,9 @@ func hit(beam):
 	else:
 		get_node("ShipSounds").play("laser-hit2")
 		healthBar.update()
+
+func set_default_volume(value):
+	get_node("ShipSounds").set_default_volume(value)
 
 func anim_finished():
 	get_node("explosion").hide()

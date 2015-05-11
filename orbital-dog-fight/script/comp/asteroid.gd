@@ -14,6 +14,8 @@ func on_ready():
 	# Add to groups
 	add_to_group("shootables")
 	add_to_group("asteroids")
+	add_to_group("sfx")
+	set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
 	pass
 
 func on_spawn():
@@ -38,6 +40,9 @@ func set_hitpoints(hp):
 func get_hitpoints():
 	return hitpoints
 
+func set_default_volume(value):
+	get_node("AsteroidSounds").set_default_volume(value)
+	
 func _die():
 	heimdallr.send_signal(self, "die", [])
 	queue_free()

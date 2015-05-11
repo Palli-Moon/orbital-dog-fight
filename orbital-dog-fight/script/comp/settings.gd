@@ -5,8 +5,11 @@ extends PopupPanel
 # var a=2
 # var b="textvar"
 var remapping
+var volume = 1.0
+var muted = false
 
 func _ready():
+	get_node("/root/Demos/Settings/Header").set_text("Wat")
 	pass
 
 func _on_Return_pressed():
@@ -62,4 +65,18 @@ func _on_MusicSlider_value_changed( value ):
 	var musicPlayer = get_parent().musicPlayer
 	#print(value)
 	musicPlayer.get_node("StreamPlayer").set_volume( value )
+	pass # replace with function body
+
+func _on_SFXCheck_toggled( pressed ):
+	muted = !pressed
+	for node in get_tree().get_nodes_in_group("sfx"):
+		node.set_default_volume(volume * int(pressed))
+	get_node("SFXSlider").set_ignore_mouse(muted)
+	pass # replace with function body
+
+
+func _on_SFXSlider_value_changed( value ):
+	volume = value
+	for node in get_tree().get_nodes_in_group("sfx"):
+		node.set_default_volume(value)
 	pass # replace with function body
