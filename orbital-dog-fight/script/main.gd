@@ -72,6 +72,9 @@ func toggle_menu():
 		menu.hide()
 
 func toggle_settings():
+	if is_remapping:
+		is_remapping = false
+		remapping = null
 	settings_open = !settings_open
 	if settings_open:
 		settings.show()
