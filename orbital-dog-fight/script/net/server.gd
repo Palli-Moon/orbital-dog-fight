@@ -6,12 +6,14 @@ export var port = 4567
 var server
 var debug
 
+var Command = preload("commands.gd")
 var clients = []
 var streams = []
 
-
 func _ready():
 	debug = get_node("Label")
+
+func start():
 	server = TCP_Server.new()
 	if server.listen( port, [host] ) == 0:
 		print_debug("Server started on port "+str(port))
@@ -19,6 +21,9 @@ func _ready():
 	else:
 		print_debug("Failed to start server on port "+str(port))
 
+func stop():
+	if server != null:
+		server.stop()
 
 func _process( delta ):
 	# Check new connections
@@ -33,8 +38,12 @@ func _process( delta ):
 	for stream in streams:
 		while stream.get_available_packet_count() > 0:
 			var data = stream.get_var()
-			print_debug(str(data))
-			broadcast(clients[streams.find(stream)].get_connected_host() + " says " + str(data))
+			var cmd = Command.parse(data)
+			if cmd != null:
+				print_debug(str(cmd.get_msg()))
+				broadcast(clients[streams.find(stream)].get_connected_host() + " says " + str(data))
+			else:
+				print_debug("Invalid command " + str(data))
 	# Delete disconnected clients
 	for client in clients:
 		if !client.is_connected():
@@ -48,4 +57,5 @@ func broadcast(message):
 		s.put_var(message)
 
 func print_debug(mess):
-	debug.add_text( str(mess) ); debug.newline()
+	debug.add_text( str(mess) )
+	debug.newline()

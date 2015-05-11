@@ -47,13 +47,13 @@
 				<resource  resource_type="Script" path="res://script/net/client.gd">  </resource>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
-					<string> "Script" </string>
+					<string> "2D" </string>
 					<string> "__editor_plugin_states__" </string>
 					<dictionary  shared="false">
 						<string> "2D" </string>
 						<dictionary  shared="false">
 							<string> "ofs" </string>
-							<vector2> -531.499, -317.374 </vector2>
+							<vector2> -531.499, -124.421 </vector2>
 							<string> "snap_grid" </string>
 							<bool> False </bool>
 							<string> "snap_offset" </string>
@@ -172,9 +172,10 @@
 							<string> "current" </string>
 							<int> 0 </int>
 							<string> "sources" </string>
-							<array  len="2" shared="false">
+							<array  len="3" shared="false">
 								<string> "res://script/net/client.gd" </string>
 								<string> "res://script/net/state.gd" </string>
+								<string> "res://script/net/commands.gd" </string>
 							</array>
 						</dictionary>
 					</dictionary>
@@ -191,10 +192,10 @@
 				<bool> True </bool>
 				<real> 1 </real>
 				<int> 1 </int>
-				<real> 109 </real>
-				<real> 220 </real>
-				<real> 702 </real>
-				<real> 534 </real>
+				<real> 667 </real>
+				<real> 16 </real>
+				<real> 1260 </real>
+				<real> 707 </real>
 				<bool> False </bool>
 				<int> 2 </int>
 				<string> "" </string>
