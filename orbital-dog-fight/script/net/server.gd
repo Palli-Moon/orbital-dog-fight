@@ -5,14 +5,27 @@ export var port = 4666
 export var max_conns = 4
 
 var server
-var debug
 
 var Command = preload("commands.gd")
 var clients = []
 var streams = []
+var handler = null
+var debug = null
 
+# Extend this class to create a server handler
+class ServerHandler:
+	func on_connect(client, stream):
+		print_debug("You should extend on_connect(client, stream)")
+	
+	func on_disconnect(client, stream):
+		print_debug("You should override on_disconnect(client, stream)")
+	
+	func on_message(client, stream, message):
+		print_debug("You should override on_message(client, stream, message)")
+
+# Server node
 func _ready():
-	debug = get_node("Label")
+	debug = get_node("Debug")
 
 func start():
 	server = TCP_Server.new()
@@ -22,25 +35,39 @@ func start():
 	else:
 		print_debug("Failed to start server on port "+str(port))
 
+func set_handler(my_handler):
+	if my_handler == null or not my_handler extends ServerHandler:
+		print_debug("Invalid handler " + str(my_handler))
+		return
+	handler = my_handler
+
 func stop():
 	if server != null:
 		server.stop()
 
 func on_connect(client, stream):
-	print_debug("You should extend on_connect(client, stream)")
+	if handler != null:
+		handler.on_connect(client, stream)
+	else:
+		print_debug("on_connect: Handler not set")
 
 func on_message(client, stream, message):
-	print_debug("You should override on_message(client, stream, message)")
-	var cmd = Command.parse(message)
-	if cmd != null:
-		print_debug(str(cmd.get_msg()))
-		broadcast(client.get_connected_host() + " says " + str(message))
+	if handler != null:
+		handler.on_message(client, stream, message)
 	else:
-		print_debug("Invalid command " + str(message))
+		print_debug("on_message: Handler not set")
+		var cmd = Command.parse(message)
+		if cmd != null:
+			print_debug(str(cmd.get_msg()))
+			broadcast(client.get_connected_host() + " says " + str(message))
+		else:
+			print_debug("Invalid command " + str(message))
 
 func on_disconnect(client, stream):
-	print_debug("You should override on_disconnect(client, stream)")
-	pass
+	if handler != null:
+		handler.on_disconnect(client, stream)
+	else:
+		print_debug("on_disconnect: Handler not set")
 
 func _process( delta ):
 	# Check new connections
@@ -77,5 +104,8 @@ func send_data(stream, message):
 	stream.put_var(message)
 
 func print_debug(mess):
-	debug.add_text( str(mess) )
-	debug.newline()
+	if debug != null:
+		debug.add_text(str(mess))
+		debug.newline()
+	else:
+		print(str(mess))
