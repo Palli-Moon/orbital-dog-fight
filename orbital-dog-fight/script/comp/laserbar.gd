@@ -13,8 +13,6 @@ func _ready():
 	frame.set_opacity(0.3)
 	points = get_node("Points")
 	set_pos(Vector2(0,0))
-	if test:
-		set_pos(Vector2(100,100))
 	update()
 
 func update_rot():
@@ -30,7 +28,7 @@ func update():
 		ratio = 1
 	var sx = -16 
 	var sy = -26+3
-	var ex = sx + 32*ratio
+	var ex = sx + 32*ratio+0.001
 	var ey = -26
 	points.set_polygon(Vector2Array([Vector2(sx,sy),Vector2(ex,sy),Vector2(ex,ey), Vector2(sx,ey)]))
 	if ratio < 0.2:
