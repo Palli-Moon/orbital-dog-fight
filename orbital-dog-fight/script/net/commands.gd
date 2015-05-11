@@ -76,7 +76,7 @@ class ServerNewPlayer:
 	func get_msg():
 		return [cmd, id, name, ship]
 
-func parse(data):
+static func parse(data):
 	if typeof(data) != TYPE_ARRAY || data.size() < 1 || typeof(data[0]) != TYPE_INT:
 		print("Invalid data " + str(data))
 		return null
