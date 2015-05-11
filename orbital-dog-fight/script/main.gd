@@ -10,10 +10,6 @@ var settings
 var musicPlayer
 var menu
 var splash
-export var alt_control_mode = false
-var events = []
-var CMD = preload("res://script/comp/ship/commands.gd")
-var global_actions = []
 var remapping = null
 
 func _ready():
@@ -23,33 +19,12 @@ func _ready():
 	settings = get_node("Settings")
 	musicPlayer = get_node("MusicPlayer")
 	get_tree().set_pause(pause)
-	for command in CMD.ALL:
-		global_actions.append("p1_"+str(command))
-		global_actions.append("p2_"+str(command))
 	set_process_input(true)
 	menu.hide()
 	musicPlayer.hide()
 	splash.get_node("Sprite/Animation").connect("finished",self,"splash_finished")
 	pass
-
-func remap_action(event):
-	if event.scancode != KEY_ESCAPE:
-		var txt
-		InputMap.erase_action(remapping)
-		InputMap.add_action(remapping)
-		InputMap.action_add_event(remapping, event)
-		if event.scancode == KEY_TAB:
-			txt = "tab"
-		elif event.scancode == KEY_RETURN:
-			txt = "\u21a9"
-		elif event.scancode == KEY_SPACE:
-			txt = "space"
-		else:
-			txt = str(event).split("Unicode: ")[1][0]
-		get_node("Settings/P"+remapping[1]+"Controls/"+remapping).set_text(txt.to_upper())
-	is_remapping = false
-	remapping = null
-			
+	
 func _input(event):
 	if !is_remapping:
 		if event.is_action("main_menu") and event.is_pressed() and not event.is_echo():
@@ -63,12 +38,8 @@ func _input(event):
 					toggle_menu()
 	else:
 		if event.type == InputEvent.KEY and event.is_pressed() and not event.is_echo():
-			events.append(event)
 			if remapping != null:
-				remap_action(event)
-			elif events.size() == 2:
-				remap(events)
-				events = []
+				settings.remap_action(event)
 
 func clear_scene():
 	var child = current.get_child(0)
@@ -138,90 +109,6 @@ func _on_Settings_pressed():
 	toggle_settings()
 	pass
 
-func _on_Return_pressed():
-	toggle_menu()
-	toggle_settings()
-	pass # replace with function body
-
-func _on_MusicCheck_toggled( pressed ):
-	if musicPlayer.isPlaying:
-		musicPlayer.get_node("StreamPlayer").set_paused( !pressed )
-		get_node("Settings/MusicSlider").set_ignore_mouse( true )
-		musicPlayer.isFadingOut = false
-		musicPlayer.isFadingIn = false
-		musicPlayer.label.set_opacity(0)
-		musicPlayer.hide()
-	else:
-		musicPlayer.get_node("StreamPlayer").set_paused( !pressed )
-		get_node("Settings/MusicSlider").set_ignore_mouse( false )
-		musicPlayer.label.set_opacity(1.0)
-		musicPlayer.get_node("ShowTimer").start()
-		musicPlayer.show()
-	musicPlayer.isPlaying = !musicPlayer.isPlaying
-	
-	
-	pass # replace with function body
-
-
-func _on_MusicSlider_value_changed( value ):
-	#print(value)
-	musicPlayer.get_node("StreamPlayer").set_volume( value )
-	pass # replace with function body
-
-func _on_P1Remap_pressed():
-	is_remapping = true
-	pass # replace with function body
-
-func _on_P1Forward_pressed():
-	is_remapping = true
-	remapping = "p1_fwd"
-	pass # replace with function body
-
-func _on_p1_back_pressed():
-	is_remapping = true
-	remapping = "p1_bwd"
-	pass # replace with function body
-
-func _on_p1_tl_pressed():
-	is_remapping = true
-	remapping = "p1_tl"
-	pass # replace with function body
-
-func _on_p1_tr_pressed():
-	is_remapping = true
-	remapping = "p1_tr"
-	pass # replace with function body
-
-func _on_p1_lasers_pressed():
-	is_remapping = true
-	remapping = "p1_lasers"
-	pass # replace with function body
-
-func _on_p2_fwd_pressed():
-	is_remapping = true
-	remapping = "p2_fwd"
-	pass # replace with function body
-
-func _on_p2_bwd_pressed():
-	is_remapping = true
-	remapping = "p2_bwd"
-	pass # replace with function body
-
-func _on_p2_tl_pressed():
-	is_remapping = true
-	remapping = "p2_tl"
-	pass # replace with function body
-
-func _on_p2_tr_pressed():
-	is_remapping = true
-	remapping = "p2_tr"
-	pass # replace with function body
-
-func _on_p2_lasers_pressed():
-	is_remapping = true
-	remapping = "p2_lasers"
-	pass # replace with function body
-	
 func splash_finished():
 	splash.hide()
 	menu.show()
