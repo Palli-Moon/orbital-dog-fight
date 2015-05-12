@@ -59,6 +59,12 @@ func restart_scene():
 	toggle_menu()
 	clear_scene()
 	load_scene(current_scene)
+	
+func simple_restart_scene():
+	if current_scene == null:
+		return
+	clear_scene()
+	load_scene(current_scene)
 
 func toggle_pause():
 	pause = !pause

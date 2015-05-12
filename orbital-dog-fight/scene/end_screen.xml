@@ -9,7 +9,7 @@
 			<string> "conns" </string>
 			<int_array  len="0"> 				 </int_array>
 			<string> "names" </string>
-			<string_array  len="43">
+			<string_array  len="45">
 				<string> "EndScreen" </string>
 				<string> "Node2D" </string>
 				<string> "_import_path" </string>
@@ -53,13 +53,15 @@
 				<string> "autowrap" </string>
 				<string> "uppercase" </string>
 				<string> "percent_visible" </string>
+				<string> "Subtext" </string>
+				<string> "Press Enter" </string>
 			</string_array>
 			<string> "node_count" </string>
-			<int> 2 </int>
+			<int> 4 </int>
 			<string> "nodes" </string>
-			<int_array  len="102"> 				-1, -1, 1, 0, -1, 13, 2, 0, 3, 1, 4, 2, 5, 3, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 8, 12, 2, 13, 9, 14, 10, 0, 0, 0, 16, 15, -1, 31, 2, 0, 4, 2, 5, 3, 6, 3, 7, 4, 17, 11, 18, 12, 19, 13, 20, 14, 21, 0, 22, 0, 23, 0, 24, 0, 25, 2, 26, 2, 27, 1, 28, 3, 29, 15, 30, 6, 31, 3, 32, 3, 33, 3, 34, 6, 35, 16, 36, 16, 37, 17, 38, 4, 39, 4, 40, 16, 41, 16, 42, 18, 0 </int_array>
+			<int_array  len="196"> 				-1, -1, 1, 0, -1, 13, 2, 0, 3, 1, 4, 2, 5, 3, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 8, 12, 2, 13, 9, 14, 10, 0, 0, 0, 16, 15, -1, 31, 2, 0, 4, 2, 5, 3, 6, 3, 7, 4, 17, 11, 18, 12, 19, 13, 20, 14, 21, 0, 22, 0, 23, 0, 24, 0, 25, 2, 26, 2, 27, 1, 28, 3, 29, 15, 30, 6, 31, 3, 32, 3, 33, 3, 34, 6, 35, 16, 36, 16, 37, 17, 38, 4, 39, 4, 40, 16, 41, 16, 42, 18, 0, 0, 0, 1, 43, -1, 10, 2, 0, 4, 2, 5, 3, 6, 3, 7, 4, 8, 5, 9, 6, 10, 19, 11, 8, 12, 2, 0, 2, 0, 16, 44, -1, 30, 2, 0, 4, 2, 5, 6, 6, 3, 7, 4, 18, 20, 19, 21, 20, 22, 21, 0, 22, 0, 23, 0, 24, 0, 25, 2, 26, 2, 27, 1, 28, 3, 29, 15, 30, 6, 31, 3, 32, 3, 33, 3, 34, 6, 35, 16, 36, 16, 37, 23, 38, 4, 39, 4, 40, 16, 41, 16, 42, 18, 0 </int_array>
 			<string> "variants" </string>
-			<array  len="19" shared="false">
+			<array  len="24" shared="false">
 				<node_path> "" </node_path>
 				<int> 2 </int>
 				<bool> True </bool>
@@ -72,7 +74,7 @@
 				<resource  resource_type="Script" path="res://script/end_screen.gd">  </resource>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
-					<string> "2D" </string>
+					<string> "Script" </string>
 					<string> "__editor_plugin_states__" </string>
 					<dictionary  shared="false">
 						<string> "2D" </string>
@@ -221,6 +223,11 @@
 				<bool> False </bool>
 				<string> "Player 2 Wins!" </string>
 				<real> -1 </real>
+				<vector2> 0.5, 0.5 </vector2>
+				<real> 540 </real>
+				<real> 1280 </real>
+				<real> 556 </real>
+				<string> "Press ENTER to play again" </string>
 			</array>
 			<string> "version" </string>
 			<int> 1 </int>
