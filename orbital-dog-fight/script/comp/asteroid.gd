@@ -1,7 +1,8 @@
-
+tool
 extends "res://script/comp/orbital_obj.gd"
 
 export var hitpoints = 100 setget set_hitpoints, get_hitpoints
+export(Texture) var asteroid_texture setget set_asteroid_texture, get_asteroid_texture
 
 var curr_hp
 var health_bar = null
@@ -15,6 +16,7 @@ func on_ready():
 	add_to_group("shootables")
 	add_to_group("asteroids")
 	add_to_group("sfx")
+	get_node("Sprite").set_texture(asteroid_texture)
 	set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
 	pass
 
@@ -53,3 +55,13 @@ func hit(beam):
 	health_bar.update()
 	if curr_hp <= 0:
 		_die()
+
+func set_asteroid_texture(tex):
+	if has_node("Sprite"):
+		get_node("Sprite").set_texture(tex)
+	asteroid_texture = tex
+
+func get_asteroid_texture(tex):
+	if has_node("Sprite"):
+		return get_node("Sprite").get_texture()
+	return asteroid_texture
