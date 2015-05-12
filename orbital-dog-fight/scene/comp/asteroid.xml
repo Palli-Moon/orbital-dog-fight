@@ -32,7 +32,7 @@
 			<string> "conns" </string>
 			<int_array  len="0"> 				 </int_array>
 			<string> "names" </string>
-			<string_array  len="81">
+			<string_array  len="82">
 				<string> "Asteroid" </string>
 				<string> "RigidBody2D" </string>
 				<string> "_import_path" </string>
@@ -71,6 +71,7 @@
 				<string> "__meta__" </string>
 				<string> "hitpoints" </string>
 				<string> "asteroid_texture" </string>
+				<string> "scale" </string>
 				<string> "Sprite" </string>
 				<string> "texture" </string>
 				<string> "centered" </string>
@@ -118,16 +119,15 @@
 			<string> "node_count" </string>
 			<int> 7 </int>
 			<string> "nodes" </string>
-			<int_array  len="295"> 				-1, -1, 1, 0, -1, 36, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 3, 14, 9, 15, 10, 16, 8, 17, 3, 18, 3, 19, 7, 20, 11, 21, 2, 22, 5, 23, 2, 24, 8, 25, 7, 26, 7, 27, 8, 28, 8, 29, 1, 30, 4, 31, 5, 32, 12, 33, 12, 34, 13, 35, 14, 36, 15, 37, 16, 0, 0, 0, 38, 38, -1, 21, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 39, 17, 40, 1, 41, 4, 42, 8, 43, 8, 44, 3, 45, 3, 46, 7, 47, 18, 48, 8, 49, 19, 0, 0, 0, 50, 50, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 20, 8, 5, 9, 21, 10, 7, 11, 1, 51, 9, 52, 8, 0, 0, 0, 54, 53, 22, 2, 2, 0, 35, 23, 0, 0, 0, 56, 55, -1, 15, 2, 0, 57, 3, 58, 24, 59, 5, 60, 2, 61, 5, 62, 5, 63, 5, 64, 25, 65, 25, 66, 25, 67, 25, 68, 26, 69, 5, 70, 5, 0, 0, 0, 72, 71, -1, 25, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 1, 13, 3, 14, 27, 15, 28, 16, 8, 73, 8, 74, 5, 75, 29, 76, 30, 77, 31, 78, 2, 79, 1, 80, 1, 17, 3, 18, 3, 0, 5, 0, 50, 50, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 51, 27, 52, 8, 0 </int_array>
+			<int_array  len="297"> 				-1, -1, 1, 0, -1, 37, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 2, 10, 6, 11, 1, 12, 7, 13, 3, 14, 8, 15, 9, 16, 7, 17, 3, 18, 3, 19, 6, 20, 10, 21, 2, 22, 5, 23, 2, 24, 7, 25, 6, 26, 6, 27, 7, 28, 7, 29, 1, 30, 4, 31, 5, 32, 11, 33, 11, 34, 12, 35, 13, 36, 14, 37, 15, 38, 2, 0, 0, 0, 39, 39, -1, 21, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 16, 10, 6, 11, 1, 40, 15, 41, 1, 42, 4, 43, 7, 44, 7, 45, 3, 46, 3, 47, 6, 48, 17, 49, 7, 50, 18, 0, 0, 0, 51, 51, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 19, 8, 5, 9, 20, 10, 6, 11, 1, 52, 8, 53, 7, 0, 0, 0, 55, 54, 21, 2, 2, 0, 35, 22, 0, 0, 0, 57, 56, -1, 15, 2, 0, 58, 3, 59, 23, 60, 5, 61, 2, 62, 5, 63, 5, 64, 5, 65, 24, 66, 24, 67, 24, 68, 24, 69, 25, 70, 5, 71, 5, 0, 0, 0, 73, 72, -1, 25, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 16, 10, 6, 11, 1, 12, 1, 13, 3, 14, 26, 15, 27, 16, 7, 74, 7, 75, 5, 76, 28, 77, 29, 78, 30, 79, 2, 80, 1, 81, 1, 17, 3, 18, 3, 0, 5, 0, 51, 51, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 16, 10, 6, 11, 1, 52, 26, 53, 7, 0 </int_array>
 			<string> "variants" </string>
-			<array  len="32" shared="false">
+			<array  len="31" shared="false">
 				<node_path> "" </node_path>
 				<bool> True </bool>
 				<real> 1 </real>
 				<int> 1 </int>
 				<vector2> 0, 0 </vector2>
 				<real> 0 </real>
-				<vector2> 1, 1 </vector2>
 				<int> 0 </int>
 				<bool> False </bool>
 				<resource  resource_type="Shape2D" path="local://0">  </resource>
@@ -143,7 +143,7 @@
 						<string> "2D" </string>
 						<dictionary  shared="false">
 							<string> "ofs" </string>
-							<vector2> -44.985, -23.3333 </vector2>
+							<vector2> -68.9259, -23.6376 </vector2>
 							<string> "snap_grid" </string>
 							<bool> False </bool>
 							<string> "snap_offset" </string>
@@ -163,7 +163,7 @@
 							<string> "snap_step" </string>
 							<vector2> 10, 10 </vector2>
 							<string> "zoom" </string>
-							<real> 11.892858 </real>
+							<real> 9.686806 </real>
 						</dictionary>
 						<string> "3D" </string>
 						<dictionary  shared="false">
@@ -260,14 +260,12 @@
 						<string> "Script" </string>
 						<dictionary  shared="false">
 							<string> "current" </string>
-							<int> 1 </int>
+							<int> 0 </int>
 							<string> "sources" </string>
-							<array  len="5" shared="false">
+							<array  len="3" shared="false">
 								<string> "res://script/comp/asteroid.gd" </string>
+								<string> "res://script/comp/planet.gd" </string>
 								<string> "res://script/comp/ship.gd" </string>
-								<string> "res://script/comp/healthbar.gd" </string>
-								<string> "res://script/comp/orbital_obj.gd" </string>
-								<string> "res://script/comp/settings.gd" </string>
 							</array>
 						</dictionary>
 					</dictionary>
@@ -281,7 +279,8 @@
 				</dictionary>
 				<int> 100 </int>
 				<resource  resource_type="Texture" path="res://assets/img/asteroid2.png">  </resource>
-				<resource name=""></resource>				<color> 1, 1, 1, 1 </color>
+				<vector2> 1, 1 </vector2>
+				<color> 1, 1, 1, 1 </color>
 				<rect2> 0, 0, 0, 0 </rect2>
 				<vector2> 0.594564, -0.158437 </vector2>
 				<vector2> 1.59307, 1.59307 </vector2>

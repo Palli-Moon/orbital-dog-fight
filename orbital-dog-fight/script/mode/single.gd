@@ -21,6 +21,6 @@ func message(sender, sig, data):
 	if sig == "die" and sender.is_in_group("ships"):
 		finish = true
 		end.show_end("You lose!")
-	elif sig == "die" and sender.is_in_group("asteroids"):
+	elif sig == "die" and sender.is_in_group("asteroids") and get_tree().get_nodes_in_group("asteroids").size() == 1:
 		finish = true
 		end.show_end("You win!")
