@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resource_file type="SpriteFrames" subresource_count="39" version="1.1" version_name="Godot Engine v1.1.rc2.custom_build">
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_01.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_02.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_03.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_04.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_05.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_06.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_07.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_08.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_09.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_10.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_11.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_12.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_13.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_14.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_15.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_16.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_17.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_18.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_19.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_20.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_21.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_22.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_23.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_24.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_25.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_26.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_27.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_28.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_29.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_30.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_31.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_32.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_33.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_34.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_35.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_36.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_37.png" type="Texture"></ext_resource>
+	<ext_resource path="res://assets/img/withLasers-anim/withLasers_logo_anim_38.png" type="Texture"></ext_resource>
+	<main_resource>
+		<array name="frames" len="38" shared="false">
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_01.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_02.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_03.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_04.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_05.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_06.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_07.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_08.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_09.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_10.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_11.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_12.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_13.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_14.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_15.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_16.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_17.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_18.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_19.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_20.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_21.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_22.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_23.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_24.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_25.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_26.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_27.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_28.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_29.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_30.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_31.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_32.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_33.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_34.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_35.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_36.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_37.png">  </resource>
+			<resource  resource_type="Texture" path="res://assets/img/withLasers-anim/withLasers_logo_anim_38.png">  </resource>
+		</array>
+
+	</main_resource>
+</resource_file>
