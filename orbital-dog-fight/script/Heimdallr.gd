@@ -29,7 +29,7 @@ func register_signal(node, sig):
 
 func message(sender, sig, data):
 	print("Received ", str(sig), " from ", str(sender), " with data: ", str(data))
-	if game.get_ref() == null:
+	if game == null or game.get_ref() == null:
 		print("game not set, signal not sent!")
 		return
 	if not game.get_ref().has_method("message"):
