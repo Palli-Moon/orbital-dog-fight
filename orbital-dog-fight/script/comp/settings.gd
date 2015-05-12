@@ -27,7 +27,7 @@ func remap_action(event):
 		if event.scancode == KEY_TAB:
 			txt = "tab"
 		elif event.scancode == KEY_RETURN:
-			txt = "return"
+			txt = "\u21B5"
 		elif event.scancode == KEY_SPACE:
 			txt = "space"
 		elif event.scancode == KEY_UP:
