@@ -36,9 +36,9 @@
 			<string> "node_count" </string>
 			<int> 4 </int>
 			<string> "nodes" </string>
-			<int_array  len="80"> 				-1, -1, 1, 0, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 0, 0, 0, 15, 14, 10, 4, 2, 0, 7, 11, 16, 12, 13, 13, 0, 0, 0, 15, 17, 14, 5, 2, 0, 7, 15, 18, 5, 16, 16, 13, 17, 0, 0, 0, 1, 19, 18, 5, 2, 0, 7, 19, 10, 20, 11, 21, 13, 22, 0 </int_array>
+			<int_array  len="76"> 				-1, -1, 1, 0, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 0, 0, 0, 15, 14, 10, 4, 2, 0, 7, 11, 16, 12, 13, 13, 0, 0, 0, 15, 17, 14, 5, 2, 0, 7, 15, 18, 5, 16, 16, 13, 17, 0, 0, 0, 1, 19, 18, 3, 2, 0, 7, 19, 13, 20, 0 </int_array>
 			<string> "variants" </string>
-			<array  len="23" shared="false">
+			<array  len="21" shared="false">
 				<node_path> "" </node_path>
 				<bool> True </bool>
 				<real> 1 </real>
@@ -470,8 +470,6 @@
 				</dictionary>
 				<resource  resource_type="PackedScene" path="res://scene/comp/planet.xml">  </resource>
 				<vector2> 640, 360 </vector2>
-				<int> 9 </int>
-				<bool> False </bool>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
 					<string> "2D" </string>
