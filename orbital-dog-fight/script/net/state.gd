@@ -1,4 +1,14 @@
 
+class ControlState:
+	var fwd = false
+	var bwd = false
+	var tl = false
+	var tr = false
+	var lasers = false
+	
+	func get_state():
+		return {fwd=false,bwd=false,tl=false,tr=false,lasers=false}
+
 class ShipState:
 	var ship
 	
@@ -11,15 +21,17 @@ class ShipState:
 			my_ctrl = ship.ctrl
 		else:
 			my_ctrl = {fwd=false,bwd=false,tl=false,tr=false,lasers=false}
-		return {pos=ship.get_pos(),v=ship.get_linear_velocity(),
+		return {pos=ship.get_pos(),r=ship.get_rot(),v=ship.get_linear_velocity(),
 			a=ship.get_angular_velocity(),hp=ship.curr_hp,ctrl=my_ctrl}
 	
 	func update_state(s):
 		ship.set_linear_velocity(s.v)
+		ship.set_rot(s.r)
 		ship.set_pos(s.pos)
 		ship.set_angular_velocity(s.a)
 		ship.curr_hp = s.hp
 		ship.ctrl = s.ctrl
+		ship.healthBar.update_rot()
 
 class PlayerState:
 	var id
@@ -35,6 +47,10 @@ class PlayerState:
 	
 	func get_state():
 		return {"id":id,"name":name,"ship":ship.get_state()}
+	
+	func update_state(state):
+		name = state.name
+		ship.update_state(state.ship)
 
 class GameState:
 	var players = {}
@@ -65,3 +81,11 @@ class GameState:
 		for k in players.keys():
 			out[players[k].id] = players[k].get_state()
 		return out
+	
+	func update(state):
+		for k in players.keys():
+			if not state.has(k):
+				var p = remove_player_by_id(k)
+				p.queue_free()
+			else:
+				players[players[k].id].update_state(state[k])
