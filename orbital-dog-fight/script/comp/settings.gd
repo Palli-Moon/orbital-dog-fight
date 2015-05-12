@@ -30,6 +30,14 @@ func remap_action(event):
 			txt = "return"
 		elif event.scancode == KEY_SPACE:
 			txt = "space"
+		elif event.scancode == KEY_UP:
+			txt = "\u2191"
+		elif event.scancode == KEY_DOWN:
+			txt = "\u2193"
+		elif event.scancode == KEY_LEFT:
+			txt = "\u2190"
+		elif event.scancode == KEY_RIGHT:
+			txt = "\u2192"
 		else:
 			txt = str(event).split("Unicode: ")[1][0]
 		get_node("P"+remapping[1]+"Controls/"+remapping).set_text(txt.to_upper())
