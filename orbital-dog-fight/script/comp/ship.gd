@@ -13,6 +13,8 @@ export var laser_overheat_threshold = 50
 export var laser_cool_rate = 5
 export(Texture) var shiptex setget set_shiptex, get_shiptex
 
+var is_remote = false
+var ctrl = null
 var colliding_bodies = 0
 var CMD = preload("res://script/comp/ship/commands.gd")
 var laser = preload("res://scene/comp/laser.xml")
@@ -98,7 +100,8 @@ func apply_ctrl(type, dt):
 func _fixed_process(delta):
 	var show = []
 	for type in CMD.ALL:
-		if Input.is_action_pressed(get_ctrl(type)):
+		if (Input.is_action_pressed(get_ctrl(type)) and not is_remote) \
+			or (is_remote and ctrl != null and ctrl.has(type) and ctrl[type]):
 			show.append(type)
 			apply_ctrl(type, delta)
 		else:
