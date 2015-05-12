@@ -43,8 +43,9 @@ func on_ready():
 	anim.connect("finished", self, "anim_finished")
 	anim.connect("animation_changed", self, "anim_changed")
 	# Manage volume settings
-	set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
-	
+	if get_node("/root/Demos/Settings") != null:
+		set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
+
 func on_spawn():
 	isdying = false
 	curr_hp = hitpoints
