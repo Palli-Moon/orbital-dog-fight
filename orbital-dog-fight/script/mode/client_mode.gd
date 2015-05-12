@@ -72,31 +72,37 @@ func _fixed_process(delta):
 
 func accepted(id):
 	player_id = id
-	ship = Ship.instance()
-	ship.is_remote = true
-	ship.ctrl = State.ControlState.new(null).get_state()
+	ship = create_ship()
 	curr_state.add_player(id, player_name, ship, null)
-	get_node("Game").add_child(ship)
 	print_debug("accepted: " + str(id))
 	set_fixed_process(true)
 
 func new_player(id, name, ship):
 	if id == player_id:
 		return
-	ship = Ship.instance()
-	ship.is_remote = true
-	ship.ctrl = State.ControlState.new(null).get_state()
-	get_node("Game").add_child(ship)
-	curr_state.add_player(id, name, ship, null)
+	var p_ship = create_ship()
+	curr_state.add_player(id, name, p_ship, null)
 	print_debug("New player")
 
 func update_state(state):
+	# Update current players and delete disconnected ones
 	curr_state.update(state)
+	# Add new players
+	for k in state:
+		if not curr_state.players.has(k):
+			var p_ship = Ship.instance()
+			p_ship.is_remote = true
+			p_ship.ctrl = State.ControlState.new(null).get_state()
+			get_node("Game").add_child(p_ship)
+			curr_state.add_player(k, state[k].name, p_ship, null)
+			curr_state.players[k].update_state(state[k])
 
 func create_ship():
-	var ship = Ship.instance()
-	get_node("Game").add_child(ship)
-	return ship
+	var out = Ship.instance()
+	out.is_remote = true
+	out.ctrl = State.ControlState.new(null).get_state()
+	get_node("Game").add_child(out)
+	return out
 
 func print_debug(mess):
 	print(mess)

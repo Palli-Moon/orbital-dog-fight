@@ -94,9 +94,12 @@ class GameState:
 		return out
 	
 	func update(state):
+		# Known players
 		for k in players.keys():
+			# Remove deleted players
 			if not state.has(k):
-				var p = remove_player_by_id(k)
+				var p = players.erase(k)
 				p.queue_free()
+			# Update known players
 			else:
 				players[players[k].id].update_state(state[k])
