@@ -27,6 +27,7 @@ var State = preload("res://script/net/state.gd")
 var Command = preload("res://script/net/commands.gd")
 var Client = preload("res://script/net/client.gd")
 var Ship = preload("res://scene/comp/ship.xml")
+var curr_ctrl = State.ControlState.new(null)
 
 class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 	var mode = null
@@ -52,6 +53,8 @@ class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 			mode.new_player(msg.id, msg.name, msg.ship)
 		elif msg.cmd == mode.Command.SERVER_STATE_UPDATE:
 			mode.update_state(msg.state)
+		elif msg.cmd == mode.Command.CLIENT_UPDATE_CTRL:
+			mode.update_ctrl(msg.id, msg.ctrl)
 
 func _ready():
 	curr_state = State.GameState.new()
@@ -63,11 +66,11 @@ func _fixed_process(delta):
 	var updated = false
 	for type in ship.CMD.ALL:
 		var active = Input.is_action_pressed("p1_"+type)
-		if ship.ctrl.has(type) and active != ship.ctrl[type]:
+		if curr_ctrl.ctrl.has(type) and active != curr_ctrl.ctrl[type]:
 			updated = true
-			ship.ctrl[type] = active
+			curr_ctrl.ctrl[type] = active
 	if updated:
-		client.send_data(Command.ClientUpdateCtrl.new(player_id, State.ControlState.new(ship.ctrl)).get_msg())
+		client.send_data(Command.ClientUpdateCtrl.new(player_id, curr_ctrl.ctrl).get_msg())
 	pass
 
 func accepted(id):
@@ -103,6 +106,15 @@ func create_ship():
 	out.ctrl = State.ControlState.new(null).get_state()
 	get_node("Game").add_child(out)
 	return out
+
+func update_ctrl(id, ctrl):
+	if id == player_id:
+		curr_ctrl.ctrl = ctrl
+		ship.ctrl = ctrl
+	else:
+		var p = curr_state.get_player_by_id(id)
+		if p != null:
+			p.ship.ctrl = ctrl
 
 func print_debug(mess):
 	print(mess)

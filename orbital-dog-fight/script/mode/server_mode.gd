@@ -86,7 +86,7 @@ func player_update_ctrl(client, stream, msg):
 	var p = curr_state.get_player_by_client(client)
 	if p != null:
 		p.ship.update_ctrl(msg.ctrl)
-	pass
+		server.broadcast(Command.ClientUpdateCtrl.new(p.id, msg.ctrl).get_msg())
 
 func player_left(client):
 	var p = curr_state.remove_player(client)

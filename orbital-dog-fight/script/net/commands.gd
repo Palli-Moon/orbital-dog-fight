@@ -26,7 +26,7 @@ class ClientUpdateCtrl:
 		ctrl = my_ctrl
 	
 	func get_msg():
-		return [cmd, id, ctrl.get_state()]
+		return [cmd, id, ctrl]
 
 class ClientDisconnect:
 	var id

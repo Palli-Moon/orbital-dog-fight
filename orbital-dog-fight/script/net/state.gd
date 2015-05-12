@@ -81,6 +81,11 @@ class GameState:
 			return player
 		return null
 	
+	func get_player_by_id(id):
+		if players.has(id):
+			return players[id]
+		return null
+	
 	func get_player_by_client(client):
 		for k in players.keys():
 			if players[k] != null and players[k].client == client:
