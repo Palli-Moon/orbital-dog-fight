@@ -1,11 +1,13 @@
 extends Node
 
-var is_server = false
-var is_dedicated = false
+export var is_server = false
+export var is_dedicated = false
 var client = null
 var server = null
 var debug = true
 
+var player_id = null
+var player_name = "Unamed Player"
 var players = {}
 var Command = preload("res://script/net/commands.gd")
 var Server = preload("res://script/net/server.gd")
@@ -19,7 +21,7 @@ class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 		mode = my_mode
 	
 	func on_connect(stream):
-		mode.get_node("Client").send_data(mode.Command.ClientConnect.new("Pippo").get_msg())
+		mode.get_node("Client").send_data(mode.Command.ClientConnect.new(mode.player_name).get_msg())
 		pass
 	
 	func on_disconnect(stream):
@@ -28,13 +30,13 @@ class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 	func on_message(stream, message):
 		var msg = mode.Command.parse(message)
 		if msg == null:
-			print("Unknown command " + str(message))
-			return
-		if msg.cmd == mode.Command.SERVER_CLIENT_ACCEPTED:
+			print_debug("Unknown command " + str(message))
+		elif msg.cmd == mode.Command.SERVER_CLIENT_ACCEPTED:
 			mode.client_accepted(msg.id)
+		elif msg.cmd == mode.Command.SERVER_NEW_PLAYER:
+			mode.client_new_player(msg.id, msg.name, msg.ship)
 
 class OnlineServer extends "res://script/net/server.gd".ServerHandler:
-	var inited = []
 	var mode = null
 	
 	func _init(my_mode):
@@ -44,27 +46,22 @@ class OnlineServer extends "res://script/net/server.gd".ServerHandler:
 		pass
 	
 	func on_disconnect(client, stream):
-		mode.player_left(client)
+		mode.server_player_left(client)
 	
 	func on_message(client, stream, message):
 		var msg = mode.Command.parse(message)
 		if msg == null:
-			print("Unknown command " + str(message))
-			return
-		if msg.cmd == mode.Command.CLIENT_CONNECT:
-			if inited.find(client) >= 0:
-				print("Invalid command, client already connected")
-				return
-			mode.new_player(client, stream, msg.name)
-			print("connected")
+			print_debug("Unknown command " + str(message))
+		elif msg.cmd == mode.Command.CLIENT_CONNECT:
+			mode.server_player_join(client, stream, msg)
+		elif msg.cmd == mode.Command.CLIENT_UPDATE_CTRL:
+			mode.server_client_update_ctrl(client, stream, msg)
+		elif msg.cmd == mode.Command.CLIENT_DISCONNECT:
+			print_debug("client disconnected")
 
 func _ready():
 	seed(OS.get_unix_time())
 	if not is_server:
-		if debug:
-			server = get_node("Server")
-			server.set_handler(OnlineServer.new(self))
-			server.start()
 		client = get_node("Client")
 		client.set_handler(OnlineClient.new(self))
 		client.connect()
@@ -72,28 +69,40 @@ func _ready():
 		server = get_node("Server")
 		server.set_handler(OnlineServer.new(self))
 		server.start()
-	pass
 
-func new_player(client, stream, name):
+func server_player_join(client, stream, msg):
 	var id = randi()
 	var ship = create_ship()
-	players[id] = {"client":client,"ship":ship}
+	players[id] = {"client":client,"ship":ship,"name":msg.name}
 	server.send_data(stream, Command.ServerClientAccepted.new(id).get_msg())
-	server.broadcast(Command.ServerNewPlayer.new(id,name, ship).get_msg())
+	server.broadcast(Command.ServerNewPlayer.new(id,msg.name, ship).get_msg())
 
-func player_left(client):
+func server_client_update_ctrl(client, stream, msg):
+	print_debug("Not implemented yet")
+	pass
+
+func server_player_left(client):
 	for key in players.keys():
 		if players[key] != null and players[key].client == client:
-			print("Removing client")
+			print_debug("Removing client")
 			players[key].ship.queue_free()
 			players.erase(key)
 			break
-	pass
 
 func create_ship():
 	var ship = Ship.instance()
-	add_child(ship)
+	get_node("Game").add_child(ship)
 	return ship
 
 func client_accepted(id):
-	print("accepted: " + str(id))
+	player_id = id
+	print_debug("accepted: " + str(id))
+
+func client_new_player(id, name, ship):
+	if id == player_id:
+		return
+	print_debug("New player")
+	pass
+
+func print_debug(mess):
+	print(mess)
