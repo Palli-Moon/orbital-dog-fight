@@ -1,5 +1,22 @@
 extends Node
 
+export var ip = "127.0.0.1" setget set_host, get_host
+export var port = 4666 setget set_port, get_port
+
+func get_host():
+	return get_node("Client").host
+
+func set_host(the_host):
+	get_node("Client").ip = the_host
+	ip = the_host
+
+func get_port():
+	return get_node("Client").port
+
+func set_port(the_port):
+	get_node("Server").port = the_port
+	port = the_port
+
 var client = null
 
 var player_id = null

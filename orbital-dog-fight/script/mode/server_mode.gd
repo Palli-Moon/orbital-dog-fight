@@ -1,6 +1,30 @@
 extends Node
 
 export var is_dedicated = false
+export var host = "127.0.0.1" setget set_host, get_host
+export var port = 4666 setget set_port, get_port
+export var max_conns = 4 setget set_max_conns, get_max_conns
+
+func get_max_conns():
+	return get_node("Server").max_conns
+
+func set_max_conns(num):
+	get_node("Server").max_conns = num
+	max_conns = num
+
+func get_host():
+	return get_node("Server").host
+
+func set_host(the_host):
+	get_node("Server").host = the_host
+	host = the_host
+
+func get_port():
+	return get_node("Server").port
+
+func set_port(the_port):
+	get_node("Server").port = the_port
+	port = the_port
 
 var server = null
 
