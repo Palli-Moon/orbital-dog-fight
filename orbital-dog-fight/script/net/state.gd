@@ -1,13 +1,15 @@
 
 class ControlState:
-	var fwd = false
-	var bwd = false
-	var tl = false
-	var tr = false
-	var lasers = false
+	var ctrl = null
+	
+	func _init(state):
+		if state != null:
+			ctrl = state
+		else:
+			ctrl = {fwd=false,bwd=false,tl=false,tr=false,lasers=false}
 	
 	func get_state():
-		return {fwd=false,bwd=false,tl=false,tr=false,lasers=false}
+		return ctrl
 
 class ShipState:
 	var ship
@@ -32,6 +34,9 @@ class ShipState:
 		ship.curr_hp = s.hp
 		ship.ctrl = s.ctrl
 		ship.healthBar.update_rot()
+	
+	func update_ctrl(ctrl):
+		ship.ctrl = ctrl
 
 class PlayerState:
 	var id
@@ -74,6 +79,12 @@ class GameState:
 		if player != null:
 			players.erase(id)
 			return player
+		return null
+	
+	func get_player_by_client(client):
+		for k in players.keys():
+			if players[k] != null and players[k].client == client:
+				return players[k]
 		return null
 	
 	func get_state():

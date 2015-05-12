@@ -26,7 +26,7 @@ class OnlineServer extends "res://script/net/server.gd".ServerHandler:
 	func on_message(client, stream, message):
 		var msg = mode.Command.parse(message)
 		if msg == null:
-			mode.print_debug("Unknown command " + str(message))
+			mode.print_debug("Unknown command from client: " + str(message))
 		elif msg.cmd == mode.Command.CLIENT_CONNECT:
 			mode.player_join(client, stream, msg)
 		elif msg.cmd == mode.Command.CLIENT_UPDATE_CTRL:
@@ -59,7 +59,9 @@ func player_join(client, stream, msg):
 	server.broadcast(Command.ServerNewPlayer.new(id,msg.name, ship).get_msg())
 
 func player_update_ctrl(client, stream, msg):
-	print_debug("Not implemented yet")
+	var p = curr_state.get_player_by_client(client)
+	if p != null:
+		p.ship.update_ctrl(msg.ctrl)
 	pass
 
 func player_left(client):

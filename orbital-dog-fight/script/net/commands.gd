@@ -19,18 +19,14 @@ class ClientConnect:
 class ClientUpdateCtrl:
 	var id
 	const cmd = CLIENT_UPDATE_CTRL
-	var ctrl = {fwd=false,bwd=false,tl=false,tr=false,fire=false}
+	var ctrl
 	
-	func _init(my_id, fwd, bwd, tl, tr, fire):
+	func _init(my_id, my_ctrl):
 		id = my_id
-		ctrl.fwd = fwd
-		ctrl.bwd = bwd
-		ctrl.tl = tl
-		ctrl.tr = tr
-		ctrl.fire = fire
+		ctrl = my_ctrl
 	
 	func get_msg():
-		return [cmd, id, ctrl.fwd, ctrl.bwd, ctrl.tl, ctrl.tr, ctrl.fire]
+		return [cmd, id, ctrl.get_state()]
 
 class ClientDisconnect:
 	var id
@@ -90,11 +86,9 @@ static func parse(data):
 			return null
 		return ClientDisconnect(data[1])
 	elif cmd == CLIENT_UPDATE_CTRL:
-		if data.size() != 7 || typeof(data[1]) != TYPE_INT || typeof(data[2]) != TYPE_BOOL || \
-			typeof(data[3]) != TYPE_BOOL || typeof(data[4]) != TYPE_BOOL || typeof(data[5]) != TYPE_BOOL || \
-			typeof(data[6]) != TYPE_BOOL:
+		if data.size() != 3 || typeof(data[1]) != TYPE_INT || typeof(data[2]) != TYPE_DICTIONARY:
 			return null
-		return ClientUpdateCtrl.new(data[1],data[2],data[3],data[4],data[5],data[6])
+		return ClientUpdateCtrl.new(data[1],data[2])
 	elif cmd == SERVER_CLIENT_ACCEPTED:
 		if data.size() != 2 || typeof(data[1]) != TYPE_INT:
 			return null
@@ -109,5 +103,5 @@ static func parse(data):
 		if data.size() != 4 || typeof(data[1]) != TYPE_INT || typeof(data[2]) != TYPE_STRING:
 			return null
 		return ServerNewPlayer.new(data[1], data[2], data[3])
-	print("Unknown client command")
+	print("Unknown command")
 	return null

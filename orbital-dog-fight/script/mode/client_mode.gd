@@ -22,12 +22,13 @@ class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 		pass
 	
 	func on_disconnect(stream):
+		mode.set_fixed_process(false)
 		pass
 	
 	func on_message(stream, message):
 		var msg = mode.Command.parse(message)
 		if msg == null:
-			print_debug("Unknown command " + str(message))
+			print_debug("Unknown command from server: " + str(message))
 		elif msg.cmd == mode.Command.SERVER_CLIENT_ACCEPTED:
 			mode.accepted(msg.id)
 		elif msg.cmd == mode.Command.SERVER_NEW_PLAYER:
@@ -41,19 +42,33 @@ func _ready():
 	client.set_handler(OnlineClient.new(self))
 	client.connect()
 
+func _fixed_process(delta):
+	var updated = false
+	for type in ship.CMD.ALL:
+		var active = Input.is_action_pressed("p1_"+type)
+		if ship.ctrl.has(type) and active != ship.ctrl[type]:
+			updated = true
+			ship.ctrl[type] = active
+	if updated:
+		client.send_data(Command.ClientUpdateCtrl.new(player_id, State.ControlState.new(ship.ctrl)).get_msg())
+	pass
+
 func accepted(id):
 	player_id = id
 	ship = Ship.instance()
+	ship.is_remote = true
+	ship.ctrl = State.ControlState.new(null).get_state()
 	curr_state.add_player(id, player_name, ship, null)
 	get_node("Game").add_child(ship)
 	print_debug("accepted: " + str(id))
+	set_fixed_process(true)
 
 func new_player(id, name, ship):
 	if id == player_id:
 		return
 	ship = Ship.instance()
 	ship.is_remote = true
-	ship.ctrl = State.ControlState.new().get_state()
+	ship.ctrl = State.ControlState.new(null).get_state()
 	get_node("Game").add_child(ship)
 	curr_state.add_player(id, name, ship, null)
 	print_debug("New player")

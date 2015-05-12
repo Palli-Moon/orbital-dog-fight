@@ -154,12 +154,15 @@ func fire():
 	var scale = get_node("Sprite").get_scale()
 	var la_l = laser.instance()
 	var la_r = laser.instance()
-	la_l.set_pos(Vector2(10 * scale.x,-34 * scale.y))
-	la_r.set_pos(Vector2(-10 * scale.x,-34 * scale.y))
+	la_l.set_rot(get_rot())
+	la_l.set_global_pos(get_transform().get_origin() + Vector2(10 * scale.x,-34 * scale.y).rotated(get_rot()))
 	la_l.set_linear_velocity(Vector2(0,-laser_speed).rotated(get_transform().get_rotation()))
+	
+	la_r.set_rot(get_rot())
+	la_r.set_global_pos(get_transform().get_origin() + Vector2(-10 * scale.x,-34 * scale.y).rotated(get_rot()))
 	la_r.set_linear_velocity(Vector2(0,-laser_speed).rotated(get_transform().get_rotation()))
-	add_child(la_l)
-	add_child(la_r)
+	get_parent().add_child(la_l)
+	get_parent().add_child(la_r)
 	get_node("ShipSounds").play("laser1")
 	laser_heat += laser_heat_step
 	
