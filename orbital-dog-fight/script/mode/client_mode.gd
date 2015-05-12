@@ -4,6 +4,7 @@ var client = null
 
 var player_id = null
 var player_name = "Unamed Player"
+var ship = null
 var players = {}
 var Command = preload("res://script/net/commands.gd")
 var Client = preload("res://script/net/client.gd")
@@ -37,6 +38,8 @@ func _ready():
 
 func client_accepted(id):
 	player_id = id
+	ship = Ship.instance()
+	get_node("Game").add_child(ship)
 	print_debug("accepted: " + str(id))
 
 func client_new_player(id, name, ship):

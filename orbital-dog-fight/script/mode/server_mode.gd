@@ -4,10 +4,12 @@ export var is_dedicated = false
 
 var server = null
 
-var players = {}
+var curr_state = null
+var State = preload("res://script/net/state.gd")
 var Command = preload("res://script/net/commands.gd")
 var Server = preload("res://script/net/server.gd")
 var Ship = preload("res://scene/comp/ship.xml")
+var dt = 0
 
 class OnlineServer extends "res://script/net/server.gd".ServerHandler:
 	var mode = null
@@ -24,24 +26,35 @@ class OnlineServer extends "res://script/net/server.gd".ServerHandler:
 	func on_message(client, stream, message):
 		var msg = mode.Command.parse(message)
 		if msg == null:
-			print_debug("Unknown command " + str(message))
+			mode.print_debug("Unknown command " + str(message))
 		elif msg.cmd == mode.Command.CLIENT_CONNECT:
 			mode.player_join(client, stream, msg)
 		elif msg.cmd == mode.Command.CLIENT_UPDATE_CTRL:
 			mode.player_update_ctrl(client, stream, msg)
 		elif msg.cmd == mode.Command.CLIENT_DISCONNECT:
-			print_debug("client disconnected")
+			mode.print_debug("client disconnected")
 
 func _ready():
 	seed(OS.get_unix_time())
+	curr_state = State.GameState.new()
 	server = get_node("Server")
 	server.set_handler(OnlineServer.new(self))
 	server.start()
+	set_fixed_process(true)
+
+func _fixed_process(delta):
+	dt += delta
+	if dt >= 0.5:
+		dt -= 0.5
+		send_sync_state()
+
+func send_sync_state():
+	server.broadcast(Command.ServerStateUpdate.new(curr_state.get_state()).get_msg())
 
 func player_join(client, stream, msg):
 	var id = randi()
 	var ship = create_ship()
-	players[id] = {"client":client,"ship":ship,"name":msg.name}
+	curr_state.add_player(id, msg.name, ship, client)
 	server.send_data(stream, Command.ServerClientAccepted.new(id).get_msg())
 	server.broadcast(Command.ServerNewPlayer.new(id,msg.name, ship).get_msg())
 
@@ -50,15 +63,14 @@ func player_update_ctrl(client, stream, msg):
 	pass
 
 func player_left(client):
-	for key in players.keys():
-		if players[key] != null and players[key].client == client:
-			print_debug("Removing client")
-			players[key].ship.queue_free()
-			players.erase(key)
-			break
+	var p = curr_state.remove_player(client)
+	if p != null:
+		p.ship.queue_free()
 
 func create_ship():
 	var ship = Ship.instance()
+	ship.is_remote = true
+	ship.ctrl = {fwd=false,bwd=false,tl=false,tr=false,lasers=false}
 	get_node("Game").add_child(ship)
 	return ship
 

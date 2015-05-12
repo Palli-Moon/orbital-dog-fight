@@ -56,7 +56,7 @@ class ServerStateUpdate:
 	var state
 	const cmd = SERVER_STATE_UPDATE
 	
-	func set_state(s):
+	func _init(s):
 		state = s
 	
 	func get_msg():

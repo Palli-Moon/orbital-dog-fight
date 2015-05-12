@@ -21,6 +21,9 @@ class ClientHandler:
 	
 	func on_message(stream, message):
 		print_debug("You should override on_message(client, stream, message)")
+	
+	func print_debug(mess):
+		print(mess)
 
 func _ready():
 	debug = get_node("Debug")
