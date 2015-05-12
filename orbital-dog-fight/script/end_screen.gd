@@ -1,13 +1,6 @@
 
 extends Node2D
 
-# member variables here, example:
-# var a=2
-# var b="textvar"
-
-func _ready():
-	set_process_input(true)
-	
 func _input(event):
 	if Input.is_action_pressed("ui_accept"):
 		if get_node("/root/Demos") != null:
@@ -18,4 +11,5 @@ func _input(event):
 func show_end(text):
 	get_node("End Text").set_text(text)
 	show()
+	set_process_input(true)
 	get_tree().set_pause(true)

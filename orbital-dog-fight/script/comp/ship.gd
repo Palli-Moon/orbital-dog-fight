@@ -18,6 +18,7 @@ var ctrl = null
 var colliding_bodies = 0
 var CMD = preload("res://script/comp/ship/commands.gd")
 var laser = preload("res://scene/comp/laser.xml")
+var audio = null
 var heimdallr = null
 var healthBar = null
 var laserBar = null
@@ -25,6 +26,7 @@ var particles = null
 var fire_timer = null
 var curr_hp = 0
 var laser_heat = 0
+var sound_playing = false
 
 var isdying = false
 
@@ -37,6 +39,7 @@ func on_ready():
 	healthBar = get_node("HealthBar")
 	particles = get_node("Particles")
 	laserBar = get_node("LaserBar")
+	audio = get_node("AudioEngine")
 	get_node("Sprite").set_texture(shiptex)
 	# Bind animation events
 	var anim = get_node("explosion/AnimationPlayer")
@@ -81,6 +84,7 @@ func xform_dir(vec):
 func apply_ctrl(type, dt):
 	if type == CMD.FORWARD:
 		apply_impulse(Vector2(0,0), xform_dir(Vector2(0,-fwd_speed * dt)))
+		play_thruster_sound()
 	elif type == CMD.BACKWARD:
 		apply_impulse(Vector2(0,0), xform_dir(Vector2(0,bwd_speed * dt)))
 	elif type == CMD.STRAFE_LEFT:
@@ -97,6 +101,17 @@ func apply_ctrl(type, dt):
 		fire()
 	else:
 		print("Unkown command: " + type)
+		
+func play_thruster_sound():
+	if !sound_playing:
+		audio.play_sound()
+		sound_playing = true
+		
+func stop_thruster_sound():
+	if sound_playing:
+		audio.stop_sound()
+		sound_playing = false
+
 
 func _fixed_process(delta):
 	var show = []
@@ -106,6 +121,8 @@ func _fixed_process(delta):
 			show.append(type)
 			apply_ctrl(type, delta)
 		else:
+			if type == CMD.FORWARD:
+				stop_thruster_sound()
 			particles.hide_particles(type)
 	for type in show:
 		particles.show_particles(type)
@@ -145,6 +162,7 @@ func fire():
 	add_child(la_r)
 	get_node("ShipSounds").play("laser1")
 	laser_heat += laser_heat_step
+	
 func _die():
 	add_to_group("dead")
 	set_pos(Vector2(-1000,-1000))
