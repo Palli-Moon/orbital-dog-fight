@@ -24,11 +24,12 @@ class ServerHandler:
 
 # Server node
 func _ready():
-	debug = get_node("Debug")
+	#debug = get_node("Debug")
+	pass
 
 func start():
 	server = TCP_Server.new()
-	if server.listen( port, [] ) == 0:
+	if server.listen( port, ["0.0.0.0"] ) == 0:
 		print_debug("Server started on port "+str(port))
 		set_fixed_process( true )
 	else:

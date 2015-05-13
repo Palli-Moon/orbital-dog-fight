@@ -37,7 +37,7 @@ class OnlineServer extends "res://script/net/server.gd".ServerHandler:
 		pass
 	
 	func on_disconnect(client, stream):
-		mode.server_player_left(client)
+		mode.player_left(client)
 	
 	func on_message(client, stream, message):
 		var msg = mode.Command.parse(message)

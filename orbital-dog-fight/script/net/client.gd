@@ -26,7 +26,8 @@ class ClientHandler:
 		print(mess)
 
 func _ready():
-	debug = get_node("Debug")
+	#debug = get_node("Debug")
+	pass
 
 func connect():
 	conn = StreamPeerTCP.new()
