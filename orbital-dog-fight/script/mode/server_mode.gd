@@ -81,9 +81,9 @@ func player_update_ctrl(client, stream, msg):
 		server.broadcast(Command.ClientUpdateCtrl.new(p.id, msg.ctrl).get_msg())
 
 func player_left(client):
-	var p = curr_state.remove_player(client)
+	var p = curr_state.remove_player_by_client(client)
 	if p != null:
-		p.ship.queue_free()
+		p.ship.get_ship().queue_free()
 
 func create_ship():
 	var ship = Ship.instance()

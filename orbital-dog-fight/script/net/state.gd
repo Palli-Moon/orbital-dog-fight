@@ -17,6 +17,9 @@ class ShipState:
 	func _init(s):
 		ship = s
 	
+	func get_ship():
+		return ship
+	
 	func get_state():
 		var my_ctrl
 		if ship.ctrl != null:
