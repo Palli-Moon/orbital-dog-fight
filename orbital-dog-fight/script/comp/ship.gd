@@ -90,10 +90,6 @@ func apply_ctrl(type, dt):
 		play_thruster_sound()
 	elif type == CMD.BACKWARD:
 		apply_impulse(Vector2(0,0), xform_dir(Vector2(0,bwd_speed * dt)))
-	elif type == CMD.STRAFE_LEFT:
-		apply_impulse(Vector2(0,0), xform_dir(Vector2(-strafe_speed * dt,0)))
-	elif type == CMD.STRAFE_RIGHT:
-		apply_impulse(Vector2(0,0), xform_dir(Vector2(strafe_speed * dt,0)))
 	elif type == CMD.TURN_LEFT:
 		apply_impulse(Vector2(rot_speed,rot_speed), Vector2(rot_speed * dt,0))
 		apply_impulse(Vector2(-rot_speed,-rot_speed), Vector2(-rot_speed * dt,0))
@@ -106,7 +102,7 @@ func apply_ctrl(type, dt):
 		fire()
 	else:
 		print("Unkown command: " + type)
-		
+
 func play_thruster_sound():
 	if !thruster_sound_playing:
 		thruster_sound_playing = true
@@ -115,17 +111,17 @@ func play_thruster_sound():
 
 	if !get_node("ShipSounds").is_voice_active(thruster_voice):
 		thruster_sound_playing = false
-		
+
 func stop_thruster_sound():
 	if thruster_sound_playing:
 		thruster_sound_playing = false
 		get_node("ShipSounds").stop(thruster_voice)
-		
+
 func play_side_thruster_sound():
 	if !side_thruster_sound_playing:
 		audio.play_sound()
 		side_thruster_sound_playing = true
-		
+
 func stop_side_thruster_sound():
 	if side_thruster_sound_playing:
 		audio.stop_sound()
@@ -146,7 +142,7 @@ func _fixed_process(delta):
 			if type == CMD.FORWARD:
 				stop_thruster_sound()
 			particles.hide_particles(type)
-			
+
 	if !should_play:
 		stop_side_thruster_sound()
 	for type in show:
@@ -182,7 +178,7 @@ func fire():
 	la_l.set_rot(get_rot())
 	la_l.set_global_pos(get_transform().get_origin() + Vector2(10 * scale.x,-34 * scale.y).rotated(get_rot()))
 	la_l.set_linear_velocity(Vector2(0,-laser_speed).rotated(get_transform().get_rotation()))
-	
+
 	la_r.set_rot(get_rot())
 	la_r.set_global_pos(get_transform().get_origin() + Vector2(-10 * scale.x,-34 * scale.y).rotated(get_rot()))
 	la_r.set_linear_velocity(Vector2(0,-laser_speed).rotated(get_transform().get_rotation()))
@@ -190,7 +186,7 @@ func fire():
 	get_parent().add_child(la_r)
 	get_node("ShipSounds").play("laser1")
 	laser_heat += laser_heat_step
-	
+
 func _die():
 	add_to_group("dead")
 	set_pos(Vector2(-1000,-1000))
