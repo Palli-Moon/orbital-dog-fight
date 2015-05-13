@@ -8,13 +8,12 @@
 			<string> "conns" </string>
 			<int_array  len="0"> 				 </int_array>
 			<string> "names" </string>
-			<string_array  len="29">
+			<string_array  len="28">
 				<string> "Server" </string>
 				<string> "Node" </string>
 				<string> "_import_path" </string>
 				<string> "script/script" </string>
 				<string> "__meta__" </string>
-				<string> "host" </string>
 				<string> "port" </string>
 				<string> "max_conns" </string>
 				<string> "Debug" </string>
@@ -42,9 +41,9 @@
 			<string> "node_count" </string>
 			<int> 2 </int>
 			<string> "nodes" </string>
-			<int_array  len="66"> 				-1, -1, 1, 0, -1, 6, 2, 0, 3, 1, 4, 2, 5, 3, 6, 4, 7, 5, 0, 0, 0, 9, 8, -1, 20, 2, 0, 10, 6, 11, 7, 12, 7, 13, 8, 14, 9, 15, 10, 16, 11, 17, 12, 18, 0, 19, 0, 20, 0, 21, 0, 22, 6, 23, 6, 24, 13, 25, 13, 26, 7, 27, 14, 28, 15, 0 </int_array>
+			<int_array  len="64"> 				-1, -1, 1, 0, -1, 5, 2, 0, 3, 1, 4, 2, 5, 3, 6, 4, 0, 0, 0, 8, 7, -1, 20, 2, 0, 9, 5, 10, 6, 11, 6, 12, 7, 13, 8, 14, 9, 15, 10, 16, 11, 17, 0, 18, 0, 19, 0, 20, 0, 21, 5, 22, 5, 23, 12, 24, 12, 25, 6, 26, 13, 27, 14, 0 </int_array>
 			<string> "variants" </string>
-			<array  len="16" shared="false">
+			<array  len="15" shared="false">
 				<node_path> "" </node_path>
 				<resource  resource_type="Script" path="res://script/net/server.gd">  </resource>
 				<dictionary  shared="false">
@@ -187,7 +186,6 @@
 						<int> 0 </int>
 					</dictionary>
 				</dictionary>
-				<string> "127.0.0.1" </string>
 				<int> 4666 </int>
 				<int> 4 </int>
 				<bool> True </bool>

@@ -97,6 +97,8 @@ func create_ship():
 	var ship = Ship.instance()
 	ship.is_remote = true
 	ship.ctrl = {fwd=false,bwd=false,tl=false,tr=false,lasers=false}
+	ship.set_linear_velocity(Vector2(150,0))
+	ship.set_pos(Vector2(800,200))
 	get_node("Game").add_child(ship)
 	return ship
 

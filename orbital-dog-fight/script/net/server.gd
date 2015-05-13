@@ -1,6 +1,5 @@
 extends Node
 
-export var host = "127.0.0.1"
 export var port = 4666
 export var max_conns = 4
 
@@ -29,7 +28,7 @@ func _ready():
 
 func start():
 	server = TCP_Server.new()
-	if server.listen( port, [host] ) == 0:
+	if server.listen( port, [] ) == 0:
 		print_debug("Server started on port "+str(port))
 		set_fixed_process( true )
 	else:

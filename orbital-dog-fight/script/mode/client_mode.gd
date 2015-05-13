@@ -1,20 +1,20 @@
 extends Node
 
-export var ip = "127.0.0.1" setget set_host, get_host
+export var ip = "127.0.0.1" setget set_ip, get_ip
 export var port = 4666 setget set_port, get_port
 
-func get_host():
-	return get_node("Client").host
+func get_ip():
+	return get_node("Client").ip
 
-func set_host(the_host):
-	get_node("Client").ip = the_host
-	ip = the_host
+func set_ip(the_ip):
+	get_node("Client").ip = the_ip
+	ip = the_ip
 
 func get_port():
 	return get_node("Client").port
 
 func set_port(the_port):
-	get_node("Server").port = the_port
+	get_node("Client").port = the_port
 	port = the_port
 
 var client = null
@@ -104,6 +104,8 @@ func create_ship():
 	var out = Ship.instance()
 	out.is_remote = true
 	out.ctrl = State.ControlState.new(null).get_state()
+	out.set_linear_velocity(Vector2(150,0))
+	out.set_pos(Vector2(400,200))
 	get_node("Game").add_child(out)
 	return out
 
