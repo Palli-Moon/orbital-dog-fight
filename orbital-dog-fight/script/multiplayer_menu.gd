@@ -1,34 +1,44 @@
 
-extends Node2D
+extends Control
+
+var main = null
 
 func _ready():
-	get_node("Control/Connect/Connect").connect("pressed", self, "on_client")
-	get_node("Control/Create/Create").connect("pressed", self, "on_server")
-	get_node("Control/Local").connect("pressed", self, "on_local")
-	get_node("Control/Back").connect("pressed", self, "on_back")
+	main = get_node("/root/Demos")
+	get_node("Connect/Connect").connect("pressed", self, "on_client")
+	get_node("Create/Create").connect("pressed", self, "on_server")
+	get_node("Local").connect("pressed", self, "on_local")
+	get_node("Back").connect("pressed", self, "on_back")
 
 func load_scene(scene):
-	var mode = get_node("Mode")
-	for c in mode.get_children():
-		mode.remove_child(c)
-	mode.add_child(scene)
+	main.clear_scene()
+	main.current.add_child(scene)
+	main.current_scene = "res://scene/mode/online.xml"
+	main.get_node("Main Menu/Resume").show()
+	main.get_node("Main Menu/Restart").hide()
+	main.toggle_pause()
 
 func on_client():
 	var s = ResourceLoader.load("res://scene/mode/online.xml").instance()
 	s.set_script(load("res://script/mode/client_mode.gd"))
 	load_scene(s)
-	s.set_ip(get_node("Control/Connect/Host").get_text())
-	s.set_port(get_node("Control/Connect/Port").get_text())
-	get_node("Control").hide()
+	s.set_ip(get_node("Connect/Host").get_text())
+	s.set_port(get_node("Connect/Port").get_text())
+	main.toggle_multiplayer()
 
 func on_server():
 	var s = ResourceLoader.load("res://scene/mode/online.xml").instance()
 	s.set_script(load("res://script/mode/server_mode.gd"))
-	s.set_port(int(get_node("Control/Create/Port").get_text()))
+	s.set_port(int(get_node("Create/Port").get_text()))
 	load_scene(s)
-	get_node("Control").hide()
+	main.toggle_multiplayer()
 
 func on_local():
-	var s = ResourceLoader.load("res://scene/mode/multi.xml").instance()
-	load_scene(s)
-	get_node("Control").hide()
+	main.clear_scene()
+	main.load_scene("res://scene/mode/multi.xml")
+	main.toggle_multiplayer()
+	main.toggle_pause()
+	
+func on_back():
+	main.toggle_multiplayer()
+	main.toggle_menu()

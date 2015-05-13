@@ -2,6 +2,7 @@ extends Node2D
 
 var menu_open = true
 var settings_open = false
+var multi_open = false
 var is_remapping = false
 var pause = true
 var current
@@ -31,6 +32,9 @@ func _input(event):
 			if settings_open:
 				toggle_settings()
 				toggle_menu()
+			elif multi_open:
+				toggle_multiplayer()
+				toggle_menu()
 			else:
 				if current_scene != null:
 					pause = menu_open
@@ -42,6 +46,7 @@ func _input(event):
 				settings.remap_action(event)
 
 func clear_scene():
+	print("Clear")
 	var child = current.get_child(0)
 	if child:
 		child.queue_free()
@@ -87,6 +92,13 @@ func toggle_settings():
 	else:
 		settings.hide()
 
+func toggle_multiplayer():
+	if multi_open:
+		get_node("Multiplayer").hide()
+	else:
+		get_node("Multiplayer").show()
+	multi_open = !multi_open
+
 # Button Handlers
 func _on_Exit_pressed():
 	OS.get_main_loop().quit()
@@ -105,9 +117,7 @@ func _on_Single_pressed():
 
 func _on_Multi_pressed():
 	toggle_menu()
-	clear_scene()
-	load_scene("res://scene/mode/multi.xml")
-	toggle_pause()
+	toggle_multiplayer()
 
 func _on_Restart_pressed():
 	restart_scene()
