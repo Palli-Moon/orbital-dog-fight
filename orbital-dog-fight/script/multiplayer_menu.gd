@@ -21,9 +21,9 @@ func load_scene(scene):
 func on_client():
 	var s = ResourceLoader.load("res://scene/mode/online.xml").instance()
 	s.set_script(load("res://script/mode/client_mode.gd"))
-	load_scene(s)
 	s.set_ip(get_node("Connect/Host").get_text())
-	s.set_port(get_node("Connect/Port").get_text())
+	s.set_port(int(get_node("Connect/Port").get_text()))
+	load_scene(s)
 	main.toggle_multiplayer()
 
 func on_server():
