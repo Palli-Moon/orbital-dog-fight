@@ -30,6 +30,9 @@ func _ready():
 	showTimer = get_child(2)
 	fadeTimer = get_child(3)
 	muteButton = get_child(6)
+	muteButton.set_focus_mode(Control.FOCUS_NONE)
+	get_node("Forward").set_focus_mode(Control.FOCUS_NONE)
+	get_node("Back").set_focus_mode(Control.FOCUS_NONE)
 	for name in songnames:
 		songs.append(load("res://sound/"+name+".ogg"))
 	currsong = randi() % songnames.size()

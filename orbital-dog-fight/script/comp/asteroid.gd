@@ -13,6 +13,7 @@ var health_bar = null
 var heimdallr
 var is_dying = false
 
+var textures = [load("res://assets/img/asteroid1.png"), load("res://assets/img/asteroid2.png"), load("res://assets/img/asteroid3.png")]
 func on_ready():
 	# Register events
 	heimdallr = get_node("/root/Heimdallr")
@@ -53,10 +54,11 @@ func get_hitpoints():
 
 func set_default_volume(value):
 	get_node("AsteroidSounds").set_default_volume(value)
-	
+
 func _die():
 	if scale > 1 && !is_dying:
 		is_dying = true
+		
 		var littleroid = asteroid.instance()
 		var pos = get_pos()
 		var vel = get_linear_velocity()
@@ -87,7 +89,7 @@ func get_asteroid_texture():
 	if has_node("Sprite"):
 		return get_node("Sprite").get_texture()
 	return asteroid_texture
-	
+
 func set_scale(scale):
 	if has_node("Sprite"):
 		get_node("Sprite").set_scale(Vector2(scale, scale))
