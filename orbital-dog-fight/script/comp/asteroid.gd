@@ -68,8 +68,8 @@ func _die():
 				var pos = get_pos()
 				var vel = get_linear_velocity()
 				littleroid.set_linear_velocity(vel)
-				littleroid.apply_impulse(Vector2(0,0), Vector2(randf()*10, randf()*10))
-				littleroid.set_pos(pos+Vector2((randf()-0.5)*10, (randf()-0.5)*10))
+				littleroid.apply_impulse(Vector2(0,0), Vector2((randf()-0.5)*50, (randf()-0.5)*50))
+				littleroid.set_pos(pos+Vector2((randf()-0.5)*20, (randf()-0.5)*20))
 				littleroid.hitpoints = hitpoints * littleroidscale
 				littleroid.curr_hp = littleroid.hitpoints
 				littleroid.scale = scale * littleroidscale
