@@ -35,12 +35,12 @@ func connect():
 	stream.set_stream_peer( conn )
 	if conn.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 		print_debug(  "Connected to "+ip+" :"+str(port) )
-		set_process(true)
+		set_fixed_process(true)
 		is_conn = true
 		on_connect(stream)
 	elif conn.get_status() == StreamPeerTCP.STATUS_CONNECTING:
 		print_debug(  "Trying to connect "+ip+" :"+str(port) )
-		set_process(true)
+		set_fixed_process(true)
 	elif conn.get_status() == StreamPeerTCP.STATUS_NONE or conn.get_status() == StreamPeerTCP.STATUS_ERROR:
 		print_debug( "Couldn't connect to "+ip+" :"+str(port) )
 
@@ -49,7 +49,7 @@ func disconnect():
 	if conn != null:
 		conn.disconnect()
 	is_conn = false
-	set_process(false)
+	set_fixed_process(false)
 
 func set_handler(my_handler):
 	if my_handler == null or not my_handler extends ClientHandler:
@@ -80,7 +80,7 @@ func on_message(stream, message):
 		else:
 			print_debug("Invalid command " + str(message))
 
-func _process( delta ):
+func _fixed_process(delta):
 	# Still trying to connect
 	if !is_conn:
 		if conn.get_status() == StreamPeerTCP.STATUS_CONNECTED:

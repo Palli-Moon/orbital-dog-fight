@@ -31,7 +31,7 @@ func start():
 	server = TCP_Server.new()
 	if server.listen( port, [host] ) == 0:
 		print_debug("Server started on port "+str(port))
-		set_process( true )
+		set_fixed_process( true )
 	else:
 		print_debug("Failed to start server on port "+str(port))
 
@@ -69,7 +69,7 @@ func on_disconnect(client, stream):
 	else:
 		print_debug("on_disconnect: Handler not set")
 
-func _process( delta ):
+func _fixed_process(delta):
 	# Check new connections
 	if server.is_connection_available():
 		var client = server.take_connection()
