@@ -116,7 +116,7 @@ func update_ctrl(id, ctrl):
 	else:
 		var p = curr_state.get_player_by_id(id)
 		if p != null:
-			p.ship.ctrl = ctrl
+			p.ship.get_ship().ctrl = ctrl
 
 func print_debug(mess):
 	print(mess)

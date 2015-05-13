@@ -60,8 +60,8 @@ func _ready():
 
 func _fixed_process(delta):
 	dt += delta
-	if dt >= 0.5:
-		dt -= 0.5
+	if dt >= 0.1:
+		dt -= 0.1
 		send_sync_state()
 
 func send_sync_state():

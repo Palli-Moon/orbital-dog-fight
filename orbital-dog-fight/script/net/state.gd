@@ -106,8 +106,9 @@ class GameState:
 		for k in players.keys():
 			# Remove deleted players
 			if not state.has(k):
-				var p = players.erase(k)
-				p.queue_free()
+				var p = players[k]
+				players.erase(k)
+				p.ship.get_ship().queue_free()
 			# Update known players
 			else:
 				players[players[k].id].update_state(state[k])
