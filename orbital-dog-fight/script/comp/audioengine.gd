@@ -10,7 +10,7 @@ var snd = RawArray()
 
 func _ready():
 	for i in range(SOUNDLEN):
-		snd.push_back(randi() % 30 + 1) 
+		snd.push_back(randi() % 15 + 1) 
 
 	server.voice_set_volume(r, 0.1) # DOESN'T FUCKING WORK
 

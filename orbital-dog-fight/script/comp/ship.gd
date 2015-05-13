@@ -26,7 +26,9 @@ var particles = null
 var fire_timer = null
 var curr_hp = 0
 var laser_heat = 0
-var sound_playing = false
+var thruster_sound_playing = false
+var side_thruster_sound_playing = false
+var thruster_voice
 
 var isdying = false
 
@@ -48,6 +50,7 @@ func on_ready():
 	# Manage volume settings
 	if get_node("/root/Demos/Settings") != null:
 		set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
+	get_node("ShipSounds").set_voice_count(24)
 
 func on_spawn():
 	isdying = false
@@ -94,36 +97,58 @@ func apply_ctrl(type, dt):
 	elif type == CMD.TURN_LEFT:
 		apply_impulse(Vector2(rot_speed,rot_speed), Vector2(rot_speed * dt,0))
 		apply_impulse(Vector2(-rot_speed,-rot_speed), Vector2(-rot_speed * dt,0))
+		play_side_thruster_sound()
 	elif type == CMD.TURN_RIGHT:
 		apply_impulse(Vector2(rot_speed,rot_speed), Vector2(-rot_speed * dt,0))
 		apply_impulse(Vector2(-rot_speed,-rot_speed), Vector2(rot_speed * dt,0))
+		play_side_thruster_sound()
 	elif type == CMD.FIRE_LASERS:
 		fire()
 	else:
 		print("Unkown command: " + type)
 		
 func play_thruster_sound():
-	if !sound_playing:
-		audio.play_sound()
-		sound_playing = true
+	if !thruster_sound_playing:
+		thruster_sound_playing = true
+		thruster_voice = get_node("ShipSounds").play("engine4")
+		get_node("ShipSounds").set_volume(thruster_voice, 0.3)
+
+	if !get_node("ShipSounds").is_voice_active(thruster_voice):
+		thruster_sound_playing = false
 		
 func stop_thruster_sound():
-	if sound_playing:
+	if thruster_sound_playing:
+		thruster_sound_playing = false
+		get_node("ShipSounds").stop(thruster_voice)
+		
+func play_side_thruster_sound():
+	if !side_thruster_sound_playing:
+		audio.play_sound()
+		side_thruster_sound_playing = true
+		
+func stop_side_thruster_sound():
+	if side_thruster_sound_playing:
 		audio.stop_sound()
-		sound_playing = false
+		side_thruster_sound_playing = false
 
 
 func _fixed_process(delta):
 	var show = []
+	var should_play = false
 	for type in CMD.ALL:
 		if (Input.is_action_pressed(get_ctrl(type)) and not is_remote) \
 			or (is_remote and ctrl != null and ctrl.has(type) and ctrl[type]):
 			show.append(type)
 			apply_ctrl(type, delta)
+			if type == CMD.TURN_LEFT or type == CMD.TURN_RIGHT:
+				should_play = true
 		else:
 			if type == CMD.FORWARD:
 				stop_thruster_sound()
 			particles.hide_particles(type)
+			
+	if !should_play:
+		stop_side_thruster_sound()
 	for type in show:
 		particles.show_particles(type)
 	# Keeps the health bar on top
