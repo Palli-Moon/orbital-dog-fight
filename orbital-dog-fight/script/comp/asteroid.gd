@@ -78,7 +78,7 @@ func _die():
 				get_parent().add_child(littleroid)
 				scale = scale * (1-littleroidscale)
 	heimdallr.send_signal(self, "die", [])
-	queue_free()
+	explode()
 
 func hit(beam):
 	get_node("AsteroidSounds").play("laser-hit2")
@@ -86,6 +86,14 @@ func hit(beam):
 	health_bar.update()
 	if curr_hp <= 0:
 		_die()
+		
+func explode():
+	get_node("Sprite").hide()
+	get_node("HealthBar").hide()
+	set_cd_enable(false)
+	set_collision_enable(false)
+	get_node("Node2D/explosion").show()
+	get_node("Node2D/explosion/AnimationPlayer").play("Explode")
 
 func set_asteroid_texture(tex):
 	if has_node("Sprite"):
@@ -108,3 +116,6 @@ func set_scale(scale):
 
 func get_scale():
 	return scale
+
+func _on_AnimationPlayer_finished():
+	queue_free()
