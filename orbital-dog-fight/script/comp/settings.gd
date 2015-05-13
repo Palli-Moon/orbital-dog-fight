@@ -9,7 +9,6 @@ var volume = 1.0
 var muted = false
 
 func _ready():
-	get_node("/root/Demos/Settings/Header").set_text("Wat")
 	pass
 
 func _on_Return_pressed():
