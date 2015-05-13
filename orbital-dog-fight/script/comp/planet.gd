@@ -12,14 +12,13 @@ export var planet_scale = 5.0 setget set_planet_scale, get_planet_scale
 
 func _ready():
 	get_node("Body/Sprite").set_texture(planet_texture)
-	print(get_node("Body/Sprite").get_texture())
 	if not get_tree().is_editor_hint():
 		get_node("Gravity").get_shape(0).set_radius(gravity_size)
 		get_node("Atmosphere").get_shape(0).set_radius(atmosphere_size)
 	pass
 
 func set_gravity(g):
-	if get_node("Gravity") != null:
+	if has_node("Gravity"):
 		get_node("Gravity").set_gravity(g)
 	gravity = g
 
@@ -27,7 +26,7 @@ func get_gravity():
 	return gravity
 
 func set_gravity_size(size):
-	if get_node("Gravity") != null and get_node("Gravity/CollisionShape2D") != null:
+	if has_node("Gravity") and has_node("Gravity/CollisionShape2D"):
 		get_node("Gravity/CollisionShape2D").get_shape().set_radius(size)
 	gravity_size = size
 
@@ -35,7 +34,7 @@ func get_gravity_size():
 	return gravity_size
 
 func set_atmosphere(atm):
-	if get_node("Atmosphere") != null:
+	if has_node("Atmosphere"):
 		get_node("Atmosphere").set_linear_damp(atm)
 	atmosphere = atm
 
@@ -43,7 +42,7 @@ func get_atmosphere():
 	return atmosphere
 
 func set_atmosphere_size(size):
-	if get_node("Atmosphere") != null and get_node("Atmosphere/CollisionShape2D") != null:
+	if has_node("Atmosphere") and has_node("Atmosphere/CollisionShape2D"):
 		get_node("Atmosphere/CollisionShape2D").get_shape().set_radius(size)
 	atmosphere_size = size
 
@@ -51,9 +50,8 @@ func get_atmosphere_size():
 	return atmosphere_size
 
 func set_g_scale(scale):
-	var node = get_node("Gravity")
-	if node != null and node.has_method("set_gravity_distance_scale"):
-		node.set_gravity_distance_scale(scale)
+	if has_node("Gravity") and get_node("Gravity").has_method("set_gravity_distance_scale"):
+		get_node("Gravity").set_gravity_distance_scale(scale)
 	gravity_distance_scale = scale
 
 func get_g_scale():

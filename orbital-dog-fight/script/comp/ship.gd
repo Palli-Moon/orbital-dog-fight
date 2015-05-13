@@ -55,10 +55,14 @@ func on_ready():
 func on_spawn():
 	isdying = false
 	curr_hp = hitpoints
-	remove_from_group("dead")
-	add_to_group("ships")
-	add_to_group("shootables")
-	add_to_group("sfx")
+	if is_in_group("dead"):
+		remove_from_group("dead")
+	if not is_in_group("ships"):
+		add_to_group("ships")
+	if not is_in_group("shootables"):
+		add_to_group("shootables")
+	if not is_in_group("sfx"):
+		add_to_group("sfx")
 	get_node("Sprite").show()
 	particles.show()
 	healthBar.update()
