@@ -12,9 +12,11 @@ var curr_hp
 var health_bar = null
 var heimdallr
 var is_dying = false
+var threshold = 0.3
 
 var textures = [load("res://assets/img/asteroid1.png"), load("res://assets/img/asteroid2.png"), load("res://assets/img/asteroid3.png")]
 func on_ready():
+	seed(OS.get_unix_time())
 	# Register events
 	heimdallr = get_node("/root/Heimdallr")
 	heimdallr.register_signal(self, "die")
@@ -58,18 +60,23 @@ func set_default_volume(value):
 func _die():
 	if scale > 1 && !is_dying:
 		is_dying = true
-		
-		var littleroid = asteroid.instance()
-		var pos = get_pos()
-		var vel = get_linear_velocity()
-		littleroid.set_linear_velocity(vel)
-		littleroid.apply_impulse(Vector2(0,0), Vector2(randf()*10, randf()*10))
-		littleroid.set_pos(pos+Vector2((randf()-0.5)*10, (randf()-0.5)*10))
-		littleroid.hitpoints = hitpoints * 0.5
-		littleroid.curr_hp = littleroid.hitpoints
-		littleroid.scale = scale * 0.5
-		littleroid.set_asteroid_texture(load("res://assets/img/asteroid1.png"))
-		get_parent().add_child(littleroid)
+		var roids = floor(scale/randf())
+		for i in range(roids):
+			var littleroidscale = randf()
+			if littleroidscale * scale > threshold:
+				var littleroid = asteroid.instance()
+				var pos = get_pos()
+				var vel = get_linear_velocity()
+				littleroid.set_linear_velocity(vel)
+				littleroid.apply_impulse(Vector2(0,0), Vector2(randf()*10, randf()*10))
+				littleroid.set_pos(pos+Vector2((randf()-0.5)*10, (randf()-0.5)*10))
+				littleroid.hitpoints = hitpoints * littleroidscale
+				littleroid.curr_hp = littleroid.hitpoints
+				littleroid.scale = scale * littleroidscale
+				var texnum = randi() % 3
+				littleroid.set_asteroid_texture(textures[texnum])
+				get_parent().add_child(littleroid)
+				scale = scale * (1-littleroidscale)
 	heimdallr.send_signal(self, "die", [])
 	queue_free()
 
