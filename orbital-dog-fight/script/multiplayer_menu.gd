@@ -23,6 +23,7 @@ func on_client():
 	s.set_script(load("res://script/mode/client_mode.gd"))
 	s.set_ip(get_node("Connect/Host").get_text())
 	s.set_port(int(get_node("Connect/Port").get_text()))
+	s.player_name = get_node("Connect/Name").get_text()
 	load_scene(s)
 	main.toggle_multiplayer()
 

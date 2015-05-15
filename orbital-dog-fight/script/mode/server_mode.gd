@@ -67,7 +67,7 @@ func _fixed_process(delta):
 func send_sync_state():
 	var lasers = get_tree().get_nodes_in_group("lasers")
 	for l in lasers:
-		if not curr_state.lasers.has(l.get_rid()) and l.get_parent() == get_node("Game"):
+		if not curr_state.lasers.has(l.get_rid().get_id()) and l.get_parent() == get_node("Game"):
 			curr_state.add_laser(l.get_rid().get_id(), l)
 	var to_remove = []
 	for k in curr_state.lasers:
