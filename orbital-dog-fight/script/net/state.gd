@@ -36,6 +36,7 @@ class ShipState:
 		ship.set_angular_velocity(s.a)
 		ship.curr_hp = s.hp
 		ship.ctrl = s.ctrl
+		ship.healthBar.update()
 		ship.healthBar.update_rot()
 	
 	func update_ctrl(ctrl):
