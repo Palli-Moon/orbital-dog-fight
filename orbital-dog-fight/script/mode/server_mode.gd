@@ -65,6 +65,16 @@ func _fixed_process(delta):
 		send_sync_state()
 
 func send_sync_state():
+	var lasers = get_tree().get_nodes_in_group("lasers")
+	for l in lasers:
+		if not curr_state.lasers.has(l.get_rid()) and l.get_parent() == get_node("Game"):
+			curr_state.add_laser(l.get_rid().get_id(), l)
+	var to_remove = []
+	for k in curr_state.lasers:
+		if not curr_state.lasers[k].is_valid():
+			to_remove.append(k)
+	for k in to_remove:
+		curr_state.lasers.erase(k)
 	server.broadcast(Command.ServerStateUpdate.new(curr_state.get_state()).get_msg())
 
 func player_join(client, stream, msg):

@@ -2,8 +2,10 @@
 extends RigidBody2D
 
 export var power = 10 setget set_power,get_power
+var remote_id = null
 
 func _ready():
+	add_to_group("lasers")
 	get_node("LifeTime").connect("timeout", self, "_die")
 	get_node("LifeTime").start()
 	connect("body_enter", self, "_on_body_enter")

@@ -61,14 +61,46 @@ class PlayerState:
 		name = state.name
 		ship.update_state(state.ship)
 
+class LaserState:
+	var id
+	var laserRef
+	
+	func _init(my_id,my_laser):
+		id = my_id
+		laserRef = weakref(my_laser)
+	
+	func get_state():
+		var laser = laserRef.get_ref()
+		return {p=laser.get_pos(),r=laser.get_rot(),v=laser.get_linear_velocity(),
+			a=laser.get_angular_velocity(),t=laser.get_node("LifeTime").get_wait_time(),r=laser.get_rot()}
+	
+	func update_state(s):
+		var laser = laserRef.get_ref()
+		laser.set_linear_velocity(s.l.v)
+		laser.set_rot(s.l.r)
+		laser.set_pos(s.l.pos)
+		laser.set_angular_velocity(s.l.a)
+		laser.set_rot(s.l.r)
+		laser.get_node("LifeTime").set_wait_time(s.l.t)
+	
+	func is_valid():
+		return laserRef.get_ref() != null
+
 class GameState:
 	var players = {}
+	var lasers = {}
 	
 	func add_player(id, name, ship, client):
 		if players.has(id):
 			print("Player already in state")
 			return
 		players[id] = PlayerState.new(id, name, ship, client)
+	
+	func add_laser(id, laser):
+		if lasers.has(id):
+			print("Laser already in state")
+		laser.remote_id = id
+		lasers[id] = LaserState.new(id, laser)
 	
 	func remove_player_by_client(client):
 		for k in players.keys():
@@ -97,19 +129,24 @@ class GameState:
 		return null
 	
 	func get_state():
-		var out = {}
+		var out = {p={},l={}}
 		for k in players.keys():
-			out[players[k].id] = players[k].get_state()
+			out.p[k] = players[k].get_state()
+		for k in lasers.keys():
+			out.l[k] = lasers[k].get_state()
 		return out
 	
 	func update(state):
+		var to_remove = []
 		# Known players
 		for k in players.keys():
 			# Remove deleted players
-			if not state.has(k):
-				var p = players[k]
-				players.erase(k)
-				p.ship.get_ship().queue_free()
+			if not state.p.has(k):
+				to_remove.append(k)
 			# Update known players
 			else:
-				players[players[k].id].update_state(state[k])
+				players[players[k].id].update_state(state.p[k])
+		for k in to_remove:
+			var p = players[k]
+			players.erase(k)
+			p.ship.get_ship().queue_free()

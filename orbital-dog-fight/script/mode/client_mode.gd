@@ -27,6 +27,7 @@ var State = preload("res://script/net/state.gd")
 var Command = preload("res://script/net/commands.gd")
 var Client = preload("res://script/net/client.gd")
 var Ship = preload("res://scene/comp/ship.xml")
+var Laser = preload("res://scene/comp/laser.xml")
 var curr_ctrl = State.ControlState.new(null)
 
 class OnlineClient extends "res://script/net/client.gd".ClientHandler:
@@ -88,17 +89,34 @@ func new_player(id, name, ship):
 	print_debug("New player")
 
 func update_state(state):
-	# Update current players and delete disconnected ones
+	var lasers = get_tree().get_nodes_in_group("lasers")
+	var to_remove = []
+	# Remove client simulated laser
+	for l in lasers:
+		if l.get_parent() == get_node("Game"):
+			if l.remote_id == null:
+				l.queue_free()
+			elif not curr_state.lasers.has(l.remote_id):
+				to_remove.append(l.remote_id)
+				l.queue_free()
+	for k in to_remove:
+		curr_state.lasers.erase(k)
+	# Update current players and lasers and delete disconnected ones
 	curr_state.update(state)
+	# Add new lasers
+	for k in state.l:
+		if not curr_state.lasers.has(k):
+			var laser = create_laser(state.l[k].p, state.l[k].v, state.l[k].a, state.l[k].t, state.l[k].r)
+			curr_state.add_laser(k, laser)
 	# Add new players
-	for k in state:
+	for k in state.p:
 		if not curr_state.players.has(k):
 			var p_ship = Ship.instance()
 			p_ship.is_remote = true
 			p_ship.ctrl = State.ControlState.new(null).get_state()
 			get_node("Game").add_child(p_ship)
-			curr_state.add_player(k, state[k].name, p_ship, null)
-			curr_state.players[k].update_state(state[k])
+			curr_state.add_player(k, state.p[k].name, p_ship, null)
+			curr_state.players[k].update_state(state.p[k])
 
 func create_ship():
 	var out = Ship.instance()
@@ -106,6 +124,16 @@ func create_ship():
 	out.ctrl = State.ControlState.new(null).get_state()
 	out.set_linear_velocity(Vector2(150,0))
 	out.set_pos(Vector2(400,200))
+	get_node("Game").add_child(out)
+	return out
+
+func create_laser(pos, vel, ang, timer, rot):
+	var out = Laser.instance()
+	out.set_pos(pos)
+	out.set_linear_velocity(vel)
+	out.set_angular_velocity(ang)
+	out.set_rot(rot)
+	out.get_node("LifeTime").set_wait_time(timer)
 	get_node("Game").add_child(out)
 	return out
 
