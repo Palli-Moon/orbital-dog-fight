@@ -4,7 +4,8 @@ extends Node2D
 # var a=2
 # var b="textvar"
 
-export var timeout = 60.0 # timeout in seconds
+export var timeout = 10.0 # timeout in seconds
+export var viewport_scale = 1
 
 var timed_objects = []
 var exts
@@ -37,7 +38,11 @@ class TimedObject:
 
 	func _timeout():
 		print("timeout")
-		self.object.hide()
+		if self.object.is_in_group("ships"):
+			self.object.die("exp_one")
+			print("is dead")
+		elif self.object.is_in_group("asteroids"):
+			self.object._die()
 		clear()
 		
 	func get_object():
@@ -69,7 +74,9 @@ class TimedObject:
 
 func _ready():
 	# Initialization here
-	exts = get_node("ScreenExtents").get_shape(0).get_extents()
+	exts = (get_tree().get_root().get_rect().end * viewport_scale)/2
+	get_node("ScreenExtents").get_shape(0).set_extents(exts)
+	get_node("ScreenExtents").set_pos(exts)
 	print(exts)
 	set_process(true)
 	pass
@@ -92,7 +99,7 @@ func _on_ScreenExtents_body_enter( body ):
 func _on_ScreenExtents_body_exit( body ):
 	print("----")
 	print(body)
-	if (body.is_in_group("ships")):
+	if (body.is_in_group("ships")) and !body.isdying:
 		print("ship")
 		var obj = TimedObject.new(timeout, body, self)
 		print(obj)
