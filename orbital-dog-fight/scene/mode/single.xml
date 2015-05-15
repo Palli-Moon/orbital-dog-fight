@@ -56,7 +56,7 @@
 				<resource  resource_type="Script" path="res://script/mode/single.gd">  </resource>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
-					<string> "Script" </string>
+					<string> "2D" </string>
 					<string> "__editor_plugin_states__" </string>
 					<dictionary  shared="false">
 						<string> "2D" </string>
@@ -179,7 +179,7 @@
 						<string> "Script" </string>
 						<dictionary  shared="false">
 							<string> "current" </string>
-							<int> 4 </int>
+							<int> 0 </int>
 							<string> "sources" </string>
 							<array  len="5" shared="false">
 								<string> "res://script/comp/ship.gd" </string>
@@ -757,7 +757,7 @@
 						<int> 0 </int>
 					</dictionary>
 				</dictionary>
-				<real> 3 </real>
+				<real> 10 </real>
 			</array>
 			<string> "version" </string>
 			<int> 1 </int>

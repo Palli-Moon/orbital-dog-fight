@@ -58,14 +58,14 @@
 			<string> "node_count" </string>
 			<int> 3 </int>
 			<string> "nodes" </string>
-			<int_array  len="123"> 				-1, -1, 1, 0, -1, 14, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 14, 10, 15, 3, 0, 0, 0, 17, 16, -1, 25, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 11, 8, 5, 9, 6, 10, 7, 11, 1, 18, 1, 19, 3, 20, 12, 21, 13, 22, 14, 23, 14, 24, 5, 25, 4, 26, 5, 27, 5, 28, 5, 29, 1, 30, 1, 31, 3, 32, 3, 0, 1, 0, 33, 33, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 34, 12, 35, 14, 0 </int_array>
+			<int_array  len="123"> 				-1, -1, 1, 0, -1, 14, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 14, 10, 15, 3, 0, 0, 0, 17, 16, -1, 25, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 11, 8, 5, 9, 6, 10, 7, 11, 1, 18, 1, 19, 3, 20, 12, 21, 13, 22, 14, 23, 14, 24, 5, 25, 15, 26, 5, 27, 5, 28, 5, 29, 1, 30, 1, 31, 3, 32, 3, 0, 1, 0, 33, 33, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 15, 8, 5, 9, 6, 10, 7, 11, 1, 34, 12, 35, 14, 0 </int_array>
 			<string> "variants" </string>
-			<array  len="15" shared="false">
+			<array  len="16" shared="false">
 				<node_path> "" </node_path>
 				<bool> True </bool>
 				<real> 1 </real>
 				<int> 1 </int>
-				<vector2> 0, 0 </vector2>
+				<vector2> 0.252533, 0 </vector2>
 				<real> 0 </real>
 				<vector2> 1, 1 </vector2>
 				<int> 0 </int>
@@ -78,7 +78,7 @@
 						<string> "2D" </string>
 						<dictionary  shared="false">
 							<string> "ofs" </string>
-							<vector2> -244.255, -116.427 </vector2>
+							<vector2> -276.549, -68.4509 </vector2>
 							<string> "snap_grid" </string>
 							<bool> False </bool>
 							<string> "snap_offset" </string>
@@ -98,7 +98,7 @@
 							<string> "snap_step" </string>
 							<vector2> 10, 10 </vector2>
 							<string> "zoom" </string>
-							<real> 0.767062 </real>
+							<real> 1.043491 </real>
 						</dictionary>
 						<string> "3D" </string>
 						<dictionary  shared="false">
@@ -212,11 +212,12 @@
 						<int> 0 </int>
 					</dictionary>
 				</dictionary>
-				<real> 60 </real>
+				<real> 20 </real>
 				<vector2> 200, 200 </vector2>
 				<resource  resource_type="Shape2D" path="local://0">  </resource>
 				<matrix32> 1, -0, 0, 1, 0, 0 </matrix32>
 				<bool> False </bool>
+				<vector2> 0, 0 </vector2>
 			</array>
 			<string> "version" </string>
 			<int> 1 </int>

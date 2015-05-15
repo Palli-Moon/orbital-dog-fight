@@ -15,7 +15,7 @@ class TimedObject:
 	var object = null
 	var indicator = null
 	var parent = null
-	var indicator_texture = null 
+	var indicator_texture = null
 	
 	func _init(timeout, obj, parent):
 		print("new timed object created")
@@ -29,12 +29,25 @@ class TimedObject:
 		parent.add_child(self.timer)
 		self.timer.start()
 		if (obj.is_in_group("ships")):
-			print("Making new sprite")
-			self.indicator = Sprite.new()
-			self.indicator.set_texture(self.indicator_texture)
-			self.indicator.set_z(4)
-			self.indicator.show()
+			self.indicator = Node2D.new()
+			var indicatorsprite = Sprite.new()
+			indicatorsprite.set_texture(self.indicator_texture)
+			indicatorsprite.set_z(4)
+			indicatorsprite.show()
 			parent.add_child(self.indicator)
+			self.indicator.add_child(indicatorsprite)
+			var indicatorlabel = Label.new()
+			indicatorlabel.set_theme(load("res://assets/themes/noshadow.xml"))
+			indicatorlabel.set_text(str(int(self.timer.get_time_left())))
+			indicatorlabel.set_align(Label.ALIGN_CENTER)
+			indicatorlabel.set_valign(Label.ALIGN_CENTER)
+			indicatorlabel.set_pos(Vector2(-32, -32))
+			indicatorlabel.set_size(Vector2(64,64))
+			var indicatorlabelcontainer = Node2D.new()
+			indicatorlabelcontainer.set_pos(Vector2(-40,0))
+			indicatorlabelcontainer.add_child(indicatorlabel)
+			self.indicator.add_child(indicatorlabelcontainer)
+			
 
 	func _timeout():
 		print("timeout")
@@ -56,14 +69,21 @@ class TimedObject:
 			indicator_pos = obj_pos
 			if obj_pos.x > width*2 - 16:
 				indicator_pos.x = width*2 - 16
-			elif obj_pos.x < 0:
+			elif obj_pos.x < 16:
 				indicator_pos.x = 16
 			if obj_pos.y > height*2 - 16:
 				indicator_pos.y = height*2 - 16
-			elif obj_pos.y < 0:
+			elif obj_pos.y < 16:
 				indicator_pos.y = 16
 			self.indicator.set_pos(indicator_pos)
 			self.indicator.set_rot(indicator_pos.angle_to_point(obj_pos) + PI/2)
+			self.indicator.get_child(1).set_rot(-(indicator_pos.angle_to_point(obj_pos) + PI/2))
+			var timeleft = int(self.timer.get_time_left())
+			if timeleft < 10:
+				timeleft = "0" + str(timeleft)
+			else:
+				timeleft = str(timeleft)
+			self.indicator.get_child(1).get_child(0).set_text(timeleft)
 			print(indicator_pos)
 			
 	func clear():
