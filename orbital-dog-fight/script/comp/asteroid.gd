@@ -112,6 +112,8 @@ func set_scale(scale):
 		get_node("CollisionShape2D").get_shape().set_radius(10*scale)
 	if has_node("Trigger/CollisionShape2D"):
 		get_node("Trigger/CollisionShape2D").get_shape().set_radius(18*scale)
+	if has_node("Node2D/explosion"):
+		get_node("Node2D/explosion").set_scale(Vector2(scale, scale))
 	pass
 
 func get_scale():
