@@ -16,11 +16,15 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+Please submit issues through the issue tracker on Github.
+
 ## Download Instructions
 
 The `bin` directory of this repository contains OSX, Linux and Windows binaries
 precompiled. These should run like any other application
--  OSX: it may be necessary to bypass Gatekeeper (by secondary clicking the icon and clicking open whilst holding the option key) in order to run the application.
+-  OSX: it may be necessary to bypass Gatekeeper (by secondary clicking the icon
+and clicking open whilst holding the option key) in order to run the
+application.
 - Linux: make the binary file executable by using `chmod +x <filename>`
 
 ## Build Instructions
@@ -53,13 +57,14 @@ containing the executable.
 - Website: http://www.fiveofive-music.com/
 
     [From the [Free Music Archive](http://freemusicarchive.org)]
-    
+
 ***
 
 ###Fonts
 ####[Press Start 2P](http://www.zone38.net/font/)
 - Designer: codeman38
-- License: [SIL Open Font License](http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
+- License: [SIL Open Font
+ License](http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
 - Website: http://www.zone38.net/
 
     [A minor derivative of the above font with additional characters is used.]
