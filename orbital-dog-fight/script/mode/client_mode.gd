@@ -53,7 +53,7 @@ class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 		if msg == null:
 			print_debug("Unknown command from server: " + str(message))
 		elif msg.cmd == mode.Command.SERVER_CLIENT_ACCEPTED:
-			mode.accepted(msg.id)
+			mode.accepted(msg.id, msg.ship)
 		elif msg.cmd == mode.Command.SERVER_NEW_PLAYER:
 			mode.new_player(msg.id, msg.name, msg.ship)
 		elif msg.cmd == mode.Command.SERVER_STATE_UPDATE:
@@ -97,9 +97,12 @@ func _fixed_process(delta):
 						to_r += 2*PI
 					p.set_rot(lerp(from_r, to_r, weight))
 
-func accepted(id):
+func accepted(id, s):
 	player_id = id
 	ship = create_ship()
+	ship.set_pos(s.pos)
+	ship.set_rot(s.r)
+	ship.set_angular_velocity(s.a)
 	curr_state.add_player(id, player_name, ship, null)
 	print_debug("accepted: " + str(id))
 	set_fixed_process(true)

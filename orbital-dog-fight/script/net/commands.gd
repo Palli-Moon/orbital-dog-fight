@@ -40,13 +40,15 @@ class ClientDisconnect:
 
 class ServerClientAccepted:
 	var id
+	var ship
 	const cmd = SERVER_CLIENT_ACCEPTED
 	
-	func _init(my_id):
+	func _init(my_id, my_ship):
 		id = my_id
+		ship = my_ship
 	
 	func get_msg():
-		return [cmd, id]
+		return [cmd, id, ship.get_state()]
 
 class ServerStateUpdate:
 	var state
@@ -90,9 +92,9 @@ static func parse(data):
 			return null
 		return ClientUpdateCtrl.new(data[1],data[2])
 	elif cmd == SERVER_CLIENT_ACCEPTED:
-		if data.size() != 2 || typeof(data[1]) != TYPE_INT:
+		if data.size() != 3 || typeof(data[1]) != TYPE_INT:
 			return null
-		return ServerClientAccepted.new(data[1])
+		return ServerClientAccepted.new(data[1], data[2])
 	elif cmd == SERVER_STATE_UPDATE:
 		# TODO Check/parse state type?!
 		if data.size() != 2 || typeof(data[1]) != TYPE_DICTIONARY:

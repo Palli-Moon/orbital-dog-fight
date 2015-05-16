@@ -92,7 +92,7 @@ func player_join(client, stream, msg):
 	var id = randi()
 	var ship = create_ship()
 	curr_state.add_player(id, msg.name, ship, client)
-	server.send_data(stream, Command.ServerClientAccepted.new(id).get_msg())
+	server.send_data(stream, Command.ServerClientAccepted.new(id, State.ShipState.new(ship)).get_msg())
 	server.broadcast(Command.ServerNewPlayer.new(id,msg.name, ship).get_msg())
 
 func player_update_ctrl(client, stream, msg):
