@@ -13,6 +13,7 @@ export var laser_overheat_threshold = 50
 export var laser_cool_rate = 5
 export(Texture) var shiptex setget set_shiptex, get_shiptex
 
+var is_dummy = false
 var is_remote = false
 var ctrl = null
 var colliding_bodies = 0
@@ -139,7 +140,8 @@ func _fixed_process(delta):
 		if (Input.is_action_pressed(get_ctrl(type)) and not is_remote) \
 			or (is_remote and ctrl != null and ctrl.has(type) and ctrl[type]):
 			show.append(type)
-			apply_ctrl(type, delta)
+			if not is_dummy:
+				apply_ctrl(type, delta)
 			if type == CMD.TURN_LEFT or type == CMD.TURN_RIGHT:
 				should_play = true
 		else:

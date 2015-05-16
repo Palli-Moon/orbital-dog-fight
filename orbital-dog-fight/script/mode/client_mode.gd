@@ -3,6 +3,8 @@ extends Node
 export var ip = "127.0.0.1" setget set_ip, get_ip
 export var port = 4666 setget set_port, get_port
 
+const STATE_SYNC_DELAY = 0.1
+
 func get_ip():
 	return get_node("Client").ip
 
@@ -29,6 +31,8 @@ var Client = preload("res://script/net/client.gd")
 var Ship = preload("res://scene/comp/ship.xml")
 var Laser = preload("res://scene/comp/laser.xml")
 var curr_ctrl = State.ControlState.new(null)
+var sync_delta = 0
+var sync_update = null
 
 class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 	var mode = null
@@ -72,7 +76,26 @@ func _fixed_process(delta):
 			curr_ctrl.ctrl[type] = active
 	if updated:
 		client.send_data(Command.ClientUpdateCtrl.new(player_id, curr_ctrl.ctrl).get_msg())
-	pass
+	if sync_update != null:
+		sync_delta += delta
+		var weight = sync_delta / STATE_SYNC_DELAY / 4
+		for k in curr_state.players:
+			if sync_update.p.has(k):
+				var p = curr_state.players[k].ship.get_ship()
+				var from = p.get_pos()
+				var to = sync_update.p[k]["ship"].pos
+				p.set_pos(Vector2(lerp(from.x, to.x, weight), lerp(from.y, to.y, weight)))
+				var from_r = p.get_rot()
+				var to_r = sync_update.p[k]["ship"].r
+				var ang = sync_update.p[k]["ship"].a
+				if abs(from_r - to_r) < 0.15:
+					p.set_rot(to_r)
+				else:
+					if sign(ang) > 0 and from_r < to_r:
+						to_r -= 2*PI
+					elif sign(ang) < 0 and from_r > to_r:
+						to_r += 2*PI
+					p.set_rot(lerp(from_r, to_r, weight))
 
 func accepted(id):
 	player_id = id
@@ -89,6 +112,7 @@ func new_player(id, name, ship):
 	print_debug("New player")
 
 func update_state(state):
+	sync_delta = 0
 	var lasers = get_tree().get_nodes_in_group("lasers")
 	var to_remove = []
 	# Remove client simulated laser
@@ -117,14 +141,19 @@ func update_state(state):
 			get_node("Game").add_child(p_ship)
 			curr_state.add_player(k, state.p[k].name, p_ship, null)
 			curr_state.players[k].update_state(state.p[k])
+	sync_update = state
 
 func create_ship():
 	var out = Ship.instance()
 	out.is_remote = true
 	out.ctrl = State.ControlState.new(null).get_state()
-	out.set_linear_velocity(Vector2(150,0))
-	out.set_pos(Vector2(400,200))
+	#out.set_linear_velocity(Vector2(150,0))
+	#out.set_pos(Vector2(400,200))
 	get_node("Game").add_child(out)
+	out.is_dummy = true
+	out.set_cd_enable(false)
+	out.set_collision_enable(false)
+	out.set_mode(Physics2DServer.BODY_MODE_STATIC)
 	return out
 
 func create_laser(pos, vel, ang, timer, rot):

@@ -4,6 +4,8 @@ export var is_dedicated = false
 export var port = 4666 setget set_port, get_port
 export var max_conns = 4 setget set_max_conns, get_max_conns
 
+const STATE_SYNC_DELAY = 0.1
+
 func get_max_conns():
 	return get_node("Server").max_conns
 
@@ -60,8 +62,8 @@ func _ready():
 
 func _fixed_process(delta):
 	dt += delta
-	if dt >= 0.1:
-		dt -= 0.1
+	if dt >= STATE_SYNC_DELAY:
+		dt -= STATE_SYNC_DELAY
 		send_sync_state()
 
 func send_sync_state():

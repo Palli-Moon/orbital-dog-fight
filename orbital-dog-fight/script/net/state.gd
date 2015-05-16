@@ -30,10 +30,10 @@ class ShipState:
 			a=ship.get_angular_velocity(),hp=ship.curr_hp,l=ship.laser_heat,ctrl=my_ctrl}
 	
 	func update_state(s):
-		ship.set_linear_velocity(s.v)
-		ship.set_rot(s.r)
-		ship.set_pos(s.pos)
-		ship.set_angular_velocity(s.a)
+		#ship.set_linear_velocity(s.v)
+		#ship.set_rot(s.r)
+		#ship.set_pos(s.pos)
+		#ship.set_angular_velocity(s.a)
 		ship.curr_hp = s.hp
 		ship.ctrl = s.ctrl
 		ship.laser_heat = s.l
@@ -88,6 +88,7 @@ class LaserState:
 class GameState:
 	var players = {}
 	var lasers = {}
+	var sync_interval = 0.1
 	
 	func add_player(id, name, ship, client):
 		if players.has(id):
@@ -128,7 +129,7 @@ class GameState:
 		return null
 	
 	func get_state():
-		var out = {p={},l={}}
+		var out = {p={},l={},i=sync_interval}
 		for k in players.keys():
 			out.p[k] = players[k].get_state()
 		for k in lasers.keys():
