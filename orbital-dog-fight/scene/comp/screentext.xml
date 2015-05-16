@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<resource_file type="PackedScene" subresource_count="4" version="1.1" version_name="Godot Engine v1.1.rc2.custom_build">
-	<ext_resource path="res://script/end_screen.gd" type="Script"></ext_resource>
-	<ext_resource path="res://assets/themes/noshadow.xml" type="Theme"></ext_resource>
+<resource_file type="PackedScene" subresource_count="2" version="1.1" version_name="Godot Engine v1.1.rc2.custom_build">
 	<ext_resource path="res://assets/fonts/codeman2d.fnt" type="Font"></ext_resource>
 	<main_resource>
 		<dictionary name="_bundled" shared="false">
@@ -10,11 +8,10 @@
 			<string> "conns" </string>
 			<int_array  len="0"> 				 </int_array>
 			<string> "names" </string>
-			<string_array  len="46">
-				<string> "EndScreen" </string>
+			<string_array  len="42">
+				<string> "Screentext" </string>
 				<string> "Node2D" </string>
 				<string> "_import_path" </string>
-				<string> "process/pause_mode" </string>
 				<string> "visibility/visible" </string>
 				<string> "visibility/opacity" </string>
 				<string> "visibility/self_opacity" </string>
@@ -24,12 +21,10 @@
 				<string> "transform/scale" </string>
 				<string> "z/z" </string>
 				<string> "z/relative" </string>
-				<string> "script/script" </string>
 				<string> "__meta__" </string>
-				<string> "End Text" </string>
+				<string> "line1" </string>
 				<string> "Label" </string>
 				<string> "margin/left" </string>
-				<string> "margin/top" </string>
 				<string> "margin/right" </string>
 				<string> "margin/bottom" </string>
 				<string> "focus_neighbour/left" </string>
@@ -40,7 +35,7 @@
 				<string> "focus/stop_mouse" </string>
 				<string> "size_flags/horizontal" </string>
 				<string> "size_flags/stretch_ratio" </string>
-				<string> "theme/theme" </string>
+				<string> "custom_fonts/font" </string>
 				<string> "range/min" </string>
 				<string> "range/max" </string>
 				<string> "range/step" </string>
@@ -54,35 +49,32 @@
 				<string> "autowrap" </string>
 				<string> "uppercase" </string>
 				<string> "percent_visible" </string>
-				<string> "Subtext" </string>
-				<string> "Press Enter" </string>
-				<string> "custom_fonts/font" </string>
+				<string> "line2" </string>
+				<string> "margin/top" </string>
 			</string_array>
 			<string> "node_count" </string>
-			<int> 4 </int>
+			<int> 3 </int>
 			<string> "nodes" </string>
-			<int_array  len="196"> 				-1, -1, 1, 0, -1, 13, 2, 0, 3, 1, 4, 2, 5, 3, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 8, 12, 2, 13, 9, 14, 10, 0, 0, 0, 16, 15, -1, 31, 2, 0, 4, 2, 5, 3, 6, 3, 7, 4, 17, 11, 18, 12, 19, 13, 20, 14, 21, 0, 22, 0, 23, 0, 24, 0, 25, 2, 26, 2, 27, 1, 28, 3, 29, 15, 30, 6, 31, 3, 32, 3, 33, 3, 34, 6, 35, 16, 36, 16, 37, 17, 38, 4, 39, 4, 40, 16, 41, 16, 42, 18, 0, 0, 0, 1, 43, -1, 10, 2, 0, 4, 2, 5, 3, 6, 3, 7, 4, 8, 5, 9, 6, 10, 19, 11, 8, 12, 2, 0, 2, 0, 16, 44, -1, 30, 2, 0, 4, 2, 5, 3, 6, 3, 7, 4, 18, 20, 19, 21, 20, 22, 21, 0, 22, 0, 23, 0, 24, 0, 25, 2, 26, 2, 27, 1, 28, 3, 45, 23, 30, 6, 31, 3, 32, 3, 33, 3, 34, 6, 35, 16, 36, 16, 37, 24, 38, 4, 39, 8, 40, 16, 41, 16, 42, 18, 0 </int_array>
+			<int_array  len="165"> 				-1, -1, 1, 0, -1, 11, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 0, 0, 0, 14, 13, -1, 30, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 15, 9, 16, 10, 17, 11, 18, 0, 19, 0, 20, 0, 21, 0, 22, 1, 23, 1, 24, 12, 25, 13, 26, 14, 27, 5, 28, 2, 29, 2, 30, 2, 31, 5, 32, 15, 33, 15, 34, 16, 35, 3, 36, 3, 37, 15, 38, 15, 39, 17, 0, 0, 0, 14, 40, -1, 31, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 15, 9, 41, 11, 16, 10, 17, 18, 18, 0, 19, 0, 20, 0, 21, 0, 22, 1, 23, 1, 24, 12, 25, 2, 26, 14, 27, 5, 28, 2, 29, 2, 30, 19, 31, 5, 32, 15, 33, 15, 34, 20, 35, 3, 36, 3, 37, 1, 38, 15, 39, 17, 0 </int_array>
 			<string> "variants" </string>
-			<array  len="25" shared="false">
+			<array  len="21" shared="false">
 				<node_path> "" </node_path>
-				<int> 2 </int>
 				<bool> True </bool>
 				<real> 1 </real>
 				<int> 1 </int>
 				<vector2> 0, 0 </vector2>
 				<real> 0 </real>
-				<vector2> 2, 2 </vector2>
+				<vector2> 1.5, 1.5 </vector2>
 				<int> 0 </int>
-				<resource  resource_type="Script" path="res://script/end_screen.gd">  </resource>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
-					<string> "2D" </string>
+					<string> "Script" </string>
 					<string> "__editor_plugin_states__" </string>
 					<dictionary  shared="false">
 						<string> "2D" </string>
 						<dictionary  shared="false">
 							<string> "ofs" </string>
-							<vector2> -238.925, -72.8794 </vector2>
+							<vector2> -306.548, -41.1128 </vector2>
 							<string> "snap_grid" </string>
 							<bool> True </bool>
 							<string> "snap_offset" </string>
@@ -98,11 +90,11 @@
 							<string> "snap_rotation_step" </string>
 							<real> 0.261799 </real>
 							<string> "snap_show_grid" </string>
-							<bool> False </bool>
+							<bool> True </bool>
 							<string> "snap_step" </string>
 							<vector2> 10, 10 </vector2>
 							<string> "zoom" </string>
-							<real> 0.735092 </real>
+							<real> 0.902502 </real>
 						</dictionary>
 						<string> "3D" </string>
 						<dictionary  shared="false">
@@ -199,14 +191,10 @@
 						<string> "Script" </string>
 						<dictionary  shared="false">
 							<string> "current" </string>
-							<int> 4 </int>
+							<int> 0 </int>
 							<string> "sources" </string>
-							<array  len="5" shared="false">
-								<string> "res://script/end_screen.gd" </string>
-								<string> "res://script/main.gd" </string>
-								<string> "res://script/comp/ship.gd" </string>
-								<string> "res://script/comp/asteroid.gd" </string>
-								<string> "res://script/comp/audioengine.gd" </string>
+							<array  len="1" shared="false">
+								<string> "res://script/mode/single.gd" </string>
 							</array>
 						</dictionary>
 					</dictionary>
@@ -218,20 +206,18 @@
 						<int> 0 </int>
 					</dictionary>
 				</dictionary>
-				<real> 192 </real>
-				<real> 172 </real>
-				<real> 448 </real>
-				<real> 188 </real>
-				<resource  resource_type="Theme" path="res://assets/themes/noshadow.xml">  </resource>
-				<bool> False </bool>
-				<string> "Player 2 Wins!" </string>
-				<real> -1 </real>
-				<vector2> 0.75, 0.75 </vector2>
-				<real> 360 </real>
-				<real> 853 </real>
-				<real> 376 </real>
+				<real> 80 </real>
+				<real> 773 </real>
+				<real> 227 </real>
+				<int> 2 </int>
+				<real> 2 </real>
 				<resource  resource_type="Font" path="res://assets/fonts/codeman2d.fnt">  </resource>
-				<string> "Press ENTER to play again" </string>
+				<bool> False </bool>
+				<string> "line1" </string>
+				<real> -1 </real>
+				<real> 480 </real>
+				<real> 15.8125 </real>
+				<string> "line2" </string>
 			</array>
 			<string> "version" </string>
 			<int> 1 </int>
