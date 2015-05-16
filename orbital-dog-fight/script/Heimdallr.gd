@@ -3,6 +3,7 @@ extends Node2D
 var game
 
 func _ready():
+	seed(OS.get_unix_time())
 	pass
 
 func set_game(m):

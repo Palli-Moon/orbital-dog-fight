@@ -17,9 +17,13 @@ func _ready():
 	add_child(end)
 	set_process(true)
 	var ships = get_tree().get_nodes_in_group("ships")
+	var spawns = get_tree().get_nodes_in_group("spawnpoints")
 	for s in ships:
 		state[s.get_rid()] = lives
 		update_lives(s)
+		var sp = get_spawnpoint(spawns)
+		spawns.remove(spawns.find(sp))
+		s.spawn_at(sp.get_pos(), sp.velocity, sp.get_rot())
 
 func update_lives(ship):
 	var node = null
@@ -65,9 +69,18 @@ func message(sender, sig, data):
 			if sender.player_num == 0:
 				num = 1
 			end.show_end("Player " + str(num + 1) + " wins!")
-
+			
+func get_spawnpoint(spawns):
+		if spawns.size() > 0:
+			var spawnpoint = randi() % spawns.size()
+			spawnpoint = spawns[spawnpoint]
+			return spawnpoint
+	
 func _on_Respawn_timeout():
 	print(get_tree().get_nodes_in_group("dead"))
+	var spawns = get_tree().get_nodes_in_group("spawnpoints")
 	for b in get_tree().get_nodes_in_group("dead"):
 		b.remove_from_group("dead")
-		b.spawn_at(Vector2(360,360), Vector2(0,-120), 0)
+		var spawnpoint = get_spawnpoint(spawns)
+		spawns.remove(spawns.find(spawnpoint))
+		b.spawn_at(spawnpoint.get_pos(), spawnpoint.velocity, spawnpoint.get_rot())

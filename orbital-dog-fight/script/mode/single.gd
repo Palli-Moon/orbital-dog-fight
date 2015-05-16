@@ -10,6 +10,12 @@ func _ready():
 	end = end_screen.instance()
 	end.hide()
 	add_child(end)
+	var ships = get_tree().get_nodes_in_group("ships")
+	var spawns = get_tree().get_nodes_in_group("spawnpoints")
+	for s in ships:
+		var sp = get_spawnpoint(spawns)
+		spawns.remove(spawns.find(sp))
+		s.spawn_at(sp.get_pos(), sp.velocity, sp.get_rot())
 	set_process(true)
 
 func _process(delta):
@@ -24,3 +30,9 @@ func message(sender, sig, data):
 	elif sig == "die" and sender.is_in_group("asteroids") and get_tree().get_nodes_in_group("asteroids").size() == 1:
 		finish = true
 		end.show_end("You win!")
+
+func get_spawnpoint(spawns):
+		if spawns.size() > 0:
+			var spawnpoint = randi() % spawns.size()
+			spawnpoint = spawns[spawnpoint]
+			return spawnpoint

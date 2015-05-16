@@ -34,6 +34,7 @@ var thruster_voice
 var isdying = false
 
 func on_ready():
+	#seed(OS.get_unix_time())
 	# Register events
 	heimdallr = get_node("/root/Heimdallr")
 	heimdallr.register_signal(self, "die")
