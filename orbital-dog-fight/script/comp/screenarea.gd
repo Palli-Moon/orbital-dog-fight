@@ -5,7 +5,7 @@ extends Node2D
 # var b="textvar"
 
 export var timeout = 10.0 # timeout in seconds
-export var viewport_scale = 1
+export var viewport_scale = 1.0
 
 var timed_objects = []
 var exts

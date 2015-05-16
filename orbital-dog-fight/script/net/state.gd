@@ -93,6 +93,7 @@ class LaserState:
 class GameState:
 	var players = {}
 	var lasers = {}
+	var time = 0
 	var sync_interval = 0.1
 	
 	func add_player(id, name, ship, client):
@@ -134,7 +135,7 @@ class GameState:
 		return null
 	
 	func get_state():
-		var out = {p={},l={},i=sync_interval}
+		var out = {p={},l={},i=sync_interval,t=time}
 		for k in players.keys():
 			out.p[k] = players[k].get_state()
 		for k in lasers.keys():

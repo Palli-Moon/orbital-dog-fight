@@ -62,12 +62,23 @@ func _ready():
 	server = get_node("Server")
 	server.set_handler(OnlineServer.new(self))
 	server.start()
+	get_node("UI/Timer").connect("timeout",self,"respawn")
+	set_process(true)
 	set_fixed_process(true)
 
 func message(sender,sig,data):
 	if sig == "die":
-		if sender.get_parent() == get_node("Game"):
-			sender.spawn_at(Vector2(50,50), Vector2(100,0), 0)
+		print("somebody died")
+
+func respawn():
+	var ships = get_tree().get_nodes_in_group("dead")
+	for s in ships:
+		if s.get_parent() == get_node("Game"):
+			s.spawn_at(Vector2(50,50), Vector2(100,0), 0)
+
+func _process(delta):
+	curr_state.time = str(round(get_node("UI/Timer").get_time_left()))
+	get_node("UI/SpawnLabel/SpawnTime").set_text(curr_state.time)
 
 func _fixed_process(delta):
 	dt += delta

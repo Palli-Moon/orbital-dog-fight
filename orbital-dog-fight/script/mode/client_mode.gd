@@ -116,6 +116,7 @@ func new_player(id, name, ship):
 
 func update_state(state):
 	sync_delta = 0
+	get_node("UI/SpawnLabel/SpawnTime").set_text(str(state.t))
 	var lasers = get_tree().get_nodes_in_group("lasers")
 	var to_remove = []
 	# Remove client simulated laser
