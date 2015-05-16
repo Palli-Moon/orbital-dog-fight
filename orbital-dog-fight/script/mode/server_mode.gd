@@ -27,6 +27,7 @@ var State = preload("res://script/net/state.gd")
 var Command = preload("res://script/net/commands.gd")
 var Server = preload("res://script/net/server.gd")
 var Ship = preload("res://scene/comp/ship.xml")
+var Heimdallr = null
 var dt = 0
 
 class OnlineServer extends "res://script/net/server.gd".ServerHandler:
@@ -54,11 +55,19 @@ class OnlineServer extends "res://script/net/server.gd".ServerHandler:
 
 func _ready():
 	seed(OS.get_unix_time())
+	if has_node("/root/Heimdallr"):
+		Heimdallr = get_node("/root/Heimdallr")
+		Heimdallr.set_game(self)
 	curr_state = State.GameState.new()
 	server = get_node("Server")
 	server.set_handler(OnlineServer.new(self))
 	server.start()
 	set_fixed_process(true)
+
+func message(sender,sig,data):
+	if sig == "die":
+		if sender.get_parent() == get_node("Game"):
+			sender.spawn_at(Vector2(50,50), Vector2(100,0), 0)
 
 func _fixed_process(delta):
 	dt += delta

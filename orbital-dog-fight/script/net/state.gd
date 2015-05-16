@@ -27,13 +27,18 @@ class ShipState:
 		else:
 			my_ctrl = {fwd=false,bwd=false,tl=false,tr=false,lasers=false}
 		return {pos=ship.get_pos(),r=ship.get_rot(),v=ship.get_linear_velocity(),
-			a=ship.get_angular_velocity(),hp=ship.curr_hp,l=ship.laser_heat,ctrl=my_ctrl}
+			a=ship.get_angular_velocity(),hp=ship.curr_hp,l=ship.laser_heat,ctrl=my_ctrl,d=ship.isdying}
 	
 	func update_state(s):
 		#ship.set_linear_velocity(s.v)
 		#ship.set_rot(s.r)
 		#ship.set_pos(s.pos)
 		#ship.set_angular_velocity(s.a)
+		if ship.isdying != s.d:
+			if s.d:
+				ship.die("exp_one")
+			else:
+				ship.spawn_at(s.pos, s.v, s.r)
 		ship.curr_hp = s.hp
 		ship.ctrl = s.ctrl
 		ship.laser_heat = s.l

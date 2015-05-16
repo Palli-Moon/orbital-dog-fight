@@ -89,19 +89,23 @@ func set_shiptex(tex):
 func xform_dir(vec):
 	return vec.rotated(get_transform().get_rotation())
 
+func impulse(pos, force):
+	if not is_dummy:
+		apply_impulse(pos, force)
+
 func apply_ctrl(type, dt):
 	if type == CMD.FORWARD:
-		apply_impulse(Vector2(0,0), xform_dir(Vector2(0,-fwd_speed * dt)))
+		impulse(Vector2(0,0), xform_dir(Vector2(0,-fwd_speed * dt)))
 		play_thruster_sound()
 	elif type == CMD.BACKWARD:
-		apply_impulse(Vector2(0,0), xform_dir(Vector2(0,bwd_speed * dt)))
+		impulse(Vector2(0,0), xform_dir(Vector2(0,bwd_speed * dt)))
 	elif type == CMD.TURN_LEFT:
-		apply_impulse(Vector2(rot_speed,rot_speed), Vector2(rot_speed * dt,0))
-		apply_impulse(Vector2(-rot_speed,-rot_speed), Vector2(-rot_speed * dt,0))
+		impulse(Vector2(rot_speed,rot_speed), Vector2(rot_speed * dt,0))
+		impulse(Vector2(-rot_speed,-rot_speed), Vector2(-rot_speed * dt,0))
 		play_side_thruster_sound()
 	elif type == CMD.TURN_RIGHT:
-		apply_impulse(Vector2(rot_speed,rot_speed), Vector2(-rot_speed * dt,0))
-		apply_impulse(Vector2(-rot_speed,-rot_speed), Vector2(rot_speed * dt,0))
+		impulse(Vector2(rot_speed,rot_speed), Vector2(-rot_speed * dt,0))
+		impulse(Vector2(-rot_speed,-rot_speed), Vector2(rot_speed * dt,0))
 		play_side_thruster_sound()
 	elif type == CMD.FIRE_LASERS:
 		fire()
@@ -140,8 +144,7 @@ func _fixed_process(delta):
 		if (Input.is_action_pressed(get_ctrl(type)) and not is_remote) \
 			or (is_remote and ctrl != null and ctrl.has(type) and ctrl[type]):
 			show.append(type)
-			if not is_dummy:
-				apply_ctrl(type, delta)
+			apply_ctrl(type, delta)
 			if type == CMD.TURN_LEFT or type == CMD.TURN_RIGHT:
 				should_play = true
 		else:
@@ -178,6 +181,9 @@ func fire():
 	if fire_timer.get_time_left() != 0 or laser_heat > laser_overheat_threshold:
 		return
 	fire_timer.start()
+	get_node("ShipSounds").play("laser1")
+	if is_dummy:
+		return
 	var scale = get_node("Sprite").get_scale()
 	var la_l = laser.instance()
 	var la_r = laser.instance()
@@ -190,10 +196,11 @@ func fire():
 	la_r.set_linear_velocity(Vector2(0,-laser_speed).rotated(get_transform().get_rotation()))
 	get_parent().add_child(la_l)
 	get_parent().add_child(la_r)
-	get_node("ShipSounds").play("laser1")
 	laser_heat += laser_heat_step
 
 func _die():
+	if not isdying:
+		return
 	add_to_group("dead")
 	set_pos(Vector2(-1000,-1000))
 	set_rot(0)
