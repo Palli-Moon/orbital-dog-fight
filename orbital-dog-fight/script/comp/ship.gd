@@ -30,6 +30,7 @@ var laser_heat = 0
 var thruster_sound_playing = false
 var side_thruster_sound_playing = false
 var thruster_voice
+var killer = null
 
 var isdying = false
 
@@ -188,6 +189,8 @@ func fire():
 	var scale = get_node("Sprite").get_scale()
 	var la_l = laser.instance()
 	var la_r = laser.instance()
+	la_l.ship = self
+	la_r.ship = self
 	la_l.set_rot(get_rot())
 	la_l.set_global_pos(get_transform().get_origin() + Vector2(10 * scale.x,-34 * scale.y).rotated(get_rot()))
 	la_l.set_linear_velocity(Vector2(0,-laser_speed).rotated(get_transform().get_rotation()))
@@ -208,7 +211,8 @@ func _die():
 	set_linear_velocity(Vector2(0,0))
 	set_angular_velocity(0)
 	hide()
-	heimdallr.send_signal(self, "die", [])
+	heimdallr.send_signal(self, "die", [killer])
+	killer = null
 
 func die(anim):
 	if !isdying:
@@ -224,6 +228,7 @@ func die(anim):
 func hit(beam):
 	curr_hp -= beam.get_power()
 	if curr_hp <= 0:
+		killer = beam.ship
 		die("exp_one")
 	else:
 		get_node("ShipSounds").play("laser-hit2")

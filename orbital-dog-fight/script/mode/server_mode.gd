@@ -67,8 +67,16 @@ func _ready():
 	set_fixed_process(true)
 
 func message(sender,sig,data):
+	if sender.get_parent() != get_node("Game"):
+		return
 	if sig == "die":
-		print("somebody died")
+		if data.size() > 0:
+			if data[0] == null or data[0] == sender:
+				curr_state.get_player_by_ship(sender).score -= 1
+			else:
+				var p = curr_state.get_player_by_ship(data[0])
+				if p != null:
+					p.score += 1
 
 func respawn():
 	var ships = get_tree().get_nodes_in_group("dead")
