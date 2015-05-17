@@ -1,10 +1,16 @@
-extends Node2D
+extends Node
 
 var game
 
 func _ready():
+	# Seed the random number generator
 	seed(OS.get_unix_time())
-	pass
+	# Loading Settings
+	Settings = SettingsClass.new()
+	if Settings.load(SettingsClass.PATH) != 0:
+		print("Creating config file")
+		if Settings.save() != 0:
+			print("Unable to save config file, user settings will not be saved")
 
 func set_game(m):
 	game = weakref(m)
@@ -37,3 +43,37 @@ func message(sender, sig, data):
 		print("game is not compatible with Heimdallr (missing message(sender,sig,data) function)!")
 		return
 	game.get_ref().message(sender, sig, data)
+
+func get_pref(key):
+	pass
+
+func set_pref(key, value):
+	pass
+
+#
+# Settings related stuff
+#
+# Use get_node("/root/Heimdallr").Settings to access this, see ConfigFile as reference
+# NOTE: save() function is overridden and takes no paramter. Remember to call it!
+# NOTE: load(name) should NEVER be called.
+#
+# Examples:
+# var Settings = get_node("/root/global").Settings
+# var music_volume = Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_MUSIC_VOL)
+# Settings.set_value(Settings.SECTION_SOUND, Settings.SOUND_MUSIC_VOL, 50)
+var Settings
+
+class SettingsClass extends ConfigFile:
+	const PATH = "user://settings.cfg"
+
+	# Add more section if you like
+	const SECTION_BINDING = "binding"
+	const SECTION_SOUND = "sound"
+	const SECTION_NETWORK = "network"
+
+	# Remember to use constants for names so we don't get lost!
+	const SOUND_MUSIC_ENABLE = "music_enabled"
+	const SOUND_MUSIC_VOL = "music_volume"
+
+	func save():
+		return .save(PATH)
