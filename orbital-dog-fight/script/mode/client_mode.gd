@@ -32,7 +32,7 @@ var Ship = preload("res://scene/comp/ship.xml")
 var Laser = preload("res://scene/comp/laser.xml")
 var curr_ctrl = State.ControlState.new(null)
 var sync_delta = 0
-var sync_update = null
+var prediction = {}
 
 class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 	var mode = null
@@ -46,6 +46,7 @@ class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 	
 	func on_disconnect(stream):
 		mode.set_fixed_process(false)
+		mode.set_process(false)
 		pass
 	
 	func on_message(stream, message):
@@ -76,36 +77,39 @@ func _fixed_process(delta):
 			curr_ctrl.ctrl[type] = active
 	if updated:
 		client.send_data(Command.ClientUpdateCtrl.new(player_id, curr_ctrl.ctrl).get_msg())
-	if sync_update != null:
-		sync_delta += delta
-		var weight = sync_delta / STATE_SYNC_DELAY / 4
-		for k in curr_state.players:
-			if sync_update.p.has(k):
-				var p = curr_state.players[k].ship.get_ship()
-				var from = p.get_pos()
-				var to = sync_update.p[k]["ship"].pos
-				p.set_pos(Vector2(lerp(from.x, to.x, weight), lerp(from.y, to.y, weight)))
-				var from_r = p.get_rot()
-				var to_r = sync_update.p[k]["ship"].r
-				var ang = sync_update.p[k]["ship"].a
-				if abs(from_r - to_r) < 0.15:
-					p.set_rot(to_r)
-				else:
-					if sign(ang) > 0 and from_r < to_r:
-						to_r -= 2*PI
-					elif sign(ang) < 0 and from_r > to_r:
-						to_r += 2*PI
-					p.set_rot(lerp(from_r, to_r, weight))
+
+func _process(delta):
+	sync_delta += delta
+	var weight = sync_delta / STATE_SYNC_DELAY
+	for k in curr_state.players:
+		var p = curr_state.players[k].ship.get_ship()
+		var from = p.get_pos()
+		var to = prediction[k][0]
+		p.set_pos(Vector2(lerp(from.x, to.x, weight), lerp(from.y, to.y, weight)))
+		var from_r = p.get_rot()
+		var to_r = prediction[k][1]
+		var ang = prediction[k][2]
+		if abs(from_r - to_r) < 0.15:
+			p.set_rot(to_r)
+		else:
+			if ang > 0 and from_r < to_r:
+				to_r -= 2*PI
+			elif ang < 0 and from_r > to_r:
+				to_r += 2*PI
+			p.set_rot(lerp(from_r, to_r, weight))
+		p.healthBar.update_rot()
+		p.laserBar.update_rot()
 
 func accepted(id, s):
 	player_id = id
 	ship = create_ship()
 	ship.set_pos(s.pos)
 	ship.set_rot(s.r)
-	ship.set_angular_velocity(s.a)
 	curr_state.add_player(id, player_name, ship, null)
+	prediction[id] = get_prediction(s.pos, s.v, s.r, s.a)
 	print_debug("accepted: " + str(id))
 	set_fixed_process(true)
+	set_process(true)
 
 func new_player(id, name, ship):
 	if id == player_id:
@@ -136,7 +140,7 @@ func update_state(state):
 		if not curr_state.lasers.has(k):
 			var laser = create_laser(state.l[k].p, state.l[k].v, state.l[k].a, state.l[k].t, state.l[k].r)
 			curr_state.add_laser(k, laser)
-	# Add new players
+	# Add new players and populate prediction
 	for k in state.p:
 		if not curr_state.players.has(k):
 			var p_ship = Ship.instance()
@@ -145,14 +149,21 @@ func update_state(state):
 			get_node("Game").add_child(p_ship)
 			curr_state.add_player(k, state.p[k].name, p_ship, null)
 			curr_state.players[k].update_state(state.p[k])
-	sync_update = state
+		# Populate prediction of the next state
+		prediction[k] = get_prediction(state.p[k].ship.pos, state.p[k].ship.v, state.p[k].ship.r, state.p[k].ship.a)
+
+func get_prediction(pos, vel, rot, ang):
+	var to_r = rot - ang * STATE_SYNC_DELAY
+	if to_r > PI:
+		to_r -= 2*PI
+	elif to_r < -PI:
+		to_r += 2*PI
+	return [pos + vel * STATE_SYNC_DELAY, to_r, sign(ang)]
 
 func create_ship():
 	var out = Ship.instance()
 	out.is_remote = true
 	out.ctrl = State.ControlState.new(null).get_state()
-	#out.set_linear_velocity(Vector2(150,0))
-	#out.set_pos(Vector2(400,200))
 	get_node("Game").add_child(out)
 	out.is_dummy = true
 	out.set_cd_enable(false)

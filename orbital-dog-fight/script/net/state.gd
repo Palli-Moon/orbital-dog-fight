@@ -39,7 +39,9 @@ class ShipState:
 				ship.die("exp_one")
 			else:
 				ship.spawn_at(s.pos, s.v, s.r)
-		ship.curr_hp = s.hp
+		if ship.curr_hp != s.hp:
+			ship.curr_hp = s.hp
+			ship.healthBar.update()
 		ship.ctrl = s.ctrl
 		ship.laser_heat = s.l
 	
@@ -51,6 +53,7 @@ class PlayerState:
 	var name
 	var ship
 	var client
+	var score = 0
 	
 	func _init(my_id,my_name,my_ship,my_client):
 		id = my_id
@@ -59,11 +62,15 @@ class PlayerState:
 		client = my_client
 	
 	func get_state():
-		return {"id":id,"name":name,"ship":ship.get_state()}
+		return {"id":id,"name":name,"ship":ship.get_state(),"score":score}
 	
 	func update_state(state):
 		name = state.name
 		ship.update_state(state.ship)
+		score = state.score
+	
+	func get_ship():
+		return ship.ship
 
 class LaserState:
 	var id
@@ -131,6 +138,12 @@ class GameState:
 	func get_player_by_client(client):
 		for k in players.keys():
 			if players[k] != null and players[k].client == client:
+				return players[k]
+		return null
+	
+	func get_player_by_ship(ship):
+		for k in players.keys():
+			if players[k] != null and players[k].get_ship().get_rid().get_id() == ship.get_rid().get_id():
 				return players[k]
 		return null
 	
