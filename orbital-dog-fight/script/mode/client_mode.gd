@@ -33,6 +33,8 @@ var Laser = preload("res://scene/comp/laser.xml")
 var curr_ctrl = State.ControlState.new(null)
 var sync_delta = 0
 var prediction = {}
+var leaderboard
+var leader_show = false
 
 class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 	var mode = null
@@ -63,6 +65,7 @@ class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 			mode.update_ctrl(msg.id, msg.ctrl)
 
 func _ready():
+	leaderboard = get_node("UI/Leaderboard")
 	curr_state = State.GameState.new()
 	client = get_node("Client")
 	client.set_handler(OnlineClient.new(self))
@@ -79,9 +82,17 @@ func _fixed_process(delta):
 		client.send_data(Command.ClientUpdateCtrl.new(player_id, curr_ctrl.ctrl).get_msg())
 
 func _process(delta):
+	if Input.is_action_pressed("leaderboard") and not leader_show:
+		leader_show = true
+		leaderboard.show()
+	elif not Input.is_action_pressed("leaderboard") and leader_show:
+		leader_show = false
+		leaderboard.hide()
 	sync_delta += delta
 	var weight = sync_delta / STATE_SYNC_DELAY
 	for k in curr_state.players:
+		if not prediction.has(k):
+			continue
 		var p = curr_state.players[k].ship.get_ship()
 		var from = p.get_pos()
 		var to = prediction[k][0]
@@ -151,6 +162,24 @@ func update_state(state):
 			curr_state.players[k].update_state(state.p[k])
 		# Populate prediction of the next state
 		prediction[k] = get_prediction(state.p[k].ship.pos, state.p[k].ship.v, state.p[k].ship.r, state.p[k].ship.a)
+	update_leader()
+
+func update_leader():
+	var scores = []
+	for k in curr_state.players:
+		scores.append(curr_state.players[k])
+	scores.sort_custom(self,"sort_score")
+	for i in range(4):
+		var line = leaderboard.get_node("Panel/P"+str(i+1))
+		if i < scores.size():
+			line.get_node("Score").set_text(str(scores[i].score))
+			line.get_node("Player").set_text(scores[i].name)
+		else:
+			line.get_node("Score").set_text("")
+			line.get_node("Player").set_text("")
+
+func sort_score(a, b):
+	return a.score > b.score
 
 func get_prediction(pos, vel, rot, ang):
 	var to_r = rot - ang * STATE_SYNC_DELAY

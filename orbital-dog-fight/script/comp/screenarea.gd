@@ -1,9 +1,5 @@
 extends Node2D
 
-# member variables here, example:
-# var a=2
-# var b="textvar"
-
 export var timeout = 10.0 # timeout in seconds
 export var viewport_scale = 1.0
 
@@ -19,7 +15,7 @@ class TimedObject:
 	
 	func _init(timeout, obj, parent):
 		print("new timed object created")
-		self.object = obj
+		self.object = weakref(obj)
 		self.parent = parent
 		self.indicator_texture = load("res://assets/img/arrowwhite.png")
 		self.timer = Timer.new()
@@ -50,22 +46,27 @@ class TimedObject:
 			
 
 	func _timeout():
-		print("timeout")
-		if self.object.is_in_group("ships"):
-			self.object.die("exp_one")
+		# Be sure that object has not been deleted
+		if self.object.get_ref() == null:
+			clear()
+			return
+		if self.object.get_ref().is_in_group("ships"):
+			self.object.get_ref().die("exp_one")
 			print("is dead")
-		elif self.object.is_in_group("asteroids"):
-			self.object._die()
+		elif self.object.get_ref().is_in_group("asteroids"):
+			self.object.get_ref()._die()
 		clear()
 		
 	func get_object():
-		return self.object
+		return self.object.get_ref()
 	
 	func update(width, height):
+		if self.object.get_ref() == null:
+			clear()
+			return
 		var indicator_pos = Vector2(0.0,0.0)
 		if self.indicator != null:
-			var obj_pos = self.object.get_pos()
-			print(obj_pos)
+			var obj_pos = self.object.get_ref().get_pos()
 			indicator_pos = obj_pos
 			if obj_pos.x > width*2 - 16:
 				indicator_pos.x = width*2 - 16
@@ -84,8 +85,7 @@ class TimedObject:
 			else:
 				timeleft = str(timeleft)
 			self.indicator.get_child(1).get_child(0).set_text(timeleft)
-			print(indicator_pos)
-			
+	
 	func clear():
 		self.timer.queue_free()
 		if indicator != null:
@@ -97,9 +97,7 @@ func _ready():
 	exts = (get_tree().get_root().get_rect().end * viewport_scale)/2
 	get_node("ScreenExtents").get_shape(0).set_extents(exts)
 	get_node("ScreenExtents").set_pos(exts)
-	print(exts)
 	set_process(true)
-	pass
 
 func _process(delta):
 	for obj in timed_objects:
@@ -107,22 +105,12 @@ func _process(delta):
 	pass
 		
 func _on_ScreenExtents_body_enter( body ):
-	print("----")
 	if (body.is_in_group("ships")):
 		for timed_obj in timed_objects:
 			if timed_obj.get_object() == body:
 				timed_obj.clear()
-				print("Object removed from list")
-	print("entered area")
-	pass # replace with function body
 
 func _on_ScreenExtents_body_exit( body ):
-	print("----")
-	print(body)
 	if (body.is_in_group("ships")) and !body.isdying:
-		print("ship")
 		var obj = TimedObject.new(timeout, body, self)
-		print(obj)
 		timed_objects.append(obj)
-	print("left area")
-	pass # replace with function body
