@@ -35,7 +35,6 @@ var killer = null
 var isdying = false
 
 func on_ready():
-	#seed(OS.get_unix_time())
 	# Register events
 	heimdallr = get_node("/root/Heimdallr")
 	heimdallr.register_signal(self, "die")
@@ -54,18 +53,18 @@ func on_ready():
 	if get_node("/root/Demos/Settings") != null:
 		set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
 	get_node("ShipSounds").set_voice_count(24)
+	# Add ship to groups
+	add_to_group("ships")
+	add_to_group("dead")
+	add_to_group("shootables")
+	add_to_group("sfx")
 
 func on_spawn():
-	isdying = false
-	curr_hp = hitpoints
+	# We are alive
 	if is_in_group("dead"):
 		remove_from_group("dead")
-	if not is_in_group("ships"):
-		add_to_group("ships")
-	if not is_in_group("shootables"):
-		add_to_group("shootables")
-	if not is_in_group("sfx"):
-		add_to_group("sfx")
+	isdying = false
+	curr_hp = hitpoints
 	get_node("Sprite").show()
 	particles.show()
 	healthBar.update()

@@ -6,9 +6,9 @@ export var hitpoints = 100 setget set_hitpoints, get_hitpoints
 export(Texture) var asteroid_texture setget set_asteroid_texture, get_asteroid_texture
 export var scale = 1.0 setget set_scale, get_scale
 
-var asteroid = preload("res://scene/comp/asteroid.xml")
+var Asteroid
 
-var curr_hp
+var curr_hp = 0
 var health_bar = null
 var heimdallr
 var is_dying = false
@@ -16,7 +16,6 @@ var threshold = 0.3
 
 var textures = [load("res://assets/img/asteroid1.png"), load("res://assets/img/asteroid2.png"), load("res://assets/img/asteroid3.png")]
 func on_ready():
-	seed(OS.get_unix_time())
 	# Register events
 	heimdallr = get_node("/root/Heimdallr")
 	heimdallr.register_signal(self, "die")
@@ -29,15 +28,15 @@ func on_ready():
 	if not get_tree().is_editor_hint():
 		get_shape(0).set_radius(10*scale)
 		get_node("Trigger").get_shape(0).set_radius(18*scale)
+		health_bar = get_node("HealthBar")
+		Asteroid = load("res://scene/comp/asteroid.xml")
 	set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
-	pass
 
 func on_spawn():
+	is_dying = false
 	curr_hp = hitpoints
-	health_bar = get_node("HealthBar")
 	health_bar.update()
 	set_fixed_process(true)
-	pass
 
 func on_collide(body):
 	pass
@@ -58,13 +57,15 @@ func set_default_volume(value):
 	get_node("AsteroidSounds").set_default_volume(value)
 
 func _die():
-	if scale > 1 && !is_dying:
-		is_dying = true
+	if is_dying:
+		return
+	is_dying = true
+	if scale > 1:
 		var roids = floor(scale/randf())
 		for i in range(roids):
 			var littleroidscale = randf()
 			if littleroidscale * scale > threshold:
-				var littleroid = asteroid.instance()
+				var littleroid = Asteroid.instance()
 				var pos = get_pos()
 				var vel = get_linear_velocity()
 				littleroid.set_linear_velocity(vel)
@@ -76,11 +77,15 @@ func _die():
 				var texnum = randi() % 3
 				littleroid.set_asteroid_texture(textures[texnum])
 				get_parent().add_child(littleroid)
+				littleroid.spawn()
 				scale = scale * (1-littleroidscale)
 	heimdallr.send_signal(self, "die", [])
+	remove_from_group("asteroids")
 	explode()
 
 func hit(beam):
+	if is_dying:
+		return
 	get_node("AsteroidSounds").play("laser-hit2")
 	curr_hp -= beam.get_power()
 	health_bar.update()
