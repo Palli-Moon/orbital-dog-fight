@@ -69,7 +69,6 @@ func prev_song():
 		isFadingOut = false
 
 func _process(delta):
-	print(isPlaying)
 	if isPlaying:
 		if !playernode.is_playing():
 			next_song()
@@ -92,12 +91,9 @@ func _on_FadeTimer_timeout():
 
 func _on_Forward_pressed():
 	next_song()
-	pass # replace with function body
-
 
 func _on_Back_pressed():
 	prev_song()
-	pass # replace with function body
 
 func _on_Mute_pressed():
 	if muted:
@@ -107,5 +103,3 @@ func _on_Mute_pressed():
 		playernode.set_volume(0)
 		muteButton.set_text("Loud")
 	muted = !muted
-	
-	pass # replace with function body

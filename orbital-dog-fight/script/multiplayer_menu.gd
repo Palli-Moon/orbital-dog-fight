@@ -37,10 +37,10 @@ func on_client():
 	main.toggle_multiplayer()
 
 func on_server():
-	var s = ResourceLoader.load("res://scene/mode/online.xml").instance()
-	s.set_script(load("res://script/mode/server_mode.gd"))
-	s.set_port(int(get_node("Create/Port").get_text()))
-	Settings.set_value(Settings.SECTION_NETWORK, Settings.NETWORK_SERVER_PORT, s.port)
+	var s = ResourceLoader.load("res://scene/mode/server_mode.xml").instance()
+	s.get_node("Server").get_node("Server").set_port(int(get_node("Create/Port").get_text()))
+	s.get_node("Client").set_port(int(get_node("Create/Port").get_text()))
+	Settings.set_value(Settings.SECTION_NETWORK, Settings.NETWORK_SERVER_PORT, s.get_node("Client").port)
 	Settings.save()
 	load_scene(s)
 	main.toggle_multiplayer()

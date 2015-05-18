@@ -94,7 +94,11 @@ func end_game(winner):
 			lasers.queue_free()
 
 func respawn():
-	var spawns = get_tree().get_nodes_in_group("spawnpoints")
+	var all_spawns = get_tree().get_nodes_in_group("spawnpoints")
+	var spawns = []
+	for sp in all_spawns:
+		if sp.get_parent() == get_node("Game"):
+			spawns.append(sp)
 	if is_end:
 		is_end = false
 		server.broadcast(Command.ServerGameRestart.new().get_msg())
