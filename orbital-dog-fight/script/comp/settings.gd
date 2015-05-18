@@ -96,7 +96,7 @@ func _on_MusicCheck_toggled( pressed ):
 		music_player.label.set_opacity(1.0)
 		music_player.get_node("ShowTimer").start()
 		music_player.show()
-	music_player.isPlaying = !music_player.isPlaying
+	music_player.isPlaying = pressed
 
 func _on_MusicSlider_value_changed( value ):
 	Settings.set_value(Settings.SECTION_SOUND, Settings.SOUND_MUSIC_VOL, value)

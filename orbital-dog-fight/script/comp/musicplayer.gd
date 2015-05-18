@@ -69,6 +69,7 @@ func prev_song():
 		isFadingOut = false
 
 func _process(delta):
+	print(isPlaying)
 	if isPlaying:
 		if !playernode.is_playing():
 			next_song()
