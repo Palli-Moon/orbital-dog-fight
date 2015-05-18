@@ -26,6 +26,7 @@ func on_ready():
 	# Register events
 	heimdallr = get_node("/root/Heimdallr")
 	heimdallr.register_signal(self, "die")
+	heimdallr.register_signal(self, "crash")
 	# Add to groups
 	add_to_group("shootables")
 	add_to_group("asteroids")
@@ -50,7 +51,9 @@ func on_spawn():
 	set_fixed_process(true)
 
 func on_collide(body):
-	pass
+	if body.is_in_group("planet"):
+		_die()
+		heimdallr.send_signal(self, "crash", [body])
 
 func on_separate(body):
 	pass
