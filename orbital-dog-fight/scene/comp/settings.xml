@@ -135,7 +135,7 @@
 				<resource  resource_type="Script" path="res://script/comp/settings.gd">  </resource>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
-					<string> "2D" </string>
+					<string> "Script" </string>
 					<string> "__editor_plugin_states__" </string>
 					<dictionary  shared="false">
 						<string> "2D" </string>
@@ -260,9 +260,10 @@
 							<string> "current" </string>
 							<int> 0 </int>
 							<string> "sources" </string>
-							<array  len="2" shared="false">
+							<array  len="3" shared="false">
 								<string> "res://script/comp/settings.gd" </string>
-								<string> "res://script/main.gd" </string>
+								<string> "res://script/Heimdallr.gd" </string>
+								<string> "res://script/comp/ship.gd" </string>
 							</array>
 						</dictionary>
 					</dictionary>

@@ -22,6 +22,22 @@ func _ready():
 	get_node("SFXSlider").set_value(sfx_vol)
 	_on_SFXCheck_toggled(sfx_on)
 	_on_SFXSlider_value_changed(music_vol)
+	set_bindings()
+
+func set_bindings():
+	for action in Settings.get_section_keys(Settings.SECTION_BINDING):
+		InputMap.erase_action(action)
+		InputMap.add_action(action)
+		var ev = Settings.get_value(Settings.SECTION_BINDING, action)
+		print(typeof(ev))
+		get_node("P"+action[1]+"Controls/"+action).set_text(ev[0].to_upper())
+		ev.remove(0)
+		for keycode in ev:
+			var evnt = InputEvent()
+			evnt.type = InputEvent.KEY
+			evnt.scancode = keycode
+			InputMap.action_add_event(action, evnt)
+		
 
 func _on_Return_pressed():
 	get_parent().toggle_menu()
@@ -50,6 +66,8 @@ func remap_action(event):
 			txt = "\u2192"
 		else:
 			txt = str(event).split("Unicode: ")[1][0]
+		Settings.set_value(Settings.SECTION_BINDING, remapping, [txt, event.scancode])
+		Settings.save()
 		get_node("P"+remapping[1]+"Controls/"+remapping).set_text(txt.to_upper())
 	get_parent().is_remapping = false
 	get_parent().remapping = null
