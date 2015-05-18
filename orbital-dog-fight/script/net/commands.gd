@@ -5,6 +5,8 @@ const CLIENT_DISCONNECT = 2
 const SERVER_CLIENT_ACCEPTED = 100
 const SERVER_STATE_UPDATE = 101
 const SERVER_NEW_PLAYER = 102
+const SERVER_GAME_ENDS = 103
+const SERVER_GAME_RESTART = 104
 
 class ClientConnect:
 	var name
@@ -37,6 +39,22 @@ class ClientDisconnect:
 	
 	func get_msg():
 		return [cmd, id]
+
+class ServerGameEnds:
+	const cmd = SERVER_GAME_ENDS
+	var winner
+	
+	func _init(winner):
+		self.winner = winner
+	
+	func get_msg():
+		return [cmd, winner]
+
+class ServerGameRestart:
+	const cmd = SERVER_GAME_RESTART
+	
+	func get_msg():
+		return [cmd]
 
 class ServerClientAccepted:
 	var id
@@ -105,5 +123,11 @@ static func parse(data):
 		if data.size() != 4 || typeof(data[1]) != TYPE_INT || typeof(data[2]) != TYPE_STRING:
 			return null
 		return ServerNewPlayer.new(data[1], data[2], data[3])
+	elif cmd == SERVER_GAME_ENDS:
+		if data.size() != 2 || typeof(data[1]) != TYPE_STRING:
+			return null
+		return ServerGameEnds.new(data[1])
+	elif cmd == SERVER_GAME_RESTART:
+		return ServerGameRestart.new()
 	print("Unknown command")
 	return null

@@ -29,6 +29,9 @@ var Server = preload("res://script/net/server.gd")
 var Ship = preload("res://scene/comp/ship.xml")
 var Heimdallr = null
 var dt = 0
+var is_end = false
+var end_timeout = 10
+var winning_score = 5
 
 class OnlineServer extends "res://script/net/server.gd".ServerHandler:
 	var mode = null
@@ -77,20 +80,41 @@ func message(sender,sig,data):
 				var p = curr_state.get_player_by_ship(data[0])
 				if p != null:
 					p.score += 1
+					if p.score >= winning_score:
+						end_game(p.name)
+
+func end_game(winner):
+	get_node("UI/Timer").start()
+	is_end = true
+	server.broadcast(Command.ServerGameEnds.new(winner).get_msg())
+	# Clean lasers
+	var lasers = get_tree().get_nodes_in_group("lasers")
+	for l in lasers:
+		if lasers.get_parent() == get_node("Game"):
+			lasers.queue_free()
 
 func respawn():
+	if is_end:
+		is_end = false
+		server.broadcast(Command.ServerGameRestart.new().get_msg())
+		for k in curr_state.players:
+			curr_state.players[k].score = 0
+			curr_state.players[k].get_ship().spawn_at(Vector2(800,300), Vector2(150,0), 0)
+		return
 	var ships = get_tree().get_nodes_in_group("dead")
 	for s in ships:
 		if s.get_parent() == get_node("Game"):
 			s.spawn_at(Vector2(800,300), Vector2(150,0), 0)
 
 func _process(delta):
+	if is_end:
+		return
 	curr_state.time = str(round(get_node("UI/Timer").get_time_left()))
 	get_node("UI/SpawnLabel/SpawnTime").set_text(curr_state.time)
 
 func _fixed_process(delta):
 	dt += delta
-	if dt >= STATE_SYNC_DELAY:
+	if dt >= STATE_SYNC_DELAY and not is_end:
 		dt -= STATE_SYNC_DELAY
 		send_sync_state()
 
@@ -115,6 +139,8 @@ func player_join(client, stream, msg):
 	server.broadcast(Command.ServerNewPlayer.new(id,msg.name, ship).get_msg())
 
 func player_update_ctrl(client, stream, msg):
+	if is_end:
+		return
 	var p = curr_state.get_player_by_client(client)
 	if p != null:
 		p.ship.update_ctrl(msg.ctrl)

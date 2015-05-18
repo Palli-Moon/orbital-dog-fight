@@ -22,6 +22,7 @@ func set_port(the_port):
 var client = null
 
 var player_id = null
+var is_end = false
 var player_name = "Unamed Player"
 var ship = null
 var curr_state = null
@@ -63,6 +64,10 @@ class OnlineClient extends "res://script/net/client.gd".ClientHandler:
 			mode.update_state(msg.state)
 		elif msg.cmd == mode.Command.CLIENT_UPDATE_CTRL:
 			mode.update_ctrl(msg.id, msg.ctrl)
+		elif msg.cmd == mode.Command.SERVER_GAME_ENDS:
+			mode.game_ends(msg.winner)
+		elif msg.cmd == mode.Command.SERVER_GAME_RESTART:
+			mode.game_restart()
 
 func _ready():
 	leaderboard = get_node("UI/Leaderboard")
@@ -88,6 +93,8 @@ func _process(delta):
 	elif not Input.is_action_pressed("leaderboard") and leader_show:
 		leader_show = false
 		leaderboard.hide()
+	if is_end:
+		return
 	sync_delta += delta
 	# Let's just apply whatever prediction we have
 	var weight = sync_delta / STATE_SYNC_DELAY
@@ -131,6 +138,20 @@ func accepted(id, s):
 	print_debug("accepted: " + str(id))
 	set_fixed_process(true)
 	set_process(true)
+
+func game_restart():
+	is_end = false
+	get_node("UI/EndText").hide()
+
+func game_ends(winner):
+	is_end = true
+	get_node("UI/EndText").set_text(str(winner) + " wins!\n\nServer will restart")
+	get_node("UI/EndText").show()
+	# Clean lasers
+	var lasers = get_tree().get_nodes_in_group("lasers")
+	for l in lasers:
+		if lasers.get_parent() == get_node("Game"):
+			lasers.queue_free()
 
 func new_player(id, name, ship):
 	if id == player_id:
