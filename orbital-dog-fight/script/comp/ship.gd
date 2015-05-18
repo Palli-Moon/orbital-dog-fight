@@ -216,12 +216,16 @@ func _die():
 	set_rot(0)
 	set_linear_velocity(Vector2(0,0))
 	set_angular_velocity(0)
+	stop_side_thruster_sound()
+	stop_thruster_sound()
 	hide()
 	heimdallr.send_signal(self, "die", [killer])
 	killer = null
 
 func die(anim):
 	if !isdying:
+		stop_side_thruster_sound()
+		stop_thruster_sound()
 		isdying = true
 		set_fixed_process(false)
 		particles.hide()
