@@ -137,6 +137,10 @@ func stop_side_thruster_sound():
 		audio.stop_sound()
 		side_thruster_sound_playing = false
 
+func _notification(what):
+	if what == NOTIFICATION_PAUSED:
+		stop_side_thruster_sound()
+		stop_thruster_sound()
 
 func _fixed_process(delta):
 	var show = []
