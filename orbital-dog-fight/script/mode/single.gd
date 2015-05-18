@@ -6,13 +6,19 @@ var end_screen = preload("res://scene/end_screen.xml")
 var end
 var screen_text
 var t = 0
+var Settings = null
+var tutorial_seen
 
 func _ready():
+	Settings = get_node("/root/Heimdallr").Settings
+	tutorial_seen = Settings.get_value(Settings.SECTION_TUTORIAL, Settings.TUTORIAL_SEEN)
 	get_node("/root/Heimdallr").set_game(self)
 	end = end_screen.instance()
 	end.hide()
 	add_child(end)
 	screen_text = get_node("Screentext")
+	if tutorial_seen:
+		screen_text.hide()
 	var ships = get_tree().get_nodes_in_group("ships")
 	var spawns = get_tree().get_nodes_in_group("spawnpoints")
 	for s in ships:
@@ -24,7 +30,8 @@ func _ready():
 func _process(delta):
 	if finish:
 		get_tree().set_pause(true)
-	tutorial(delta)
+	if !tutorial_seen:
+		tutorial(delta)
 
 func tutorial(delta):
 	t += delta
@@ -36,7 +43,11 @@ func tutorial(delta):
 		set_screen_text("Welcome to Orbital Dog-fight!", "Press SPACE or X to shoot")
 	elif t < 9:
 		set_screen_text("Shoot the asteroid before", "it destroys your planet!")
-		
+	else:
+		Settings.set_value(Settings.SECTION_TUTORIAL, Settings.TUTORIAL_SEEN, true)
+		Settings.save()
+		tutorial_seen = true
+
 func set_screen_text(line1, line2):
 	screen_text.show()
 	screen_text.get_node("line1").set_text(line1)

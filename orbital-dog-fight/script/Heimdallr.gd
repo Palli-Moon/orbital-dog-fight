@@ -71,6 +71,7 @@ class SettingsClass extends ConfigFile:
 	const SECTION_BINDING = "binding"
 	const SECTION_SOUND = "sound"
 	const SECTION_NETWORK = "network"
+	const SECTION_TUTORIAL = "tutorial"
 
 	#
 	# Remember to use constants for names so we don't get lost!
@@ -99,6 +100,9 @@ class SettingsClass extends ConfigFile:
 	const BINDING_P2_TL = "p2_tl"
 	const BINDING_P2_TR = "p2_tr"
 	const BINDING_P2_LASERS = "p2_lasers"
+	
+	# Tutorial Section
+	const TUTORIAL_SEEN = "tutorial_seen"
 
 	func save():
 		return .save(PATH)
@@ -129,3 +133,5 @@ class SettingsClass extends ConfigFile:
 		_set_default(SECTION_BINDING, BINDING_P2_TL, ["Y", KEY_Y])
 		_set_default(SECTION_BINDING, BINDING_P2_TR, ["I", KEY_I])
 		_set_default(SECTION_BINDING, BINDING_P2_LASERS, ["M", KEY_M])
+		
+		_set_default(SECTION_TUTORIAL, TUTORIAL_SEEN, false)
