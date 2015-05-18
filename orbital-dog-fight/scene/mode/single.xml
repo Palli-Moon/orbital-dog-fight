@@ -15,7 +15,7 @@
 			<string> "conns" </string>
 			<int_array  len="0"> 				 </int_array>
 			<string> "names" </string>
-			<string_array  len="33">
+			<string_array  len="32">
 				<string> "World" </string>
 				<string> "Node2D" </string>
 				<string> "_import_path" </string>
@@ -39,7 +39,6 @@
 				<string> "velocity/angular" </string>
 				<string> "damp_override/angular" </string>
 				<string> "spawn_on_ready" </string>
-				<string> "hitpoints" </string>
 				<string> "asteroid_texture" </string>
 				<string> "scale" </string>
 				<string> "can_shoot" </string>
@@ -53,9 +52,9 @@
 			<string> "node_count" </string>
 			<int> 8 </int>
 			<string> "nodes" </string>
-			<int_array  len="162"> 				-1, -1, 1, 0, -1, 13, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 14, 7, 0, 0, 0, 16, 15, 10, 4, 2, 0, 7, 11, 17, 12, 13, 13, 0, 0, 0, 16, 18, 14, 13, 2, 0, 7, 15, 9, 16, 19, 5, 17, 17, 20, 2, 21, 5, 13, 18, 22, 1, 23, 19, 24, 20, 25, 16, 26, 1, 0, 0, 0, 1, 27, 21, 3, 2, 0, 7, 22, 13, 23, 0, 0, 0, 1, 28, 24, 2, 2, 0, 13, 25, 0, 0, 0, 1, 29, 26, 5, 2, 0, 7, 27, 10, 28, 13, 29, 30, 12, 0, 0, 0, 1, 31, 30, 3, 2, 0, 7, 31, 13, 32, 0, 0, 0, 1, 32, -1, 10, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 0 </int_array>
+			<int_array  len="160"> 				-1, -1, 1, 0, -1, 13, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 14, 7, 0, 0, 0, 16, 15, 10, 4, 2, 0, 7, 11, 17, 12, 13, 13, 0, 0, 0, 16, 18, 14, 12, 2, 0, 7, 15, 9, 16, 19, 5, 17, 17, 20, 2, 21, 5, 13, 18, 22, 1, 23, 19, 24, 16, 25, 1, 0, 0, 0, 1, 26, 20, 3, 2, 0, 7, 21, 13, 22, 0, 0, 0, 1, 27, 23, 2, 2, 0, 13, 24, 0, 0, 0, 1, 28, 25, 5, 2, 0, 7, 26, 10, 27, 13, 28, 29, 12, 0, 0, 0, 1, 30, 29, 3, 2, 0, 7, 30, 13, 31, 0, 0, 0, 1, 31, -1, 10, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 0 </int_array>
 			<string> "variants" </string>
-			<array  len="33" shared="false">
+			<array  len="32" shared="false">
 				<node_path> "" </node_path>
 				<bool> True </bool>
 				<real> 1 </real>
@@ -67,7 +66,7 @@
 				<resource  resource_type="Script" path="res://script/mode/single.gd">  </resource>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
-					<string> "Script" </string>
+					<string> "2D" </string>
 					<string> "__editor_plugin_states__" </string>
 					<dictionary  shared="false">
 						<string> "2D" </string>
@@ -190,7 +189,7 @@
 						<string> "Script" </string>
 						<dictionary  shared="false">
 							<string> "current" </string>
-							<int> 3 </int>
+							<int> 0 </int>
 							<string> "sources" </string>
 							<array  len="7" shared="false">
 								<string> "res://script/mode/single.gd" </string>
@@ -493,7 +492,6 @@
 					<string> "_editor_collapsed" </string>
 					<bool> True </bool>
 				</dictionary>
-				<int> 10 </int>
 				<resource  resource_type="Texture" path="res://assets/img/asteroid1.png">  </resource>
 				<resource  resource_type="PackedScene" path="res://scene/comp/planet.xml">  </resource>
 				<vector2> 640, 360 </vector2>
