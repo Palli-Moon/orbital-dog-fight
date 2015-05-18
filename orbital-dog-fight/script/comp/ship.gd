@@ -70,6 +70,7 @@ func on_spawn():
 		remove_from_group("dead")
 	isdying = false
 	curr_hp = hitpoints
+	laser_heat = 0
 	get_node("Sprite").show()
 	particles.show()
 	healthBar.update()

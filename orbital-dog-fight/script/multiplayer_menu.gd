@@ -40,6 +40,7 @@ func on_server():
 	var s = ResourceLoader.load("res://scene/mode/server_mode.xml").instance()
 	s.get_node("Server").get_node("Server").set_port(int(get_node("Create/Port").get_text()))
 	s.get_node("Client").set_port(int(get_node("Create/Port").get_text()))
+	s.get_node("Client").player_name = get_node("Connect/Name").get_text()
 	Settings.set_value(Settings.SECTION_NETWORK, Settings.NETWORK_SERVER_PORT, s.get_node("Client").port)
 	Settings.save()
 	load_scene(s)

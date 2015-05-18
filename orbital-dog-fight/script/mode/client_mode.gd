@@ -157,6 +157,8 @@ func new_player(id, name, ship):
 	if id == player_id:
 		return
 	var p_ship = create_ship()
+	p_ship.laser_speed = 500
+	p_ship.fwd_speed = 20
 	curr_state.add_player(id, name, p_ship, null)
 	print_debug("New player")
 

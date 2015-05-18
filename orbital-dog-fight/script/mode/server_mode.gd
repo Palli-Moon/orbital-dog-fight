@@ -163,6 +163,8 @@ func player_left(client):
 
 func create_ship():
 	var ship = Ship.instance()
+	ship.laser_speed = 500
+	ship.fwd_speed = 20
 	ship.is_remote = true
 	ship.ctrl = {fwd=false,bwd=false,tl=false,tr=false,lasers=false}
 	get_node("Game").add_child(ship)
