@@ -1,20 +1,31 @@
 
 extends PopupPanel
 
-# member variables here, example:
-# var a=2
-# var b="textvar"
+var Settings
 var remapping
 var volume = 1.0
 var muted = false
+var music_player = null
 
 func _ready():
-	pass
+	music_player = get_parent().get_node("MusicPlayer")
+	Settings = get_node("/root/Heimdallr").Settings
+	var music_on = Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_MUSIC_ENABLE)
+	var music_vol = Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_MUSIC_VOL)
+	get_node("MusicCheck").set_pressed(music_on)
+	get_node("MusicSlider").set_value(music_vol)
+	_on_MusicCheck_toggled(music_on)
+	_on_MusicSlider_value_changed(music_vol)
+	var sfx_on = Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_FX_ENABLE)
+	var sfx_vol = Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_FX_VOL)
+	get_node("SFXCheck").set_pressed(sfx_on)
+	get_node("SFXSlider").set_value(sfx_vol)
+	_on_SFXCheck_toggled(sfx_on)
+	_on_SFXSlider_value_changed(music_vol)
 
 func _on_Return_pressed():
 	get_parent().toggle_menu()
 	get_parent().toggle_settings()
-	pass # replace with function body
 
 func remap_action(event):
 	remapping = get_parent().remapping
@@ -44,38 +55,40 @@ func remap_action(event):
 	get_parent().remapping = null
 
 func _on_rebind_pressed(button):
-	print(button)
 	get_parent().is_remapping = true
 	get_parent().remapping = button
-	pass # replace with function body
 
 func _on_MusicCheck_toggled( pressed ):
-	var musicPlayer = get_parent().musicPlayer
-	if musicPlayer.isPlaying:
-		musicPlayer.get_node("StreamPlayer").set_paused( !pressed )
+	Settings.set_value(Settings.SECTION_SOUND, Settings.SOUND_MUSIC_ENABLE, pressed)
+	Settings.save()
+	if music_player == null:
+		return
+	if !pressed:
+		music_player.get_node("StreamPlayer").set_paused( true )
 		get_node("MusicSlider").set_ignore_mouse( true )
-		musicPlayer.isFadingOut = false
-		musicPlayer.isFadingIn = false
-		musicPlayer.label.set_opacity(0)
-		musicPlayer.hide()
+		music_player.isFadingOut = false
+		music_player.isFadingIn = false
+		music_player.label.set_opacity(0)
+		music_player.hide()
 	else:
-		musicPlayer.get_node("StreamPlayer").set_paused( !pressed )
+		music_player.get_node("StreamPlayer").set_paused( false )
 		get_node("MusicSlider").set_ignore_mouse( false )
-		musicPlayer.label.set_opacity(1.0)
-		musicPlayer.get_node("ShowTimer").start()
-		musicPlayer.show()
-	musicPlayer.isPlaying = !musicPlayer.isPlaying
-	
-	pass # replace with function body
+		music_player.label.set_opacity(1.0)
+		music_player.get_node("ShowTimer").start()
+		music_player.show()
+	music_player.isPlaying = !music_player.isPlaying
 
 func _on_MusicSlider_value_changed( value ):
-	var musicPlayer = get_parent().musicPlayer
-	#print(value)
-	musicPlayer.get_node("StreamPlayer").set_volume( value )
-	pass # replace with function body
+	Settings.set_value(Settings.SECTION_SOUND, Settings.SOUND_MUSIC_VOL, value)
+	Settings.save()
+	if music_player == null:
+		return
+	music_player.get_node("StreamPlayer").set_volume( value )
 
 func _on_SFXCheck_toggled( pressed ):
 	muted = !pressed
+	Settings.set_value(Settings.SECTION_SOUND, Settings.SOUND_FX_ENABLE, pressed)
+	Settings.save()
 	for node in get_tree().get_nodes_in_group("sfx"):
 		node.set_default_volume(volume * int(pressed))
 	get_node("SFXSlider").set_ignore_mouse(muted)
@@ -84,6 +97,8 @@ func _on_SFXCheck_toggled( pressed ):
 
 func _on_SFXSlider_value_changed( value ):
 	volume = value
+	Settings.set_value(Settings.SECTION_SOUND, Settings.SOUND_FX_VOL, value)
+	Settings.save()
 	for node in get_tree().get_nodes_in_group("sfx"):
 		node.set_default_volume(value)
 	pass # replace with function body

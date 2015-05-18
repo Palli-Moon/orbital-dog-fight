@@ -3,12 +3,14 @@ extends Node
 
 const SOUNDLEN = 44100
 
+var Settings
 var server = AudioServer
 var r = server.sample_create(0,false,SOUNDLEN)
 var v = server.voice_create()
 var snd = RawArray()
 
 func _ready():
+	Settings = get_node("/root/Heimdallr").Settings
 	for i in range(SOUNDLEN):
 		snd.push_back(randi() % 15 + 1) 
 	server.sample_set_data(r,snd)
@@ -17,8 +19,10 @@ func _ready():
 	server.sample_set_loop_end(r, SOUNDLEN)
 	
 func play_sound():
+	if not Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_FX_ENABLE):
+		return
 	server.voice_play(v,r)
-	server.voice_set_volume(v, 0.2)
+	server.voice_set_volume(v, Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_FX_VOL))
 	
 func stop_sound():
 	server.voice_stop(v)

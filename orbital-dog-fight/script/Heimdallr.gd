@@ -11,6 +11,7 @@ func _ready():
 		print("Creating config file")
 		if Settings.save() != 0:
 			print("Unable to save config file, user settings will not be saved")
+	Settings.load_defaults()
 
 func set_game(m):
 	game = weakref(m)
@@ -74,6 +75,18 @@ class SettingsClass extends ConfigFile:
 	# Remember to use constants for names so we don't get lost!
 	const SOUND_MUSIC_ENABLE = "music_enabled"
 	const SOUND_MUSIC_VOL = "music_volume"
+	const SOUND_FX_ENABLE = "sfx_enabled"
+	const SOUND_FX_VOL = "sfx_volume"
 
 	func save():
 		return .save(PATH)
+	
+	func load_defaults():
+		if get_value(SECTION_SOUND, SOUND_FX_VOL) == null:
+			set_value(SECTION_SOUND, SOUND_FX_VOL, 1)
+		if get_value(SECTION_SOUND, SOUND_FX_ENABLE) == null:
+			set_value(SECTION_SOUND, SOUND_FX_ENABLE, true)
+		if get_value(SECTION_SOUND, SOUND_MUSIC_VOL) == null:
+			set_value(SECTION_SOUND, SOUND_MUSIC_VOL, 1)
+		if get_value(SECTION_SOUND, SOUND_MUSIC_ENABLE) == null:
+			set_value(SECTION_SOUND, SOUND_MUSIC_ENABLE, true)
