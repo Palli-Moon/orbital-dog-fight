@@ -58,6 +58,8 @@ func on_ready():
 	add_to_group("dead")
 	add_to_group("shootables")
 	add_to_group("sfx")
+	isdying = true
+	hide()
 
 func on_spawn():
 	# We are alive

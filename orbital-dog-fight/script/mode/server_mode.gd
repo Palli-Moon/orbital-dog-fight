@@ -82,7 +82,7 @@ func respawn():
 	var ships = get_tree().get_nodes_in_group("dead")
 	for s in ships:
 		if s.get_parent() == get_node("Game"):
-			s.spawn_at(Vector2(50,50), Vector2(100,0), 0)
+			s.spawn_at(Vector2(800,300), Vector2(150,0), 0)
 
 func _process(delta):
 	curr_state.time = str(round(get_node("UI/Timer").get_time_left()))
@@ -129,8 +129,6 @@ func create_ship():
 	var ship = Ship.instance()
 	ship.is_remote = true
 	ship.ctrl = {fwd=false,bwd=false,tl=false,tr=false,lasers=false}
-	ship.set_linear_velocity(Vector2(150,0))
-	ship.set_pos(Vector2(800,200))
 	get_node("Game").add_child(ship)
 	return ship
 

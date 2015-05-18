@@ -193,8 +193,8 @@ func create_ship():
 	var out = Ship.instance()
 	out.is_remote = true
 	out.ctrl = State.ControlState.new(null).get_state()
-	get_node("Game").add_child(out)
 	out.is_dummy = true
+	get_node("Game").add_child(out)
 	out.set_cd_enable(false)
 	out.set_collision_enable(false)
 	out.set_mode(Physics2DServer.BODY_MODE_STATIC)
