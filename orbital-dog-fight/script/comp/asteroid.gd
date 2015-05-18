@@ -31,11 +31,12 @@ func on_ready():
 	add_to_group("shootables")
 	add_to_group("asteroids")
 	add_to_group("sfx")
-	fire_timer = get_node("FireTimer")
-	fire_timer.start()
+
 	if asteroid_texture != null:
 		if can_shoot:
 			get_node("Sprite").set_texture(robotoroid)
+			fire_timer = get_node("FireTimer")
+			fire_timer.start()
 		else:
 			get_node("Sprite").set_texture(asteroid_texture)
 	if not get_tree().is_editor_hint():
@@ -96,6 +97,7 @@ func _die():
 				scale = scale * (1-littleroidscale)
 	heimdallr.send_signal(self, "die", [])
 	remove_from_group("asteroids")
+	fire_timer.stop()
 	explode()
 
 func hit(beam):
