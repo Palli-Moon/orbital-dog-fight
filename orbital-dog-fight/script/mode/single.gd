@@ -34,13 +34,23 @@ func _process(delta):
 		tutorial(delta)
 
 func tutorial(delta):
+	var fwd = Settings.get_value(Settings.SECTION_BINDING, Settings.BINDING_P1_FWD)[0]
+	var bwd = Settings.get_value(Settings.SECTION_BINDING, Settings.BINDING_P1_BWD)[0]
+	var tl = Settings.get_value(Settings.SECTION_BINDING, Settings.BINDING_P1_TL)[0]
+	var tr = Settings.get_value(Settings.SECTION_BINDING, Settings.BINDING_P1_TR)[0]
+	var lasers = Settings.get_value(Settings.SECTION_BINDING, Settings.BINDING_P1_LASERS)
+	if lasers.size() > 2:
+		lasers = lasers[0] + " or " + lasers[2]
+	else:
+		lasers = lasers[0]
+
 	t += delta
 	
 	screen_text.hide()
 	if t < 3:
-		set_screen_text("Welcome to Orbital Dog-fight!", "Go forward with W\nTurn with Q and E")
+		set_screen_text("Welcome to Orbital Dog-fight!", "Go forward with " + fwd + ".\nTurn with " + tl + " and " + tr)
 	elif t < 6:
-		set_screen_text("Welcome to Orbital Dog-fight!", "Press SPACE or X to shoot")
+		set_screen_text("Welcome to Orbital Dog-fight!", "Press " + lasers + " to shoot")
 	elif t < 9:
 		set_screen_text("Shoot the asteroid before", "it destroys your planet!")
 	else:

@@ -29,9 +29,9 @@ func set_bindings():
 		InputMap.erase_action(action)
 		InputMap.add_action(action)
 		var ev = Settings.get_value(Settings.SECTION_BINDING, action)
-		print(typeof(ev))
 		get_node("P"+action[1]+"Controls/"+action).set_text(ev[0].to_upper())
 		ev.remove(0)
+		ev.remove(1)
 		for keycode in ev:
 			var evnt = InputEvent()
 			evnt.type = InputEvent.KEY
