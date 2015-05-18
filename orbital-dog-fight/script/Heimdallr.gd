@@ -72,21 +72,37 @@ class SettingsClass extends ConfigFile:
 	const SECTION_SOUND = "sound"
 	const SECTION_NETWORK = "network"
 
+	#
 	# Remember to use constants for names so we don't get lost!
+	#
+
+	# Sound Section
 	const SOUND_MUSIC_ENABLE = "music_enabled"
 	const SOUND_MUSIC_VOL = "music_volume"
 	const SOUND_FX_ENABLE = "sfx_enabled"
 	const SOUND_FX_VOL = "sfx_volume"
 
+	# Network Section
+	const NETWORK_PLAYER_NAME = "player_name"
+	const NETWORK_CLIENT_HOST = "client_host"
+	const NETWORK_CLIENT_PORT = "client_port"
+	const NETWORK_SERVER_PORT = "server_port"
+
 	func save():
 		return .save(PATH)
 	
+	func _set_default(sec, name, value):
+		if get_value(sec, name) == null:
+			set_value(sec, name, value)
+
 	func load_defaults():
-		if get_value(SECTION_SOUND, SOUND_FX_VOL) == null:
-			set_value(SECTION_SOUND, SOUND_FX_VOL, 1)
-		if get_value(SECTION_SOUND, SOUND_FX_ENABLE) == null:
-			set_value(SECTION_SOUND, SOUND_FX_ENABLE, true)
-		if get_value(SECTION_SOUND, SOUND_MUSIC_VOL) == null:
-			set_value(SECTION_SOUND, SOUND_MUSIC_VOL, 1)
-		if get_value(SECTION_SOUND, SOUND_MUSIC_ENABLE) == null:
-			set_value(SECTION_SOUND, SOUND_MUSIC_ENABLE, true)
+		# Set defaults for Sound section
+		_set_default(SECTION_SOUND, SOUND_FX_VOL, 1)
+		_set_default(SECTION_SOUND, SOUND_FX_ENABLE, true)
+		_set_default(SECTION_SOUND, SOUND_MUSIC_VOL, 1)
+		_set_default(SECTION_SOUND, SOUND_MUSIC_ENABLE, true)
+		# Set defaults for network section
+		_set_default(SECTION_NETWORK, NETWORK_PLAYER_NAME, "Unamed Player")
+		_set_default(SECTION_NETWORK, NETWORK_CLIENT_HOST, "127.0.0.1")
+		_set_default(SECTION_NETWORK, NETWORK_CLIENT_PORT, 4666)
+		_set_default(SECTION_NETWORK, NETWORK_SERVER_PORT, 4666)
