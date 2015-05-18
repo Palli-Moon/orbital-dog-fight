@@ -178,7 +178,8 @@ func on_collide(body):
 		curr_hp -= round(abs((get_linear_velocity() - body.get_linear_velocity()).length()) / 10) \
 					* (body.get_mass() / get_mass())
 		if curr_hp <= 0:
-			die("exp_one")
+			if not is_dummy:
+				die("exp_one")
 		else:
 			healthBar.update()
 	elif body.is_in_group("planet"):
@@ -233,8 +234,9 @@ func die(anim):
 func hit(beam):
 	curr_hp -= beam.get_power()
 	if curr_hp <= 0:
-		killer = beam.ship
-		die("exp_one")
+		if not is_dummy:
+			killer = beam.ship
+			die("exp_one")
 	else:
 		get_node("ShipSounds").play("laser-hit2")
 		healthBar.update()
