@@ -26,7 +26,9 @@ precompiled. These should run like any other application
 and clicking open whilst holding the option key) in order to run the
 application.
 - Linux: make the binary file executable by using `chmod +x <filename>`
-
+- Server: To run an headless server version of the game (dedicated server)
+use the binary in bin/server passing as an argument "server.xml" 
+(ie. `./odf_server.bin server.xml`)
 ## Build Instructions
 To build this software the [GODOT](http://www.godotengine.org/) game
 engine is required <sup>[1](#myfootnote1)</sup>, as well as the
