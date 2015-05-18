@@ -5,6 +5,7 @@ extends "res://script/comp/orbital_obj.gd"
 export var hitpoints = 100 setget set_hitpoints, get_hitpoints
 export(Texture) var asteroid_texture setget set_asteroid_texture, get_asteroid_texture
 export var scale = 1.0 setget set_scale, get_scale
+export var can_shoot = false
 
 var Asteroid
 
@@ -15,6 +16,8 @@ var is_dying = false
 var threshold = 0.3
 
 var textures = [load("res://assets/img/asteroid1.png"), load("res://assets/img/asteroid2.png"), load("res://assets/img/asteroid3.png")]
+var robotoroid = load("res://assets/img/robotoroid.png")
+
 func on_ready():
 	# Register events
 	heimdallr = get_node("/root/Heimdallr")
@@ -24,7 +27,10 @@ func on_ready():
 	add_to_group("asteroids")
 	add_to_group("sfx")
 	if asteroid_texture != null:
-		get_node("Sprite").set_texture(asteroid_texture)
+		if can_shoot:
+			get_node("Sprite").set_texture(robotoroid)
+		else:
+			get_node("Sprite").set_texture(asteroid_texture)
 	if not get_tree().is_editor_hint():
 		get_shape(0).set_radius(10*scale)
 		get_node("Trigger").get_shape(0).set_radius(18*scale)
