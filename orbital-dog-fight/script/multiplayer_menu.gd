@@ -18,9 +18,7 @@ func _ready():
 	get_node("Create/Port").set_text(str(Settings.get_value(Settings.SECTION_NETWORK, Settings.NETWORK_SERVER_PORT)))
 
 func load_scene(scene):
-	main.clear_scene()
-	main.current.add_child(scene)
-	main.current_scene = "res://scene/mode/online.xml"
+	main.load_scene_instance(scene, "res://scene/mode/online.xml")
 	main.get_node("Main Menu/Resume").show()
 	main.get_node("Main Menu/Restart").hide()
 	main.toggle_pause()
@@ -48,7 +46,6 @@ func on_server():
 	main.toggle_multiplayer()
 
 func on_local():
-	main.clear_scene()
 	main.load_scene("res://scene/mode/multi.xml")
 	main.toggle_multiplayer()
 	main.toggle_pause()

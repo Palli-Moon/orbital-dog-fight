@@ -45,30 +45,41 @@ func _input(event):
 			if remapping != null:
 				settings.remap_action(event)
 
-func clear_scene():
-	print("Clear")
+func _clear_scene():
+	get_node("/root/Heimdallr").game = null
 	var child = current.get_child(0)
 	if child:
+		current.remove_child(child)
 		child.queue_free()
 
-func load_scene(scene):
+func _load_sceme(scene):
+	_clear_scene()
 	get_node("Main Menu/Resume").show()
 	get_node("Main Menu/Restart").show()
 	current_scene = scene
 	var s = ResourceLoader.load(scene)
 	current.add_child(s.instance())
 
+func _load_scene_instance(scene, name):
+	_clear_scene()
+	current_scene = name
+	current.add_child(scene)
+
+func load_scene(scene):
+	call_deferred("_load_sceme", scene)
+
+func load_scene_instance(scene, name):
+	call_deferred("_load_scene_instance", scene, name)
+
 func restart_scene():
 	if current_scene == null:
 		return
 	toggle_menu()
-	clear_scene()
 	load_scene(current_scene)
 	
 func simple_restart_scene():
 	if current_scene == null:
 		return
-	clear_scene()
 	load_scene(current_scene)
 
 func toggle_pause():
@@ -111,7 +122,6 @@ func _on_Resume_pressed():
 
 func _on_Single_pressed():
 	toggle_menu()
-	clear_scene()
 	load_scene("res://scene/mode/single.xml")
 	toggle_pause()
 
