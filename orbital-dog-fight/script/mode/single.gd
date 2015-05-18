@@ -47,10 +47,10 @@ func get_spawnpoint(spawns):
 			return spawnpoint
 			
 func next_scene():
-	if levelnum == 0:
-		return 1
+	if levelnum < 2:
+		return levelnum + 1
 	else:
 		return 0
-		
+
 func is_win():
 	return win
