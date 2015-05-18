@@ -119,7 +119,7 @@ func play_thruster_sound():
 	if !thruster_sound_playing:
 		thruster_sound_playing = true
 		thruster_voice = get_node("ShipSounds").play("engine4")
-		get_node("ShipSounds").set_volume(thruster_voice, 0.3)
+		get_node("ShipSounds").set_volume(thruster_voice, 0.3 * get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
 
 	if !get_node("ShipSounds").is_voice_active(thruster_voice):
 		thruster_sound_playing = false
