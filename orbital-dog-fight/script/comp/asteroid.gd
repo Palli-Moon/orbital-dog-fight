@@ -97,7 +97,8 @@ func _die():
 				scale = scale * (1-littleroidscale)
 	heimdallr.send_signal(self, "die", [])
 	remove_from_group("asteroids")
-	fire_timer.stop()
+	if can_shoot:
+		fire_timer.stop()
 	explode()
 
 func hit(beam):
