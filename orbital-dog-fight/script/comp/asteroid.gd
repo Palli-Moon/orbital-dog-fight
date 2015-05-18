@@ -32,6 +32,7 @@ func on_ready():
 	add_to_group("asteroids")
 	add_to_group("sfx")
 	fire_timer = get_node("FireTimer")
+	fire_timer.start()
 	if asteroid_texture != null:
 		if can_shoot:
 			get_node("Sprite").set_texture(robotoroid)
@@ -59,8 +60,6 @@ func on_separate(body):
 	pass
 
 func _fixed_process(delta):
-	if can_shoot:
-		fire()
 	health_bar.update_rot()
 
 func set_hitpoints(hp):
@@ -144,9 +143,6 @@ func _on_AnimationPlayer_finished():
 	queue_free()
 
 func fire():
-	if fire_timer.get_time_left() != 0:
-		return
-	fire_timer.start()
 	get_node("AsteroidSounds").play("laser1")
 	var la_t = laser.instance()
 	var la_b = laser.instance()
@@ -174,3 +170,8 @@ func fire():
 	get_parent().add_child(la_b)
 	get_parent().add_child(la_l)
 	get_parent().add_child(la_r)
+
+
+func _on_FireTimer_timeout():
+	fire()
+	fire_timer.start()
