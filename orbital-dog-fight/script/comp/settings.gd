@@ -45,6 +45,7 @@ func _on_Return_pressed():
 
 func remap_action(event):
 	remapping = get_parent().remapping
+	print(remapping)
 	if event.scancode != KEY_ESCAPE:
 		var txt
 		InputMap.erase_action(remapping)
@@ -68,6 +69,7 @@ func remap_action(event):
 			txt = str(event).split("Unicode: ")[1][0]
 		Settings.set_value(Settings.SECTION_BINDING, remapping, [txt.to_upper(), event.scancode])
 		Settings.save()
+		print(remapping)
 		get_node("P"+remapping[1]+"Controls/"+remapping).set_text(txt.to_upper())
 	get_parent().is_remapping = false
 	get_parent().remapping = null

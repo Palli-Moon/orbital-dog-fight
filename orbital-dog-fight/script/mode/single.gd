@@ -12,6 +12,7 @@ var tutorial_seen
 func _ready():
 	Settings = get_node("/root/Heimdallr").Settings
 	tutorial_seen = Settings.get_value(Settings.SECTION_TUTORIAL, Settings.TUTORIAL_SEEN)
+
 	get_node("/root/Heimdallr").set_game(self)
 	end = end_screen.instance()
 	end.hide()
@@ -35,7 +36,6 @@ func _process(delta):
 
 func tutorial(delta):
 	var fwd = Settings.get_value(Settings.SECTION_BINDING, Settings.BINDING_P1_FWD)[0]
-	var bwd = Settings.get_value(Settings.SECTION_BINDING, Settings.BINDING_P1_BWD)[0]
 	var tl = Settings.get_value(Settings.SECTION_BINDING, Settings.BINDING_P1_TL)[0]
 	var tr = Settings.get_value(Settings.SECTION_BINDING, Settings.BINDING_P1_TR)[0]
 	var lasers = Settings.get_value(Settings.SECTION_BINDING, Settings.BINDING_P1_LASERS)
@@ -43,7 +43,7 @@ func tutorial(delta):
 		lasers = lasers[0] + " or " + lasers[2]
 	else:
 		lasers = lasers[0]
-
+		
 	t += delta
 	
 	screen_text.hide()

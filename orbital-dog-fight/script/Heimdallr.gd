@@ -9,9 +9,10 @@ func _ready():
 	Settings = SettingsClass.new()
 	if Settings.load(SettingsClass.PATH) != 0:
 		print("Creating config file")
+		Settings.load_defaults()
 		if Settings.save() != 0:
 			print("Unable to save config file, user settings will not be saved")
-	Settings.load_defaults()
+	Settings.load(SettingsClass.PATH)
 
 func set_game(m):
 	game = weakref(m)
@@ -122,6 +123,8 @@ class SettingsClass extends ConfigFile:
 		_set_default(SECTION_NETWORK, NETWORK_CLIENT_HOST, "127.0.0.1")
 		_set_default(SECTION_NETWORK, NETWORK_CLIENT_PORT, 4666)
 		_set_default(SECTION_NETWORK, NETWORK_SERVER_PORT, 4666)
+		
+		print(get_value(SECTION_BINDING, BINDING_P1_FWD))
 		
 		_set_default(SECTION_BINDING, BINDING_P1_FWD, ["W", KEY_W])
 		_set_default(SECTION_BINDING, BINDING_P1_BWD, ["S", KEY_S])
