@@ -7,6 +7,7 @@ export var rot_speed = 16
 export var fwd_speed = 10.0
 export var bwd_speed = 5.0
 export var strafe_speed = 3.0
+export var laser_power = 10
 export var laser_speed = 300.0
 export var laser_heat_step = 10
 export var laser_overheat_threshold = 50
@@ -199,8 +200,12 @@ func fire():
 	var scale = get_node("Sprite").get_scale()
 	var la_l = laser.instance()
 	var la_r = laser.instance()
+	
 	la_l.ship = self
+	la_l.power = laser_power
 	la_r.ship = self
+	la_r.power = laser_power
+	
 	la_l.set_rot(get_rot())
 	la_l.set_global_pos(get_transform().get_origin() + Vector2(10 * scale.x,-34 * scale.y).rotated(get_rot()))
 	la_l.set_linear_velocity(Vector2(0,-laser_speed).rotated(get_transform().get_rotation()))
