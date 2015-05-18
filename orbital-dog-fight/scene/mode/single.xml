@@ -191,14 +191,9 @@
 							<string> "current" </string>
 							<int> 0 </int>
 							<string> "sources" </string>
-							<array  len="7" shared="false">
-								<string> "res://script/mode/single.gd" </string>
-								<string> "res://script/Heimdallr.gd" </string>
-								<string> "res://script/comp/settings.gd" </string>
-								<string> "res://script/end_screen.gd" </string>
-								<string> "res://script/comp/planet.gd" </string>
-								<string> "res://script/main.gd" </string>
-								<string> "res://script/mode/multi.gd" </string>
+							<array  len="2" shared="false">
+								<string> "res://script/comp/screenarea.gd" </string>
+								<string> "res://script/comp/asteroid.gd" </string>
 							</array>
 						</dictionary>
 					</dictionary>

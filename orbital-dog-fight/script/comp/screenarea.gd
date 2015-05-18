@@ -56,6 +56,7 @@ class TimedObject:
 			self.clear()
 			print("is dead")
 		elif self.object.get_ref().is_in_group("asteroids"):
+			self.object.get_ref().scale = 0.1
 			self.object.get_ref()._die()
 		clear()
 		
@@ -107,12 +108,12 @@ func _process(delta):
 	pass
 		
 func _on_ScreenExtents_body_enter( body ):
-	if (body.is_in_group("ships")):
+	if (body.is_in_group("ships") or body.is_in_group("asteroids")):
 		for timed_obj in timed_objects:
 			if timed_obj.get_object() == body:
 				timed_obj.clear()
 
 func _on_ScreenExtents_body_exit( body ):
-	if (body.is_in_group("ships")) and !body.isdying:
+	if (body.is_in_group("ships") and !body.isdying) or body.is_in_group("asteroids"):
 		var obj = TimedObject.new(timeout, body, self)
 		timed_objects.append(obj)
