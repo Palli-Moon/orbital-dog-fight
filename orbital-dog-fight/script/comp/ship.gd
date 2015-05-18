@@ -13,6 +13,7 @@ export var laser_overheat_threshold = 50
 export var laser_cool_rate = 5
 export(Texture) var shiptex setget set_shiptex, get_shiptex
 
+var Settings
 var is_dummy = false
 var is_remote = false
 var ctrl = null
@@ -38,6 +39,11 @@ func on_ready():
 	# Register events
 	heimdallr = get_node("/root/Heimdallr")
 	heimdallr.register_signal(self, "die")
+	# Load settings
+	Settings = heimdallr.Settings
+	set_default_volume(Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_FX_VOL) * \
+		int(Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_FX_ENABLE)))
+	get_node("ShipSounds").set_voice_count(24)
 	# Manage child nodes
 	fire_timer = get_node("FireTimer")
 	healthBar = get_node("HealthBar")
@@ -49,10 +55,6 @@ func on_ready():
 	var anim = get_node("explosion/AnimationPlayer")
 	anim.connect("finished", self, "anim_finished")
 	anim.connect("animation_changed", self, "anim_changed")
-	# Manage volume settings
-	if get_node("/root/Demos/Settings") != null:
-		set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
-	get_node("ShipSounds").set_voice_count(24)
 	# Add ship to groups
 	add_to_group("ships")
 	add_to_group("dead")
@@ -116,10 +118,12 @@ func apply_ctrl(type, dt):
 		print("Unkown command: " + type)
 
 func play_thruster_sound():
+	if !Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_FX_ENABLE):
+		return
 	if !thruster_sound_playing:
 		thruster_sound_playing = true
 		thruster_voice = get_node("ShipSounds").play("engine4")
-		get_node("ShipSounds").set_volume(thruster_voice, 0.3 * get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
+		get_node("ShipSounds").set_volume(thruster_voice, 0.3 * Settings.get_value(Settings.SECTION_SOUND, Settings.SOUND_FX_VOL))
 
 	if !get_node("ShipSounds").is_voice_active(thruster_voice):
 		thruster_sound_playing = false
