@@ -94,17 +94,23 @@ func end_game(winner):
 			lasers.queue_free()
 
 func respawn():
+	var spawns = get_tree().get_nodes_in_group("spawnpoints")
 	if is_end:
 		is_end = false
 		server.broadcast(Command.ServerGameRestart.new().get_msg())
 		for k in curr_state.players:
 			curr_state.players[k].score = 0
+			var sp = get_spawnpoint(spawns)
+			spawns.remove(spawns.find(sp))
+			curr_state.players[k].get_ship().spawn_at(sp.get_pos(), sp.velocity, sp.get_rot())
 			curr_state.players[k].get_ship().spawn_at(Vector2(800,300), Vector2(150,0), 0)
 		return
 	var ships = get_tree().get_nodes_in_group("dead")
 	for s in ships:
 		if s.get_parent() == get_node("Game"):
-			s.spawn_at(Vector2(800,300), Vector2(150,0), 0)
+			var sp = get_spawnpoint(spawns)
+			spawns.remove(spawns.find(sp))
+			s.spawn_at(sp.get_pos(), sp.velocity, sp.get_rot())
 
 func _process(delta):
 	if is_end:
@@ -157,6 +163,12 @@ func create_ship():
 	ship.ctrl = {fwd=false,bwd=false,tl=false,tr=false,lasers=false}
 	get_node("Game").add_child(ship)
 	return ship
+
+func get_spawnpoint(spawns):
+	if spawns.size() > 0:
+		var spawnpoint = randi() % spawns.size()
+		spawnpoint = spawns[spawnpoint]
+		return spawnpoint
 
 func print_debug(mess):
 	print(mess)
