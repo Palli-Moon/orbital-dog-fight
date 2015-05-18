@@ -1,10 +1,11 @@
-
 extends Node2D
 
 var finish = false
 var end_screen = preload("res://scene/end_screen.xml")
 var end
 var Settings = null
+var win = false
+export var levelnum = 0
 
 func _ready():
 	Settings = get_node("/root/Heimdallr").Settings
@@ -12,7 +13,6 @@ func _ready():
 	end = end_screen.instance()
 	end.hide()
 	get_node("EndContainer").add_child(end)
-	#add_child(end)
 	var ships = get_tree().get_nodes_in_group("ships")
 	var spawns = get_tree().get_nodes_in_group("spawnpoints")
 	for s in ships:
@@ -29,11 +29,14 @@ func message(sender, sig, data):
 	print("Received ", sig, " from ", sender, " with data ", data)
 	if sig == "die" and sender.is_in_group("ships"):
 		finish = true
+		win = false
 		end.show_end("You lose!")
 	elif sig == "die" and sender.is_in_group("asteroids") and get_tree().get_nodes_in_group("asteroids").size() == 1:
 		finish = true
+		win = true
 		end.show_end("You win!")
 	elif sig == "crash":
+		win = false
 		finish = true
 		end.show_end("You lose!")
 
@@ -42,3 +45,12 @@ func get_spawnpoint(spawns):
 			var spawnpoint = randi() % spawns.size()
 			spawnpoint = spawns[spawnpoint]
 			return spawnpoint
+			
+func next_scene():
+	if levelnum == 0:
+		return 1
+	else:
+		return 0
+		
+func is_win():
+	return win

@@ -76,13 +76,13 @@
 				<resource  resource_type="Script" path="res://script/end_screen.gd">  </resource>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
-					<string> "2D" </string>
+					<string> "Script" </string>
 					<string> "__editor_plugin_states__" </string>
 					<dictionary  shared="false">
 						<string> "2D" </string>
 						<dictionary  shared="false">
 							<string> "ofs" </string>
-							<vector2> -238.925, -72.8794 </vector2>
+							<vector2> -457.96, -89.6091 </vector2>
 							<string> "snap_grid" </string>
 							<bool> True </bool>
 							<string> "snap_offset" </string>
@@ -102,7 +102,7 @@
 							<string> "snap_step" </string>
 							<vector2> 10, 10 </vector2>
 							<string> "zoom" </string>
-							<real> 0.735092 </real>
+							<real> 0.598737 </real>
 						</dictionary>
 						<string> "3D" </string>
 						<dictionary  shared="false">
@@ -201,12 +201,10 @@
 							<string> "current" </string>
 							<int> 0 </int>
 							<string> "sources" </string>
-							<array  len="5" shared="false">
+							<array  len="3" shared="false">
 								<string> "res://script/end_screen.gd" </string>
+								<string> "res://script/mode/single.gd" </string>
 								<string> "res://script/main.gd" </string>
-								<string> "res://script/comp/ship.gd" </string>
-								<string> "res://script/comp/asteroid.gd" </string>
-								<string> "res://script/comp/audioengine.gd" </string>
 							</array>
 						</dictionary>
 					</dictionary>
