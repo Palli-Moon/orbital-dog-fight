@@ -4,12 +4,81 @@ export var port = 4666
 export var max_conns = 4
 
 var server
+var udpserver = null
+var udpstream = null
 
 var Command = preload("commands.gd")
 var clients = []
 var streams = []
 var handler = null
 var debug = null
+
+class UDPServer:
+	var handler = null
+	
+	const PENDING_TIMEOUT = 10
+	var udpstream = PacketPeerUDP.new()
+	var udpclients = []
+	var pending = {}
+	var port
+	
+	func _init(port):
+		self.port = port
+	
+	func listen():
+		return udpstream.listen( port )
+	
+	func close():
+		udpstream.close()
+	
+	func send_data(message, host, port):
+		udpstream.set_send_address( host, port )
+		udpstream.put_var(message)
+	
+	func process_packets():
+		var obj
+		while udpstream.get_available_packet_count() > 0:
+			var data = udpstream.get_var()
+			if typeof(data) == TYPE_INT:
+				obj = auth(data)
+				if obj != null:
+					udpclients.append({client=obj, \
+										address=udpstream.get_packet_ip(), \
+										port=udpstream.get_packet_port() \
+									})
+					if handler != null and handler.has_method("on_auth"):
+						handler.on_auth(data, obj, udpstream.get_packet_ip(), udpstream.get_packet_port())
+					print("Added client: ", udpclients[udpclients.size()-1])
+			else:
+				print("Invalid data: ", data)
+				print(udpstream.get_packet_ip(), ":",udpstream.get_packet_port())
+		pass
+	
+	func _remove_stale():
+		for k in pending.keys():
+			if pending[k][0] < OS.get_unix_time():
+				print("Removing stale")
+				pending.erase(k)
+	
+	func add_pending(id, obj):
+		if pending.has(id):
+			print("Error, value already in pending!")
+			return
+		pending[id] = [OS.get_unix_time() + PENDING_TIMEOUT, obj]
+	
+	func auth(id):
+		_remove_stale()
+		if pending.has(id):
+			var obj = pending[id][1]
+			pending.erase(id)
+			return obj
+		return null
+	
+	func get_by_obj(obj):
+		for c in udpclients:
+			if c.client == obj:
+				return c
+		return null
 
 # Extend this class to create a server handler
 class ServerHandler:
@@ -28,8 +97,10 @@ func _ready():
 	pass
 
 func start():
+	udpserver = UDPServer.new(port)
+	udpserver.handler = self
 	server = TCP_Server.new()
-	if server.listen( port, ["0.0.0.0"] ) == 0:
+	if server.listen( port, ["0.0.0.0"] ) == 0 and udpserver.listen() == 0:
 		print_debug("Server started on port "+str(port))
 		set_fixed_process( true )
 	else:
@@ -63,6 +134,22 @@ func on_message(client, stream, message):
 		else:
 			print_debug("Invalid command " + str(message))
 
+func on_auth(id, stream, ip, port):
+	if stream != null:
+		stream.put_var([1, id])
+	#broadcast_udp(id)
+	#broadcast_udp([101, {name="Faless",ship={"t":9, "l":{}, "p":{1633176173:{"score":0, "ship":{"d":false, "l":0, "ctrl":{"bwd":false, "tr":false, "tl":false, "fwd":false, "lasers":false}, "v":"150,0", "hp":0, "a":0, "r":0, "pos":"915,200"}, "id":1633176173, "name":"Unamed Player"}}, "i":0.1}}.to_json()])
+	#broadcast_udp([101, {"p":{1633176173:{"score":0, "ship":{"d":false, "l":0, "ctrl":{"bwd":false, "tr":false, "tl":false, "fwd":false, "lasers":false}, "v":"150,0", "hp":0, "a":0, "r":0, "pos":"915,200"}, "id":1633176173, "name":"Unamed Player"}}, "i":0.1}.to_json()])
+	#broadcast_udp([101, {"p":{1633176173:{"score":0, "ship":{"d":false, "l":0, "ctrl":{"bwd":false, "tr":false, "tl":false}, "v":"150,0", "hp":0, "a":0, "r":0, "pos":"915,200"}, "id":1633176173, "name":"Unamed Player"}}, "i":0.1}.to_json()])
+	#broadcast_udp(15)
+	#broadcast_udp(["a", "b"])
+	#broadcast_udp(id)
+
+func broadcast_udp(message):
+	print("BROADCASTING!!!!!!!!!!!!!!!!!!!! ", message)
+	for c in udpserver.udpclients:
+		udpserver.send_data(message, c.address, c.port)
+
 func on_disconnect(client, stream):
 	if handler != null:
 		handler.on_disconnect(client, stream)
@@ -81,12 +168,15 @@ func _fixed_process(delta):
 			streams.append(PacketPeerStream.new())
 			var index = clients.find(client)
 			streams[index].set_stream_peer(client)
-			print_debug("Client has connected!")
-			on_connect(client, streams[index])
+			print_debug("Client has connected! Authenticating UDP stream...")
+			send_auth(streams[index])
+			on_connect( client, streams[index] )
 	# Read incoming data
 	for stream in streams:
 		while stream.get_available_packet_count() > 0:
 			on_message(clients[streams.find(stream)], stream, stream.get_var())
+	# Read incoming udp data
+	udpserver.process_packets()
 	# Delete disconnected clients
 	for client in clients:
 		if !client.is_connected():
@@ -98,10 +188,18 @@ func _fixed_process(delta):
 
 func broadcast(message):
 	for s in streams:
-		s.put_var(message)
+		s.put_var([2, message])
 
 func send_data(stream, message):
-	stream.put_var(message)
+	stream.put_var([2, message])
+
+func send_auth(stream):
+	var secret = randi()
+	udpserver.add_pending(secret, stream)
+	stream.put_var([0, secret])
+
+func validate_auth(client, stream):
+	on_connect(client, stream)
 
 func print_debug(mess):
 	if debug != null:
