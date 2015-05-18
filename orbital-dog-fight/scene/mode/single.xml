@@ -184,7 +184,7 @@
 						<string> "Script" </string>
 						<dictionary  shared="false">
 							<string> "current" </string>
-							<int> 0 </int>
+							<int> 2 </int>
 							<string> "sources" </string>
 							<array  len="3" shared="false">
 								<string> "res://script/mode/single.gd" </string>

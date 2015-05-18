@@ -66,7 +66,7 @@ func remap_action(event):
 			txt = "\u2192"
 		else:
 			txt = str(event).split("Unicode: ")[1][0]
-		Settings.set_value(Settings.SECTION_BINDING, remapping, [txt, event.scancode])
+		Settings.set_value(Settings.SECTION_BINDING, remapping, [txt.to_upper(), event.scancode])
 		Settings.save()
 		get_node("P"+remapping[1]+"Controls/"+remapping).set_text(txt.to_upper())
 	get_parent().is_remapping = false
