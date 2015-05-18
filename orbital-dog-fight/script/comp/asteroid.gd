@@ -25,8 +25,8 @@ var laser = preload("res://scene/comp/laser.xml")
 func on_ready():
 	# Register events
 	heimdallr = get_node("/root/Heimdallr")
-	heimdallr.register_signal(self, "die")
 	heimdallr.register_signal(self, "crash")
+	heimdallr.register_signal(self, "die")
 	# Add to groups
 	add_to_group("shootables")
 	add_to_group("asteroids")
@@ -55,8 +55,11 @@ func on_spawn():
 
 func on_collide(body):
 	if body.is_in_group("planet"):
+		body.get_parent().get_node("Explosion").show()
+		body.get_parent().get_node("Explosion/Explode").play("exp_three")
 		_die()
 		heimdallr.send_signal(self, "crash", [body])
+		
 
 func on_separate(body):
 	pass

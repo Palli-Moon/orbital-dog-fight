@@ -10,7 +10,10 @@ export(Texture) var planet_texture setget set_planet_texture, get_planet_texture
 export(Animation) var planet_animation setget set_planet_animation, get_planet_animation
 export var planet_scale = 5.0 setget set_planet_scale, get_planet_scale
 
+var heimdallr
+
 func _ready():
+	get_node("Explosion").hide()
 	get_node("Body/Sprite").set_texture(planet_texture)
 	if not get_tree().is_editor_hint():
 		get_node("Gravity").get_shape(0).set_radius(gravity_size)
