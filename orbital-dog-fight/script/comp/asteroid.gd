@@ -44,7 +44,8 @@ func on_ready():
 		get_node("Trigger").get_shape(0).set_radius(18*scale)
 		health_bar = get_node("HealthBar")
 		Asteroid = load("res://scene/comp/asteroid.xml")
-	set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
+	if has_node("/root/Demos/Settings"):
+		set_default_volume(get_node("/root/Demos/Settings").volume * int(!get_node("/root/Demos/Settings").muted))
 
 func on_spawn():
 	is_dying = false

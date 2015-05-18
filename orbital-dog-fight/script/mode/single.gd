@@ -8,11 +8,11 @@ var Settings = null
 
 func _ready():
 	Settings = get_node("/root/Heimdallr").Settings
-
 	get_node("/root/Heimdallr").set_game(self)
 	end = end_screen.instance()
 	end.hide()
-	add_child(end)
+	get_node("EndContainer").add_child(end)
+	#add_child(end)
 	var ships = get_tree().get_nodes_in_group("ships")
 	var spawns = get_tree().get_nodes_in_group("spawnpoints")
 	for s in ships:
