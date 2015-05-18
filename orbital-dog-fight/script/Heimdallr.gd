@@ -127,7 +127,7 @@ class SettingsClass extends ConfigFile:
 		_set_default(SECTION_BINDING, BINDING_P1_BWD, ["S", KEY_S])
 		_set_default(SECTION_BINDING, BINDING_P1_TL, ["Q", KEY_Q])
 		_set_default(SECTION_BINDING, BINDING_P1_TR, ["E", KEY_E])
-		_set_default(SECTION_BINDING, BINDING_P1_LASERS, ["X", KEY_X, KEY_SPACE])
+		_set_default(SECTION_BINDING, BINDING_P1_LASERS, ["X", KEY_X, "SPACE", KEY_SPACE])
 		_set_default(SECTION_BINDING, BINDING_P2_FWD, ["U", KEY_U])
 		_set_default(SECTION_BINDING, BINDING_P2_BWD, ["J", KEY_J])
 		_set_default(SECTION_BINDING, BINDING_P2_TL, ["Y", KEY_Y])
