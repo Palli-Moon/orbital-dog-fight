@@ -11,9 +11,6 @@ var snd = RawArray()
 func _ready():
 	for i in range(SOUNDLEN):
 		snd.push_back(randi() % 15 + 1) 
-
-	server.voice_set_volume(r, 0.1) # DOESN'T FUCKING WORK
-
 	server.sample_set_data(r,snd)
 	server.sample_set_loop_format(r, 1)
 	server.sample_set_loop_begin(r, 0)
@@ -21,6 +18,7 @@ func _ready():
 	
 func play_sound():
 	server.voice_play(v,r)
+	server.voice_set_volume(v, 0.2)
 	
 func stop_sound():
 	server.voice_stop(v)
