@@ -87,6 +87,18 @@ class SettingsClass extends ConfigFile:
 	const NETWORK_CLIENT_HOST = "client_host"
 	const NETWORK_CLIENT_PORT = "client_port"
 	const NETWORK_SERVER_PORT = "server_port"
+	
+	# Bindings Section
+	const BINDING_P1_FWD = "p1_fwd"
+	const BINDING_P1_BWD = "p1_bwd"
+	const BINDING_P1_TL = "p1_tl"
+	const BINDING_P1_TR = "p1_tr"
+	const BINDING_P1_LASERS = "p1_lasers"
+	const BINDING_P2_FWD = "p2_fwd"
+	const BINDING_P2_BWD = "p2_bwd"
+	const BINDING_P2_TL = "p2_tl"
+	const BINDING_P2_TR = "p2_tr"
+	const BINDING_P2_LASERS = "p2_lasers"
 
 	func save():
 		return .save(PATH)
@@ -106,3 +118,14 @@ class SettingsClass extends ConfigFile:
 		_set_default(SECTION_NETWORK, NETWORK_CLIENT_HOST, "127.0.0.1")
 		_set_default(SECTION_NETWORK, NETWORK_CLIENT_PORT, 4666)
 		_set_default(SECTION_NETWORK, NETWORK_SERVER_PORT, 4666)
+		
+		_set_default(SECTION_BINDING, BINDING_P1_FWD, ["W", KEY_W])
+		_set_default(SECTION_BINDING, BINDING_P1_BWD, ["S", KEY_S])
+		_set_default(SECTION_BINDING, BINDING_P1_TL, ["Q", KEY_Q])
+		_set_default(SECTION_BINDING, BINDING_P1_TR, ["E", KEY_E])
+		_set_default(SECTION_BINDING, BINDING_P1_LASERS, ["X", KEY_X, KEY_SPACE])
+		_set_default(SECTION_BINDING, BINDING_P2_FWD, ["U", KEY_U])
+		_set_default(SECTION_BINDING, BINDING_P2_BWD, ["J", KEY_J])
+		_set_default(SECTION_BINDING, BINDING_P2_TL, ["Y", KEY_Y])
+		_set_default(SECTION_BINDING, BINDING_P2_TR, ["I", KEY_I])
+		_set_default(SECTION_BINDING, BINDING_P2_LASERS, ["M", KEY_M])
