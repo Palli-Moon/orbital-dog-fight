@@ -12,6 +12,7 @@ var musicPlayer
 var menu
 var splash
 var remapping = null
+var prefs
 
 func _ready():
 	splash = get_node("Splash")
@@ -19,6 +20,7 @@ func _ready():
 	menu = get_node("Main Menu")
 	settings = get_node("Settings")
 	musicPlayer = get_node("MusicPlayer")
+	prefs = get_node("/root/Heimdallr").Settings
 	get_tree().set_pause(pause)
 	set_process_input(true)
 	menu.hide()
@@ -94,6 +96,7 @@ func toggle_menu():
 		menu.hide()
 
 func toggle_settings():
+	get_node("Settings/TutorialSwitch").set_pressed(!(prefs.get_value(prefs.SECTION_TUTORIAL, prefs.TUTORIAL_SEEN)))
 	if is_remapping:
 		is_remapping = false
 		remapping = null

@@ -120,3 +120,9 @@ func _on_SFXSlider_value_changed( value ):
 	for node in get_tree().get_nodes_in_group("sfx"):
 		node.set_default_volume(value)
 	pass # replace with function body
+
+
+func _on_TutorialSwitch_toggled( pressed ):
+	Settings.set_value(Settings.SECTION_TUTORIAL, Settings.TUTORIAL_SEEN, !pressed)
+	Settings.save()
+	pass # replace with function body
