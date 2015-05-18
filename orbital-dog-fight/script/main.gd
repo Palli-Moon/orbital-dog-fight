@@ -144,4 +144,5 @@ func _on_Settings_pressed():
 func splash_finished():
 	splash.hide()
 	menu.show()
-	musicPlayer.show()
+	if prefs.get_value(prefs.SECTION_SOUND, prefs.SOUND_MUSIC_ENABLE):
+		musicPlayer.show()
