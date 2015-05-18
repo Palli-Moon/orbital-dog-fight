@@ -51,7 +51,9 @@ class TimedObject:
 			clear()
 			return
 		if self.object.get_ref().is_in_group("ships"):
-			self.object.get_ref().die("exp_one")
+			if not self.object.get_ref().is_dummy:
+				self.object.get_ref().die("exp_one")
+			self.clear()
 			print("is dead")
 		elif self.object.get_ref().is_in_group("asteroids"):
 			self.object.get_ref()._die()

@@ -89,6 +89,7 @@ func _process(delta):
 		leader_show = false
 		leaderboard.hide()
 	sync_delta += delta
+	# Let's just apply whatever prediction we have
 	var weight = sync_delta / STATE_SYNC_DELAY
 	for k in curr_state.players:
 		if not prediction.has(k):
@@ -98,8 +99,8 @@ func _process(delta):
 		var to = prediction[k][0]
 		p.set_pos(Vector2(lerp(from.x, to.x, weight), lerp(from.y, to.y, weight)))
 		var from_r = p.get_rot()
-		var to_r = prediction[k][1]
-		var ang = prediction[k][2]
+		var to_r = prediction[k][2]
+		var ang = prediction[k][3]
 		if abs(from_r - to_r) < 0.15:
 			p.set_rot(to_r)
 		else:
@@ -110,6 +111,15 @@ func _process(delta):
 			p.set_rot(lerp(from_r, to_r, weight))
 		p.healthBar.update_rot()
 		p.laserBar.update_rot()
+	# We are still waiting for an update but the sync_delta is more than the expected delay
+	# Let's make a new prediction!
+	if sync_delta > STATE_SYNC_DELAY:
+		for k in curr_state.players:
+			if not prediction.has(k):
+				continue
+			prediction[k] = get_prediction(curr_state.players[k].ship.get_ship().get_pos(), prediction[k][1], \
+				curr_state.players[k].ship.get_ship().get_rot(), prediction[k][3])
+		sync_delta = 0
 
 func accepted(id, s):
 	player_id = id
@@ -154,10 +164,7 @@ func update_state(state):
 	# Add new players and populate prediction
 	for k in state.p:
 		if not curr_state.players.has(k):
-			var p_ship = Ship.instance()
-			p_ship.is_remote = true
-			p_ship.ctrl = State.ControlState.new(null).get_state()
-			get_node("Game").add_child(p_ship)
+			var p_ship = create_ship()
 			curr_state.add_player(k, state.p[k].name, p_ship, null)
 			curr_state.players[k].update_state(state.p[k])
 		# Populate prediction of the next state
@@ -187,7 +194,7 @@ func get_prediction(pos, vel, rot, ang):
 		to_r -= 2*PI
 	elif to_r < -PI:
 		to_r += 2*PI
-	return [pos + vel * STATE_SYNC_DELAY, to_r, sign(ang)]
+	return [pos + vel * STATE_SYNC_DELAY, vel, to_r, sign(ang)]
 
 func create_ship():
 	var out = Ship.instance()
