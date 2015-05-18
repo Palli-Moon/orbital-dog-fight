@@ -15,7 +15,7 @@
 			<string> "conns" </string>
 			<int_array  len="0"> 				 </int_array>
 			<string> "names" </string>
-			<string_array  len="31">
+			<string_array  len="32">
 				<string> "World" </string>
 				<string> "Node2D" </string>
 				<string> "_import_path" </string>
@@ -37,6 +37,7 @@
 				<string> "Asteroid" </string>
 				<string> "friction" </string>
 				<string> "velocity/angular" </string>
+				<string> "damp_override/linear" </string>
 				<string> "damp_override/angular" </string>
 				<string> "spawn_on_ready" </string>
 				<string> "asteroid_texture" </string>
@@ -51,9 +52,9 @@
 			<string> "node_count" </string>
 			<int> 8 </int>
 			<string> "nodes" </string>
-			<int_array  len="158"> 				-1, -1, 1, 0, -1, 13, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 14, 7, 0, 0, 0, 16, 15, 10, 4, 2, 0, 7, 11, 17, 12, 13, 13, 0, 0, 0, 16, 18, 14, 11, 2, 0, 7, 15, 9, 16, 19, 5, 17, 17, 20, 2, 21, 5, 13, 18, 22, 1, 23, 19, 24, 16, 0, 0, 0, 1, 25, 20, 3, 2, 0, 7, 21, 13, 22, 0, 0, 0, 1, 26, 23, 2, 2, 0, 13, 24, 0, 0, 0, 1, 27, 25, 5, 2, 0, 7, 26, 10, 27, 13, 28, 28, 12, 0, 0, 0, 1, 29, 29, 3, 2, 0, 7, 30, 13, 31, 0, 0, 0, 1, 30, -1, 10, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 0 </int_array>
+			<int_array  len="160"> 				-1, -1, 1, 0, -1, 13, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 14, 7, 0, 0, 0, 16, 15, 10, 4, 2, 0, 7, 11, 17, 12, 13, 13, 0, 0, 0, 16, 18, 14, 12, 2, 0, 7, 15, 9, 16, 19, 5, 17, 17, 20, 2, 21, 18, 22, 5, 13, 19, 23, 1, 24, 20, 25, 16, 0, 0, 0, 1, 26, 21, 3, 2, 0, 7, 22, 13, 23, 0, 0, 0, 1, 27, 24, 2, 2, 0, 13, 25, 0, 0, 0, 1, 28, 26, 5, 2, 0, 7, 27, 10, 28, 13, 29, 29, 12, 0, 0, 0, 1, 30, 30, 3, 2, 0, 7, 31, 13, 32, 0, 0, 0, 1, 31, -1, 10, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 0 </int_array>
 			<string> "variants" </string>
-			<array  len="32" shared="false">
+			<array  len="33" shared="false">
 				<node_path> "" </node_path>
 				<bool> True </bool>
 				<real> 1 </real>
@@ -351,6 +352,7 @@
 				<vector2> 900, 210 </vector2>
 				<real> 2 </real>
 				<vector2> 0, 150 </vector2>
+				<real> 0.01 </real>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
 					<string> "2D" </string>
