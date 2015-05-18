@@ -24,3 +24,11 @@ func play_sound():
 	
 func stop_sound():
 	server.voice_stop(v)
+
+func _exit_tree():
+	# For compatibility with non bugfixed engines, we just leak in that case
+	# See pull request
+	# https://github.com/okamstudio/godot/pull/1931
+	if server.has_method("free_rid"):
+		server.free_rid(v)
+		server.free_rid(r)
