@@ -15,7 +15,7 @@
 			<string> "conns" </string>
 			<int_array  len="0"> 				 </int_array>
 			<string> "names" </string>
-			<string_array  len="27">
+			<string_array  len="28">
 				<string> "World" </string>
 				<string> "Node2D" </string>
 				<string> "_import_path" </string>
@@ -38,6 +38,7 @@
 				<string> "spawn_on_ready" </string>
 				<string> "asteroid_texture" </string>
 				<string> "scale" </string>
+				<string> "can_shoot" </string>
 				<string> "Planet" </string>
 				<string> "ScreenLeave" </string>
 				<string> "SpawnPoint" </string>
@@ -47,7 +48,7 @@
 			<string> "node_count" </string>
 			<int> 7 </int>
 			<string> "nodes" </string>
-			<int_array  len="123"> 				-1, -1, 1, 0, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 0, 0, 0, 15, 14, 10, 4, 2, 0, 7, 11, 16, 12, 13, 13, 0, 0, 0, 15, 17, 14, 9, 2, 0, 7, 15, 9, 16, 18, 5, 16, 17, 13, 18, 19, 1, 20, 19, 21, 16, 0, 0, 0, 1, 22, 20, 3, 2, 0, 7, 21, 13, 22, 0, 0, 0, 1, 23, 23, 2, 2, 0, 13, 24, 0, 0, 0, 1, 24, 25, 5, 2, 0, 7, 26, 10, 27, 13, 28, 25, 12, 0, 0, 0, 1, 26, 29, 2, 2, 0, 13, 30, 0 </int_array>
+			<int_array  len="125"> 				-1, -1, 1, 0, -1, 12, 2, 0, 3, 1, 4, 2, 5, 2, 6, 3, 7, 4, 8, 5, 9, 6, 10, 7, 11, 1, 12, 8, 13, 9, 0, 0, 0, 15, 14, 10, 4, 2, 0, 7, 11, 16, 12, 13, 13, 0, 0, 0, 15, 17, 14, 10, 2, 0, 7, 15, 9, 16, 18, 5, 16, 17, 13, 18, 19, 1, 20, 19, 21, 16, 22, 1, 0, 0, 0, 1, 23, 20, 3, 2, 0, 7, 21, 13, 22, 0, 0, 0, 1, 24, 23, 2, 2, 0, 13, 24, 0, 0, 0, 1, 25, 25, 5, 2, 0, 7, 26, 10, 27, 13, 28, 26, 12, 0, 0, 0, 1, 27, 29, 2, 2, 0, 13, 30, 0 </int_array>
 			<string> "variants" </string>
 			<array  len="31" shared="false">
 				<node_path> "" </node_path>
@@ -61,7 +62,7 @@
 				<resource  resource_type="Script" path="res://script/mode/single.gd">  </resource>
 				<dictionary  shared="false">
 					<string> "__editor_plugin_screen__" </string>
-					<string> "2D" </string>
+					<string> "Script" </string>
 					<string> "__editor_plugin_states__" </string>
 					<dictionary  shared="false">
 						<string> "2D" </string>
@@ -184,7 +185,7 @@
 						<string> "Script" </string>
 						<dictionary  shared="false">
 							<string> "current" </string>
-							<int> 1 </int>
+							<int> 2 </int>
 							<string> "sources" </string>
 							<array  len="6" shared="false">
 								<string> "res://script/comp/ship.gd" </string>

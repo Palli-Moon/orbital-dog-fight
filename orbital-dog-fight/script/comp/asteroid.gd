@@ -6,17 +6,21 @@ export var hitpoints = 100 setget set_hitpoints, get_hitpoints
 export(Texture) var asteroid_texture setget set_asteroid_texture, get_asteroid_texture
 export var scale = 1.0 setget set_scale, get_scale
 export var can_shoot = false
+export var laser_speed = 300.0
 
 var Asteroid
 
 var curr_hp = 0
 var health_bar = null
+var fire_timer = null
 var heimdallr
 var is_dying = false
 var threshold = 0.3
 
 var textures = [load("res://assets/img/asteroid1.png"), load("res://assets/img/asteroid2.png"), load("res://assets/img/asteroid3.png")]
 var robotoroid = load("res://assets/img/robotoroid.png")
+
+var laser = preload("res://scene/comp/laser.xml")
 
 func on_ready():
 	# Register events
@@ -26,6 +30,7 @@ func on_ready():
 	add_to_group("shootables")
 	add_to_group("asteroids")
 	add_to_group("sfx")
+	fire_timer = get_node("FireTimer")
 	if asteroid_texture != null:
 		if can_shoot:
 			get_node("Sprite").set_texture(robotoroid)
@@ -51,6 +56,8 @@ func on_separate(body):
 	pass
 
 func _fixed_process(delta):
+	if can_shoot:
+		fire()
 	health_bar.update_rot()
 
 func set_hitpoints(hp):
@@ -132,3 +139,35 @@ func get_scale():
 
 func _on_AnimationPlayer_finished():
 	queue_free()
+
+func fire():
+	if fire_timer.get_time_left() != 0:
+		return
+	fire_timer.start()
+	get_node("AsteroidSounds").play("laser1")
+	var la_t = laser.instance()
+	var la_b = laser.instance()
+	var la_l = laser.instance()
+	var la_r = laser.instance()
+	var scale = get_node("Sprite").get_scale()
+
+	la_t.set_rot(get_rot())
+	la_t.set_global_pos(get_transform().get_origin() + Vector2(0 * scale.x,-34 * scale.y).rotated(get_rot()))
+	la_t.set_linear_velocity(Vector2(0,-laser_speed).rotated(get_transform().get_rotation()))
+
+	la_b.set_rot(get_rot())
+	la_b.set_global_pos(get_transform().get_origin() + Vector2(0 * scale.x,34 * scale.y).rotated(get_rot()))
+	la_b.set_linear_velocity(Vector2(0,laser_speed).rotated(get_transform().get_rotation()))
+	
+	la_l.set_rot(get_rot()+PI/2)
+	la_l.set_global_pos(get_transform().get_origin() + Vector2(-34 * scale.x,0 * scale.y).rotated(get_rot()))
+	la_l.set_linear_velocity(Vector2(-laser_speed,0).rotated(get_transform().get_rotation()))
+	
+	la_r.set_rot(get_rot()-PI/2)
+	la_r.set_global_pos(get_transform().get_origin() + Vector2(34 * scale.x,0 * scale.y).rotated(get_rot()))
+	la_r.set_linear_velocity(Vector2(laser_speed,0).rotated(get_transform().get_rotation()))
+	
+	get_parent().add_child(la_t)
+	get_parent().add_child(la_b)
+	get_parent().add_child(la_l)
+	get_parent().add_child(la_r)
